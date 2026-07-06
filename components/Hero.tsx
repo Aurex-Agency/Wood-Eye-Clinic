@@ -3,23 +3,23 @@ import { clinic } from "@/lib/site";
 
 /*
  * "See clearly" hero. The scene fills the section softly out of focus, the way
- * the world looks without the right prescription. A pair of eyeglass lenses
- * sits over it, and everything seen through the lenses snaps into sharp focus.
- * A literal, on-brand play on what the clinic does.
+ * the world looks without the right prescription. A large pair of eyeglass
+ * lenses sits over it, and everything seen through the lenses snaps into sharp
+ * focus. A literal, on-brand play on what the clinic does.
  *
  * SWAP THE PHOTO: replace /public/img/hero.webp. Both the blurred backdrop and
  * the sharp lenses read from the same file, so one swap updates both.
  */
 export default function Hero() {
   return (
-    <section className="relative isolate -mt-[92px] flex min-h-[38rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[44rem]">
+    <section className="relative isolate -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: "url('/img/hero.webp')",
-            filter: "blur(22px) brightness(0.62) saturate(1.1)",
+            filter: "blur(24px) brightness(0.6) saturate(1.1)",
             transform: "scale(1.15)",
           }}
         />
@@ -27,17 +27,17 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(0,24,36,0.82) 0%, rgba(0,24,36,0.5) 45%, rgba(0,24,36,0.28) 100%)",
+              "linear-gradient(to right, rgba(0,24,36,0.85) 0%, rgba(0,24,36,0.5) 46%, rgba(0,24,36,0.25) 100%)",
           }}
         />
-        <div className="orb animate-drift right-[8%] top-[16%] h-72 w-72 bg-sky/20" />
+        <div className="orb animate-drift right-[6%] top-[14%] h-80 w-80 bg-sky/20" />
         <div
-          className="orb animate-drift left-[10%] bottom-[12%] h-72 w-72 bg-brand/25"
+          className="orb animate-drift left-[8%] bottom-[10%] h-72 w-72 bg-brand/25"
           style={{ animationDelay: "-9s" }}
         />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-6">
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[0.82fr_1.18fr]">
         {/* Copy */}
         <div className="max-w-xl">
           <p className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md">
@@ -48,7 +48,7 @@ export default function Hero() {
             Welcoming new patients in Pontotoc, MS
           </p>
 
-          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-[0_2px_18px_rgba(0,18,30,0.5)] sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-[0_2px_18px_rgba(0,18,30,0.55)] sm:text-6xl lg:text-7xl">
             Life is better
             <span className="block text-sky">in focus.</span>
           </h1>
@@ -96,62 +96,75 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Eyeglass lenses that bring the scene into focus */}
-        <div className="relative">
+        {/* Big eyeglass lenses that bring the scene into focus */}
+        <div className="relative flex justify-center lg:justify-end">
           <svg
-            viewBox="0 0 660 400"
-            className="h-auto w-full drop-shadow-[0_20px_40px_rgba(0,20,32,0.45)]"
+            viewBox="0 0 720 440"
+            className="h-auto w-full max-w-[44rem] drop-shadow-[0_28px_50px_rgba(0,18,30,0.5)]"
             role="img"
             aria-label="The Wood Eye Clinic team seen clearly through a pair of glasses"
           >
             <defs>
               <clipPath id="hero-lenses">
-                <circle cx="180" cy="195" r="140" />
-                <circle cx="480" cy="195" r="140" />
+                <circle cx="197" cy="212" r="152" />
+                <circle cx="523" cy="212" r="152" />
               </clipPath>
               <linearGradient id="hero-frame" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#083b52" />
-                <stop offset="1" stopColor="#0075a1" />
+                <stop offset="0" stopColor="#06344a" />
+                <stop offset="0.55" stopColor="#0075a1" />
+                <stop offset="1" stopColor="#063246" />
               </linearGradient>
-              <radialGradient id="hero-glint" cx="0.35" cy="0.3" r="0.5">
-                <stop offset="0" stopColor="#ffffff" stopOpacity="0.5" />
-                <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+              <radialGradient id="hero-lensvig" cx="0.5" cy="0.42" r="0.62">
+                <stop offset="0.55" stopColor="#001a26" stopOpacity="0" />
+                <stop offset="1" stopColor="#001a26" stopOpacity="0.42" />
               </radialGradient>
             </defs>
 
             {/* Sharp, in-focus scene revealed only inside the lenses */}
-            <image
-              href="/img/hero.webp"
-              x="15"
-              y="-35"
-              width="630"
-              height="470"
-              preserveAspectRatio="xMidYMid slice"
-              clipPath="url(#hero-lenses)"
-            />
-
-            {/* Lens glints */}
-            <ellipse cx="135" cy="140" rx="66" ry="44" fill="url(#hero-glint)" clipPath="url(#hero-lenses)" />
-            <ellipse cx="435" cy="140" rx="66" ry="44" fill="url(#hero-glint)" clipPath="url(#hero-lenses)" />
+            <g clipPath="url(#hero-lenses)">
+              <image
+                href="/img/hero.webp"
+                x="30"
+                y="-40"
+                width="660"
+                height="510"
+                preserveAspectRatio="xMidYMid slice"
+              />
+              {/* faint cool tint */}
+              <rect x="0" y="0" width="720" height="440" fill="#0075a1" opacity="0.06" />
+              {/* diagonal glass reflections */}
+              <g transform="rotate(-26 360 212)">
+                <rect x="-60" y="120" width="900" height="70" fill="#ffffff" opacity="0.16" />
+                <rect x="-60" y="205" width="900" height="30" fill="#ffffff" opacity="0.1" />
+              </g>
+              {/* inner lens vignette for depth */}
+              <circle cx="197" cy="212" r="152" fill="url(#hero-lensvig)" />
+              <circle cx="523" cy="212" r="152" fill="url(#hero-lensvig)" />
+            </g>
 
             {/* Frame */}
-            <g fill="none" stroke="url(#hero-frame)" strokeWidth="15" strokeLinecap="round">
-              <circle cx="180" cy="195" r="140" />
-              <circle cx="480" cy="195" r="140" />
+            <g fill="none" stroke="url(#hero-frame)" strokeWidth="21" strokeLinecap="round">
+              <circle cx="197" cy="212" r="152" />
+              <circle cx="523" cy="212" r="152" />
               {/* bridge */}
-              <path d="M318 183 q12 -16 24 0" />
+              <path d="M348 196 q12 -20 24 0" />
               {/* temple arms */}
-              <path d="M44 158 L10 98" />
-              <path d="M616 158 L650 98" />
+              <path d="M52 168 L14 100" />
+              <path d="M668 168 L706 100" />
             </g>
-            {/* Inner lens rim highlight */}
+            {/* Glossy frame highlight */}
+            <g fill="none" stroke="#bfeaff" strokeOpacity="0.5" strokeWidth="4">
+              <path d="M96 120 a152 152 0 0 1 150 -58" />
+              <path d="M422 120 a152 152 0 0 1 150 -58" />
+            </g>
+            {/* Inner rim highlight */}
             <g fill="none" stroke="#ffffff" strokeOpacity="0.4" strokeWidth="2.5">
-              <circle cx="180" cy="195" r="131" />
-              <circle cx="480" cy="195" r="131" />
+              <circle cx="197" cy="212" r="142" />
+              <circle cx="523" cy="212" r="142" />
             </g>
           </svg>
 
-          <span className="glass-chip absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full px-5 py-2 text-sm font-bold text-brand-dark shadow-lg">
+          <span className="glass-chip absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full px-5 py-2 text-sm font-bold text-brand-dark shadow-lg">
             See clearly again
           </span>
         </div>
