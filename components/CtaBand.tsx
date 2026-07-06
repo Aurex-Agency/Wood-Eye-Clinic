@@ -11,7 +11,23 @@ export default function CtaBand({
   return (
     <section className="px-6 py-16">
       <div className="mx-auto max-w-5xl">
-        <div className="relative overflow-hidden rounded-5xl bg-gradient-to-br from-brand-deep via-brand-dark to-brand px-8 py-14 text-center text-white sm:px-14">
+        <div className="relative overflow-hidden rounded-5xl bg-brand-deep px-8 py-14 text-center text-white sm:px-14">
+          {/* blurred photographic texture for warmth and depth */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/img/hero.webp')",
+              filter: "blur(18px) brightness(0.5) saturate(1.15)",
+              transform: "scale(1.2)",
+            }}
+            aria-hidden="true"
+          />
+          {/* brand gradient wash over the photo */}
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-brand-deep/85 via-brand-dark/85 to-brand/80"
+            aria-hidden="true"
+          />
+
           {/* animated glow orbs behind the frosted panel */}
           <div
             className="orb animate-drift -right-20 -top-24 h-72 w-72 bg-sky/30"

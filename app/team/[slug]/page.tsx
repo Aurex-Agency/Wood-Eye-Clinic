@@ -39,9 +39,13 @@ export default async function TeamMemberPage({ params }: Props) {
               &larr; Back to {member.isDoctor ? "Meet the Optometrists" : "Meet the Team"}
             </Link>
             <div className="mt-8 flex flex-col items-start gap-8 sm:flex-row sm:items-center">
-              {/* Placeholder portrait: swap for photography */}
-              <div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-4xl bg-gradient-to-br from-sky to-brand/30 font-display text-4xl font-bold text-brand-deep">
-                {member.shortName.replace("Dr. ", "").charAt(0)}
+              <div className="w-40 shrink-0 overflow-hidden rounded-4xl shadow-xl sm:w-48">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="aspect-[4/5] h-full w-full object-cover"
+                />
               </div>
               <div>
                 <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">

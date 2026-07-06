@@ -2,8 +2,8 @@ import Link from "next/link";
 import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
-import FocusDemo from "@/components/FocusDemo";
 import Hero from "@/components/Hero";
+import Photo from "@/components/Photo";
 import BrandMarquee from "@/components/BrandMarquee";
 import CtaBand from "@/components/CtaBand";
 import { clinic, doctors, services, testimonials } from "@/lib/site";
@@ -41,35 +41,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Interactive blur-to-clear demo */}
+      {/* See clearly again */}
       <section className="px-6 py-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
-              See the Difference
-            </p>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Living with blurry vision? You do not have to.
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink/70">
-              Many people do not realize how much they are missing until they
-              see clearly for the first time. Drag the slider and experience
-              the difference the right prescription makes. Then let us make it
-              real.
-            </p>
-            <Link
-              href="/contact"
-              className="mt-7 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
-            >
-              Schedule Your Eye Exam
-            </Link>
-          </Reveal>
-          <Reveal delay={150} className="lg:pl-4">
-            <div className="animate-float">
-              <FocusDemo />
-            </div>
-          </Reveal>
-        </div>
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
+            See Clearly Again
+          </p>
+          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            You do not have to live with blurry vision
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-ink/70">
+            Many people do not realize how much they are missing until they see
+            clearly for the first time. Our doctors take the time to find the
+            right prescription, and the right care, for your eyes and your life.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-8 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
+          >
+            Schedule Your Eye Exam
+          </Link>
+        </Reveal>
       </section>
 
       {/* Services */}
@@ -124,6 +116,57 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Inside the clinic — photo gallery */}
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-6xl">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
+              Inside Wood Eye Clinic
+            </p>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+              A place that feels like home
+            </h2>
+            <p className="mt-4 text-lg text-ink/70">
+              From advanced diagnostic technology to a boutique full of designer
+              frames, everything under our roof is designed around you.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid items-center gap-5 md:grid-cols-3">
+            <Reveal>
+              <Photo
+                src="/img/exam.webp"
+                alt="An optometrist examining a patient with advanced imaging technology"
+                className="aspect-[4/3]"
+              />
+              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+                Advanced diagnostic imaging
+              </p>
+            </Reveal>
+            <Reveal delay={120}>
+              <Photo
+                src="/img/eyewear-wall.webp"
+                alt="A patient browsing the designer frame wall in the optical boutique"
+                className="aspect-[3/4]"
+              />
+              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+                A boutique full of designer frames
+              </p>
+            </Reveal>
+            <Reveal delay={240}>
+              <Photo
+                src="/img/team-boutique.webp"
+                alt="The Wood Eye Clinic team in the optical boutique"
+                className="aspect-[4/3]"
+              />
+              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+                A team that treats you like family
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* Eyewear brand marquee */}
       <BrandMarquee />
 
@@ -148,24 +191,40 @@ export default function HomePage() {
               <Reveal key={doc.slug} delay={i * 120}>
                 <Glass
                   href={`/team/${doc.slug}`}
-                  className="group h-full p-7 text-center hover:-translate-y-1.5 hover:shadow-xl"
+                  className="group h-full overflow-hidden hover:-translate-y-1.5 hover:shadow-xl"
                 >
-                  {/* Placeholder portrait: swap for doctor photography */}
-                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-sky to-brand/30 font-display text-2xl font-bold text-brand-deep">
-                    {doc.shortName.replace("Dr. ", "").charAt(0)}
+                  <div className="relative aspect-[4/5] w-full overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={doc.photo}
+                      alt={doc.name}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(to top, rgba(0,24,36,0.35) 0%, rgba(0,24,36,0) 40%)",
+                      }}
+                      aria-hidden="true"
+                    />
+                    <div className="absolute bottom-3 left-3">
+                      <span className="glass-chip rounded-full px-3 py-1 text-xs font-bold text-brand-dark">
+                        {doc.joined}
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="mt-5 font-display text-lg font-bold text-ink">{doc.name}</h3>
-                  <p className="mt-1 text-sm font-semibold text-brand">{doc.role}</p>
-                  <p className="mt-1 text-xs uppercase tracking-widest text-ink/50">
-                    {doc.joined}
-                  </p>
-                  <p className="mt-4 text-sm leading-relaxed text-ink/65">{doc.headline}</p>
-                  <p className="mt-4 text-sm font-semibold text-brand">
-                    Meet {doc.shortName}
-                    <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                      &rarr;
-                    </span>
-                  </p>
+                  <div className="p-6 text-center">
+                    <h3 className="font-display text-lg font-bold text-ink">{doc.name}</h3>
+                    <p className="mt-1 text-sm font-semibold text-brand">{doc.role}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-ink/65">{doc.headline}</p>
+                    <p className="mt-4 text-sm font-semibold text-brand">
+                      Meet {doc.shortName}
+                      <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
+                        &rarr;
+                      </span>
+                    </p>
+                  </div>
                 </Glass>
               </Reveal>
             ))}
