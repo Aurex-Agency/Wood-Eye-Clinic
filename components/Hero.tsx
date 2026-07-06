@@ -12,7 +12,7 @@ import { clinic } from "@/lib/site";
  */
 export default function Hero() {
   return (
-    <section className="relative isolate overflow-hidden px-4 pb-16 pt-6 sm:px-6">
+    <section className="relative isolate -mt-[92px] overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32">
       {/* Out-of-focus backdrop of the same photograph */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <div
