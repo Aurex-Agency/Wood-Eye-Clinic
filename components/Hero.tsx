@@ -18,19 +18,22 @@ export default function Hero() {
         <div className="relative overflow-hidden rounded-[2rem] shadow-2xl shadow-brand-deep/20 ring-1 ring-white/50 sm:rounded-[2.5rem]">
           {/* Background photograph (real .jpg painted over the placeholder .svg) */}
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover"
             style={{
               backgroundImage: "url('/hero-team.jpg'), url('/hero-team.svg')",
+              backgroundPosition: "center 22%",
             }}
             aria-hidden="true"
           />
 
-          {/* Legibility scrim — darker at top/bottom, lighter over the center */}
+          {/* Legibility scrim — a soft focus glow behind the centered copy,
+              plus gentle top/bottom darkening, so text stays crisp while the
+              team's faces stay bright toward the edges. */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(0,32,46,0.62) 0%, rgba(0,32,46,0.22) 34%, rgba(0,32,46,0.18) 60%, rgba(0,32,46,0.5) 100%)",
+                "radial-gradient(115% 80% at 50% 40%, rgba(0,20,32,0.62) 0%, rgba(0,20,32,0.34) 38%, rgba(0,20,32,0.12) 60%, rgba(0,20,32,0) 78%), linear-gradient(to bottom, rgba(0,24,36,0.55) 0%, rgba(0,24,36,0.05) 26%, rgba(0,24,36,0.08) 70%, rgba(0,24,36,0.42) 100%)",
             }}
             aria-hidden="true"
           />
