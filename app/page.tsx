@@ -3,6 +3,8 @@ import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 import FocusDemo from "@/components/FocusDemo";
+import HeroGlasses from "@/components/HeroGlasses";
+import BrandMarquee from "@/components/BrandMarquee";
 import CtaBand from "@/components/CtaBand";
 import { clinic, doctors, services, testimonials } from "@/lib/site";
 
@@ -18,51 +20,8 @@ const trustPoints = [
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden px-6 pb-16 pt-14 sm:pt-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full bg-sky/60 px-4 py-1.5 text-sm font-semibold text-brand-dark">
-              <span className="h-2 w-2 rounded-full bg-brand" aria-hidden="true" />
-              Welcoming new patients in Pontotoc, MS
-            </p>
-            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              Life is better
-              <span className="block text-brand">in focus.</span>
-            </h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink/70">
-              Since 1981, Wood Eye Clinic has helped generations of North
-              Mississippi families protect one of their greatest gifts: their
-              vision. Comprehensive eye care, designer eyewear, and a team
-              that treats you like family.
-            </p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/contact"
-                className="rounded-full bg-brand px-8 py-4 text-center font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
-              >
-                Request an Appointment
-              </Link>
-              <a
-                href={clinic.phoneHref}
-                className="glass-surface rounded-full px-8 py-4 text-center font-bold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:text-brand"
-              >
-                Call {clinic.phone}
-              </a>
-            </div>
-            <p className="mt-6 text-sm text-ink/60">
-              {clinic.address.street}, {clinic.address.city}, {clinic.address.state}{" "}
-              {clinic.address.zip}
-            </p>
-          </Reveal>
-
-          <Reveal delay={200} className="lg:pl-4">
-            <div className="animate-float">
-              <FocusDemo />
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* Hero with "putting on glasses" intro */}
+      <HeroGlasses />
 
       {/* Trust bar */}
       <section className="px-6">
@@ -79,6 +38,37 @@ export default function HomePage() {
               ))}
             </div>
           </Glass>
+        </div>
+      </section>
+
+      {/* Interactive blur-to-clear demo */}
+      <section className="px-6 py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+          <Reveal>
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
+              See the Difference
+            </p>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+              Living with blurry vision? You do not have to.
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-ink/70">
+              Many people do not realize how much they are missing until they
+              see clearly for the first time. Drag the slider and experience
+              the difference the right prescription makes. Then let us make it
+              real.
+            </p>
+            <Link
+              href="/contact"
+              className="mt-7 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
+            >
+              Schedule Your Eye Exam
+            </Link>
+          </Reveal>
+          <Reveal delay={150} className="lg:pl-4">
+            <div className="animate-float">
+              <FocusDemo />
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -133,6 +123,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Eyewear brand marquee */}
+      <BrandMarquee />
 
       {/* Doctors */}
       <section className="px-6 py-4">

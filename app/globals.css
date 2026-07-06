@@ -91,6 +91,25 @@ body {
   opacity: 1;
 }
 
+/* Brand name marquee on the home page */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  animation: marquee 45s linear infinite;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal-blur {
     filter: none;
@@ -98,6 +117,9 @@ body {
     transition: none;
   }
   .animate-float {
+    animation: none;
+  }
+  .marquee {
     animation: none;
   }
 }
