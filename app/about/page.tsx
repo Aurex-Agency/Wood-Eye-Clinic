@@ -3,6 +3,7 @@ import Link from "next/link";
 import Glass from "@/components/Glass";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import CtaBand from "@/components/CtaBand";
 import { doctors } from "@/lib/site";
 
@@ -39,6 +40,19 @@ export default function AboutPage() {
         title="Four decades of caring for the eyes of North Mississippi"
         description="Since opening our doors in 1981, our mission has remained the same: deliver personalized, compassionate care using the latest technology while treating every patient like family."
       />
+
+      <section className="px-6 pb-4 pt-4">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <Photo
+              src="/img/team-boutique.webp"
+              alt="The Wood Eye Clinic team in the optical boutique"
+              className="aspect-[16/9]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+        </div>
+      </section>
 
       <section className="px-6 py-10">
         <div className="mx-auto max-w-4xl space-y-6 text-lg leading-relaxed text-ink/75">

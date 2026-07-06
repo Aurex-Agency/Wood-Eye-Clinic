@@ -27,9 +27,13 @@ export default function MeetTheDoctorsPage() {
             <Reveal key={doc.slug} delay={i * 100}>
               <Glass strong className="p-8 sm:p-10">
                 <div className="flex flex-col gap-8 sm:flex-row">
-                  {/* Placeholder portrait: swap for doctor photography */}
-                  <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-3xl bg-gradient-to-br from-sky to-brand/30 font-display text-3xl font-bold text-brand-deep">
-                    {doc.shortName.replace("Dr. ", "").charAt(0)}
+                  <div className="w-full shrink-0 overflow-hidden rounded-3xl sm:w-52">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={doc.photo}
+                      alt={doc.name}
+                      className="aspect-[4/5] h-full w-full object-cover"
+                    />
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.25em] text-brand">

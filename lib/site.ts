@@ -35,6 +35,7 @@ export type TeamMember = {
   specialties: string[];
   funFact?: string;
   placeholder?: boolean;
+  photo?: string;
 };
 
 export const doctors: TeamMember[] = [
@@ -44,6 +45,7 @@ export const doctors: TeamMember[] = [
     shortName: "Dr. Wood",
     role: "Optometrist, Founder",
     isDoctor: true,
+    photo: "/img/doctors/wood.webp",
     joined: "Founded the clinic in 1981",
     headline: "Serving the community that raised him for more than 45 years.",
     intro:
@@ -71,6 +73,7 @@ export const doctors: TeamMember[] = [
     shortName: "Dr. Maynard",
     role: "Optometrist",
     isDoctor: true,
+    photo: "/img/doctors/maynard.webp",
     joined: "Joined the clinic in 2008",
     headline: "Full-scope eye care with a special passion for vision therapy.",
     intro:
@@ -99,6 +102,7 @@ export const doctors: TeamMember[] = [
     shortName: "Dr. Warren",
     role: "Optometrist",
     isDoctor: true,
+    photo: "/img/doctors/warren.webp",
     joined: "Joined the clinic in June 2023",
     headline: "Advanced technology paired with hometown, personalized care.",
     intro:
@@ -124,60 +128,150 @@ export const doctors: TeamMember[] = [
 ];
 
 /*
- * Placeholder staff profiles. Swap the names, roles, and bios for the real
- * Wood Eye Clinic team once photos and details are collected from the client.
+ * Wood Eye Clinic team members. Photos are optimized in /public/img/staff.
+ * Bios are intentionally brief and can be expanded as the clinic provides more
+ * detail for each person.
  */
 export const staff: TeamMember[] = [
   {
-    slug: "optical-team",
-    name: "Our Optical Team",
-    shortName: "Optical Team",
-    role: "Opticians and Frame Stylists",
+    slug: "sarah-grace",
+    name: "Sarah Grace",
+    shortName: "Sarah",
+    role: "Office Manager",
     isDoctor: false,
-    joined: "Serving patients every day",
-    headline: "Helping you find frames that fit your face, your prescription, and your life.",
+    joined: "Front office & scheduling",
+    headline: "Keeping every visit smooth, from the very first phone call.",
     intro:
-      "Our opticians guide you through frame selection, precise measurements, lens options, and follow-up adjustments so your eyewear feels as good as it looks.",
-    bio: [
-      "From bold designer styles to subtle everyday frames, our optical team takes the time to understand your lifestyle and help you leave with eyewear you feel confident wearing every day.",
-      "They also provide complimentary adjustments, nose pad replacements, screw tightening, and minor repairs long after your purchase.",
-    ],
-    specialties: ["Frame styling", "Lens technology", "Adjustments and repairs"],
-    placeholder: true,
-  },
-  {
-    slug: "front-office-team",
-    name: "Our Front Office Team",
-    shortName: "Front Office",
-    role: "Patient Care Coordinators",
-    isDoctor: false,
-    joined: "The first smile you see",
-    headline: "Making every visit smooth, from scheduling to insurance questions.",
-    intro:
-      "Our front office team welcomes you, verifies your benefits, and helps you understand your coverage before your visit so there are never any surprises.",
-    bio: [
-      "Insurance can be confusing, but you do not have to figure it out alone. Our staff is always available to verify your benefits and explain your options.",
-      "Give us a call and we will be happy to help you schedule an appointment that fits your family's routine.",
-    ],
+      "Sarah oversees the front office and makes sure scheduling, paperwork, and insurance questions are handled with care so your visit is stress-free.",
+    bio: [],
     specialties: ["Scheduling", "Insurance verification", "Patient support"],
-    placeholder: true,
+    photo: "/img/staff/sarah-grace.webp",
   },
   {
-    slug: "clinical-team",
-    name: "Our Clinical Team",
-    shortName: "Clinical Team",
-    role: "Optometric Technicians",
+    slug: "savannah-purdon",
+    name: "Savannah Purdon",
+    shortName: "Savannah",
+    role: "Optical Manager",
+    isDoctor: false,
+    joined: "Optical boutique",
+    headline: "Helping you find frames you feel confident wearing every day.",
+    intro:
+      "Savannah leads our optical boutique, guiding patients through frame styles, lens options, and precise measurements for a perfect fit.",
+    bio: [],
+    specialties: ["Frame styling", "Lens options", "Fittings"],
+    photo: "/img/staff/savannah-purdon.webp",
+  },
+  {
+    slug: "katelyn-maffett",
+    name: "Katelyn Maffett",
+    shortName: "Katelyn",
+    role: "Optical Lab Manager",
+    isDoctor: false,
+    joined: "Onsite optical lab",
+    headline: "Crafting and finishing your eyewear right here in our lab.",
+    intro:
+      "Katelyn runs our onsite optical lab, cutting and finishing lenses for faster turnaround and higher-quality eyewear.",
+    bio: [],
+    specialties: ["Lens finishing", "Quality control", "Repairs & adjustments"],
+    photo: "/img/staff/katelyn-maffett.webp",
+  },
+  {
+    slug: "christy-wallace",
+    name: "Christy Wallace",
+    shortName: "Christy",
+    role: "Optometric Technician",
     isDoctor: false,
     joined: "Beside you at every exam",
     headline: "Gathering the measurements and imaging your doctor relies on.",
     intro:
-      "Our technicians perform pre-testing, retinal imaging, and visual field screenings, and they make sure you feel comfortable at every step of your exam.",
-    bio: [
-      "Using the latest diagnostic technology, our clinical team captures a detailed picture of your eye health before you ever see the doctor.",
-      "They are also the friendly faces who teach new contact lens wearers how to insert, remove, and care for their lenses with confidence.",
-    ],
-    specialties: ["Pre-testing", "Retinal imaging", "Contact lens training"],
-    placeholder: true,
+      "Christy performs pretesting and diagnostic imaging so your doctor has a complete picture of your eye health before your exam.",
+    bio: [],
+    specialties: ["Pretesting", "Retinal imaging", "Patient comfort"],
+    photo: "/img/staff/christy-wallace.webp",
+  },
+  {
+    slug: "chloe-throne",
+    name: "Chloe Throne",
+    shortName: "Chloe",
+    role: "Glasses Technician",
+    isDoctor: false,
+    joined: "Optical boutique",
+    headline: "Making sure your glasses fit just right.",
+    intro:
+      "Chloe helps fit, adjust, and fine-tune your eyewear so it feels as good as it looks, long after you leave the office.",
+    bio: [],
+    specialties: ["Frame fitting", "Adjustments", "Repairs"],
+    photo: "/img/staff/chloe-throne.webp",
+  },
+  {
+    slug: "shelby-knight",
+    name: "Shelby Knight",
+    shortName: "Shelby",
+    role: "Clinical Scribe",
+    isDoctor: false,
+    joined: "Beside you at every exam",
+    headline: "Capturing the details so your doctor can focus on you.",
+    intro:
+      "Shelby documents your exam and assists the doctor so your visit stays personal, accurate, and efficient.",
+    bio: [],
+    specialties: ["Exam documentation", "Patient assistance"],
+    photo: "/img/staff/shelby-knight.webp",
+  },
+  {
+    slug: "katelyn-inmon",
+    name: "Katelyn Inmon",
+    shortName: "Katelyn",
+    role: "Clinical Scribe",
+    isDoctor: false,
+    joined: "Beside you at every exam",
+    headline: "Supporting your exam from start to finish.",
+    intro:
+      "Katelyn assists our doctors during exams and keeps your records accurate and up to date.",
+    bio: [],
+    specialties: ["Exam documentation", "Patient assistance"],
+    photo: "/img/staff/katelyn-inmon.webp",
+  },
+  {
+    slug: "bailey-rhynes",
+    name: "Bailey Rhynes",
+    shortName: "Bailey",
+    role: "Clinical Scribe",
+    isDoctor: false,
+    joined: "Beside you at every exam",
+    headline: "A friendly face at every step of your exam.",
+    intro:
+      "Bailey assists the doctors and helps you feel comfortable and cared for throughout your visit.",
+    bio: [],
+    specialties: ["Exam documentation", "Patient assistance"],
+    photo: "/img/staff/bailey-rhynes.webp",
+  },
+  {
+    slug: "chelsea-conlee",
+    name: "Chelsea Conlee",
+    shortName: "Chelsea",
+    role: "Optometric Receptionist",
+    isDoctor: false,
+    joined: "The first smile you see",
+    headline: "The first smile you see when you arrive.",
+    intro:
+      "Chelsea welcomes patients, answers questions, and helps you get checked in with ease.",
+    bio: [],
+    specialties: ["Check-in", "Scheduling", "Patient support"],
+    photo: "/img/staff/chelsea-conlee.webp",
+  },
+  {
+    slug: "alana-wright",
+    name: "Alana Wright",
+    shortName: "Alana",
+    role: "Optometric Receptionist",
+    isDoctor: false,
+    joined: "The first smile you see",
+    headline: "Here to help before and after your visit.",
+    intro:
+      "Alana greets patients and helps with scheduling, benefits, and everything in between.",
+    bio: [],
+    specialties: ["Check-in", "Scheduling", "Patient support"],
+    photo: "/img/staff/alana-wright.webp",
   },
 ];
 

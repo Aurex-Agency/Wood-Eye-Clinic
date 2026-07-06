@@ -3,7 +3,9 @@ import Glass from "@/components/Glass";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
-import { team } from "@/lib/site";
+import { doctors, staff } from "@/lib/site";
+
+const team = [...doctors, ...staff];
 
 export const metadata: Metadata = {
   title: "Meet the Team",
@@ -26,29 +28,44 @@ export default function MeetTheTeamPage() {
             <Reveal key={member.slug} delay={(i % 3) * 100}>
               <Glass
                 href={`/team/${member.slug}`}
-                className="group h-full p-7 text-center hover:-translate-y-1.5 hover:shadow-xl"
+                className="group h-full overflow-hidden hover:-translate-y-1.5 hover:shadow-xl"
               >
-                {/* Placeholder portrait: swap for team photography */}
-                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-sky to-brand/30 font-display text-2xl font-bold text-brand-deep">
-                  {member.shortName.replace("Dr. ", "").charAt(0)}
+                <div className="relative aspect-[4/5] w-full overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(0,24,36,0.4) 0%, rgba(0,24,36,0) 42%)",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <div className="absolute bottom-3 left-3">
+                    <span className="glass-chip rounded-full px-3 py-1 text-xs font-bold text-brand-dark">
+                      {member.role}
+                    </span>
+                  </div>
                 </div>
-                <h2 className="mt-5 font-display text-lg font-bold text-ink">{member.name}</h2>
-                <p className="mt-1 text-sm font-semibold text-brand">{member.role}</p>
-                <p className="mt-3 text-sm leading-relaxed text-ink/65">{member.headline}</p>
-                <p className="mt-4 text-sm font-semibold text-brand">
-                  View profile
-                  <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    &rarr;
-                  </span>
-                </p>
+                <div className="p-6 text-center">
+                  <h2 className="font-display text-lg font-bold text-ink">{member.name}</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-ink/65">{member.headline}</p>
+                  <p className="mt-4 text-sm font-semibold text-brand">
+                    View profile
+                    <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
+                      &rarr;
+                    </span>
+                  </p>
+                </div>
               </Glass>
             </Reveal>
           ))}
         </div>
-        <p className="mx-auto mt-10 max-w-2xl text-center text-sm text-ink/50">
-          Individual staff profiles are coming soon. Check back to meet every
-          member of the Wood Eye Clinic family.
-        </p>
       </section>
 
       <CtaBand />

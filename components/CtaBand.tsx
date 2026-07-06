@@ -16,7 +16,7 @@ export default function CtaBand({
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('/hero-team.jpg')",
+              backgroundImage: "url('/img/hero.webp')",
               filter: "blur(18px) brightness(0.5) saturate(1.15)",
               transform: "scale(1.2)",
             }}

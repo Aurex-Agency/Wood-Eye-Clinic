@@ -7,7 +7,7 @@ import { clinic } from "@/lib/site";
  * clear glass card — crisp copy on the left, the same photo perfectly sharp on
  * the right (the in-focus reveal). A literal play on what the clinic does.
  *
- * SWAP THE PHOTO: replace /public/hero-team.jpg. Both the blurred backdrop and
+ * SWAP THE PHOTO: replace /public/img/hero.webp. Both the blurred backdrop and
  * the sharp window read from the same file, so one swap updates both.
  */
 export default function Hero() {
@@ -18,7 +18,7 @@ export default function Hero() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/hero-team.jpg'), url('/hero-team.svg')",
+            backgroundImage: "url('/img/hero.webp')",
             filter: "blur(24px) brightness(0.72) saturate(1.1)",
             transform: "scale(1.15)",
           }}
@@ -99,7 +99,7 @@ export default function Hero() {
               <div
                 className="absolute inset-0 bg-cover"
                 style={{
-                  backgroundImage: "url('/hero-team.jpg'), url('/hero-team.svg')",
+                  backgroundImage: "url('/img/hero.webp')",
                   backgroundPosition: "center 22%",
                 }}
                 aria-hidden="true"
