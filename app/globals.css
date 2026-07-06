@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme {
+  /* Wood Eye Clinic brand palette */
+  --color-ink: #080808;
+  --color-brand: #0075a1;
+  --color-brand-dark: #005e81;
+  --color-brand-deep: #00445e;
+  --color-mist: #ededed;
+  --color-sky: #bcedff;
+  --color-cloud: #f7fafc;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-4xl: 2rem;
+
+  --animate-float: float 9s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cloud);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-sky);
+  color: var(--color-ink);
+}
+
+/* Soft ambient background used across the site */
+.ambient {
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, rgba(188, 237, 255, 0.55), transparent 60%),
+    radial-gradient(50rem 36rem at -10% 30%, rgba(0, 117, 161, 0.1), transparent 55%),
+    radial-gradient(40rem 30rem at 60% 110%, rgba(188, 237, 255, 0.35), transparent 60%),
+    var(--color-cloud);
+}
+
+/* Glass surfaces */
+.glass-surface {
+  position: relative;
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 6px 24px rgba(8, 40, 60, 0.08),
+    inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 1px 1px rgba(255, 255, 255, 0.35);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.glass-tint {
+  background: rgba(188, 237, 255, 0.28);
+}
+
+/* The blur-to-clear reveal used for the "blurry vision vs. after care" moments */
+.reveal-blur {
+  filter: blur(7px);
+  opacity: 0.75;
+  transition:
+    filter 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: filter;
+}
+
+.reveal-clear {
+  filter: blur(0);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-blur {
+    filter: none;
+    opacity: 1;
+    transition: none;
+  }
+  .animate-float {
+    animation: none;
+  }
+}
