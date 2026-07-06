@@ -34,7 +34,7 @@ export default function Hero() {
 
       {/* Clear, in-focus glass card */}
       <div className="mx-auto max-w-6xl">
-        <div className="glass-surface overflow-hidden rounded-[1.75rem] p-2.5 shadow-2xl shadow-brand-deep/30 sm:rounded-[2.25rem] sm:p-3.5">
+        <div className="glass-surface glass-strong overflow-hidden rounded-[1.75rem] p-2.5 shadow-2xl shadow-brand-deep/30 sm:rounded-[2.25rem] sm:p-3.5">
           <div className="grid items-stretch gap-2.5 sm:gap-3.5 lg:grid-cols-[1.04fr_0.96fr]">
             {/* Copy */}
             <div className="flex flex-col justify-center px-6 py-9 sm:px-9 sm:py-12 lg:px-11">

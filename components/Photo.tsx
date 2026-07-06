@@ -63,7 +63,7 @@ export default function Photo({
           className="h-full w-full object-cover"
           style={{
             filter: focused ? "blur(0)" : "blur(14px)",
-            opacity: focused ? 1 : 0.7,
+            opacity: focused ? 1 : 0.6,
             transform: `scale(${scale})`,
             transition:
               "filter 1000ms cubic-bezier(0.22,1,0.36,1), opacity 1000ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1)",

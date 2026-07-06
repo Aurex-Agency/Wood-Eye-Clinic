@@ -2,7 +2,6 @@ import Link from "next/link";
 import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
-import FocusDemo from "@/components/FocusDemo";
 import Hero from "@/components/Hero";
 import Photo from "@/components/Photo";
 import BrandMarquee from "@/components/BrandMarquee";
@@ -42,35 +41,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Interactive blur-to-clear demo */}
+      {/* See clearly again */}
       <section className="px-6 py-20">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
-              See the Difference
-            </p>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Living with blurry vision? You do not have to.
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink/70">
-              Many people do not realize how much they are missing until they
-              see clearly for the first time. Drag the slider and experience
-              the difference the right prescription makes. Then let us make it
-              real.
-            </p>
-            <Link
-              href="/contact"
-              className="mt-7 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
-            >
-              Schedule Your Eye Exam
-            </Link>
-          </Reveal>
-          <Reveal delay={150} className="lg:pl-4">
-            <div className="animate-float">
-              <FocusDemo />
-            </div>
-          </Reveal>
-        </div>
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
+            See Clearly Again
+          </p>
+          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            You do not have to live with blurry vision
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-ink/70">
+            Many people do not realize how much they are missing until they see
+            clearly for the first time. Our doctors take the time to find the
+            right prescription, and the right care, for your eyes and your life.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-8 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
+          >
+            Schedule Your Eye Exam
+          </Link>
+        </Reveal>
       </section>
 
       {/* Services */}

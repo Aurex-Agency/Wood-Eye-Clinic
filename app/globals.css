@@ -113,12 +113,13 @@ body {
     inset 0 -1px 2px rgba(255, 255, 255, 0.25);
 }
 
-/* Top-edge light sheen */
+/* Top-edge light sheen — sits behind content so it only lights the glass
+   background, never washes out text, logos, or icons placed on the glass. */
 .glass-surface::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   border-radius: inherit;
   background: linear-gradient(
     135deg,
@@ -172,19 +173,23 @@ body {
     inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
-/* The blur-to-clear reveal used for the "blurry vision vs. after care" moments */
+/* Blur-to-clear reveal: content enters softly blurred (uncorrected vision)
+   and sharpens into focus as it scrolls in, then rises gently into place. */
 .reveal-blur {
   filter: blur(7px);
   opacity: 0.75;
+  transform: translateY(20px);
   transition:
     filter 900ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: filter;
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: filter, opacity, transform;
 }
 
 .reveal-clear {
   filter: blur(0);
   opacity: 1;
+  transform: none;
 }
 
 /* Brand name marquee on the home page */
@@ -210,6 +215,7 @@ body {
   .reveal-blur {
     filter: none;
     opacity: 1;
+    transform: none;
     transition: none;
   }
   .animate-float,
