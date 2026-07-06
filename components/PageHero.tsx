@@ -10,11 +10,17 @@ export default function PageHero({
   description?: string;
 }) {
   return (
-    <section className="px-6 pb-6 pt-16 sm:pt-20">
-      <div className="mx-auto max-w-4xl text-center">
+    <section className="relative overflow-hidden px-6 pb-6 pt-16 sm:pt-20">
+      <div
+        className="orb animate-drift left-1/2 top-[-6rem] h-72 w-96 -translate-x-1/2 bg-sky/50"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-4xl text-center">
         <Reveal>
-          <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">{eyebrow}</p>
-          <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+          <p className="glass-chip mx-auto inline-block rounded-full px-4 py-1.5 text-sm font-bold uppercase tracking-[0.28em] text-brand-dark">
+            {eyebrow}
+          </p>
+          <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
             {title}
           </h1>
           {description && (

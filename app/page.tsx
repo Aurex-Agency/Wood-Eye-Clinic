@@ -3,7 +3,7 @@ import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 import FocusDemo from "@/components/FocusDemo";
-import HeroGlasses from "@/components/HeroGlasses";
+import Hero from "@/components/Hero";
 import BrandMarquee from "@/components/BrandMarquee";
 import CtaBand from "@/components/CtaBand";
 import { clinic, doctors, services, testimonials } from "@/lib/site";
@@ -20,8 +20,8 @@ const trustPoints = [
 export default function HomePage() {
   return (
     <>
-      {/* Hero with "putting on glasses" intro */}
-      <HeroGlasses />
+      {/* Image-forward glass hero */}
+      <Hero />
 
       {/* Trust bar */}
       <section className="px-6">
