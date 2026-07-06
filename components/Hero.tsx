@@ -2,132 +2,79 @@ import Link from "next/link";
 import { clinic } from "@/lib/site";
 
 /*
- * Image-forward hero: a floating glass content card on the left, a large
- * portrait visual on the right framed in glass with drifting glass accent
- * cards. Built to feel like premium "liquid glass" over a bright, airy scene.
+ * Full-bleed image hero (inspired by the client's approved reference): a large
+ * photograph filling a rounded, floating card with centered white copy and a
+ * pill call-to-action. The glass site header floats above it.
  *
- * SWAP THE PHOTO: replace /public/hero.svg with the client's photograph
- * (e.g. drop in /public/hero.jpg) and update the `src` on the <img> below.
- * The container is a fixed 4:5 portrait with object-cover, so any well-lit
- * vertical photo of the clinic, doctors, or eyewear will drop straight in.
+ * SWAP THE PHOTO: drop the real team photograph in at /public/hero-team.jpg.
+ * It loads automatically over the placeholder via the layered background-image
+ * below (the .jpg is painted on top of /hero-team.svg, so no code change is
+ * needed once the file exists). Use a wide, landscape image for best framing.
  */
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden px-6 pb-10 pt-10 sm:pt-14">
-      {/* ambient glow orbs */}
-      <div className="orb animate-drift left-[-6rem] top-[-4rem] h-72 w-72 bg-sky/60" aria-hidden="true" />
-      <div
-        className="orb animate-drift right-[-5rem] top-24 h-80 w-80 bg-brand/25"
-        style={{ animationDelay: "-8s" }}
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
-        {/* Content card */}
-        <div className="glass-surface relative z-10 rounded-5xl p-8 sm:p-10 lg:p-12">
-          <p className="glass-chip inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold text-brand-dark">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand" />
-            </span>
-            Welcoming new patients in Pontotoc, MS
-          </p>
-
-          <h1 className="mt-7 font-display text-5xl font-bold leading-[1.03] tracking-tight text-ink sm:text-6xl lg:text-[4.2rem]">
-            Life is better
-            <span className="block text-brand">in focus.</span>
-          </h1>
-
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/70">
-            Since 1981, Wood Eye Clinic has helped generations of North
-            Mississippi families protect one of their greatest gifts: their
-            vision. Comprehensive eye care, designer eyewear, and a team that
-            treats you like family.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact"
-              className="rounded-full bg-brand px-8 py-4 text-center font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
-            >
-              Request an Appointment
-            </Link>
-            <a
-              href={clinic.phoneHref}
-              className="glass-btn rounded-full px-8 py-4 text-center font-bold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:text-brand"
-            >
-              Call {clinic.phone}
-            </a>
-          </div>
-
-          {/* Rating / trust strip */}
-          <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-ink/10 pt-6">
-            <div className="flex items-center gap-2">
-              <div className="flex gap-0.5 text-brand" aria-label="Five star rated">
-                {Array.from({ length: 5 }).map((_, s) => (
-                  <svg key={s} viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
-                    <path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.5 5.8 21l1.6-7L2 9.3l7.1-.7L12 2Z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="text-sm font-semibold text-ink/70">Loved by local families</span>
-            </div>
-            <div className="text-sm text-ink/60">
-              <span className="font-bold text-brand-dark">45+ years</span> caring for Pontotoc
-            </div>
-          </div>
-        </div>
-
-        {/* Visual */}
-        <div className="relative z-0 lg:pl-2">
-          <div className="animate-float-slow">
-            <div className="glass-surface overflow-hidden rounded-5xl p-2.5">
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/hero.svg"
-                  alt="Clear vision through Wood Eye Clinic eyewear"
-                  className="h-full w-full object-cover"
-                />
-                {/* glass sheen over the photo */}
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 42%)",
-                  }}
-                  aria-hidden="true"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Floating glass accent — established since */}
-          <div className="animate-float absolute -left-3 top-8 sm:-left-6">
-            <div className="glass-surface glass-strong rounded-2xl px-5 py-4 text-center shadow-xl">
-              <p className="font-display text-2xl font-bold text-brand-dark">1981</p>
-              <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-ink/55">
-                Established
-              </p>
-            </div>
-          </div>
-
-          {/* Floating glass accent — onsite lab */}
+    <section className="px-3 pt-3 sm:px-5 sm:pt-5">
+      <div className="mx-auto max-w-7xl">
+        <div className="relative overflow-hidden rounded-[2rem] shadow-2xl shadow-brand-deep/20 ring-1 ring-white/50 sm:rounded-[2.5rem]">
+          {/* Background photograph (real .jpg painted over the placeholder .svg) */}
           <div
-            className="animate-float absolute -right-2 bottom-10 sm:-right-5"
-            style={{ animationDelay: "-4.5s" }}
-          >
-            <div className="glass-surface glass-strong flex items-center gap-3 rounded-2xl px-5 py-4 shadow-xl">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky/70 text-brand-dark">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M9 3v6l-5 8a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-5-8V3" />
-                  <path d="M7 3h10" />
-                </svg>
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/hero-team.jpg'), url('/hero-team.svg')",
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Legibility scrim — darker at top/bottom, lighter over the center */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(0,32,46,0.62) 0%, rgba(0,32,46,0.22) 34%, rgba(0,32,46,0.18) 60%, rgba(0,32,46,0.5) 100%)",
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Content */}
+          <div className="relative flex min-h-[34rem] flex-col items-center px-6 pb-20 pt-24 text-center sm:min-h-[40rem] sm:pt-28 lg:min-h-[44rem] lg:pt-32">
+            <p className="glass-chip inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold text-white/95">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky opacity-70" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-sky" />
               </span>
-              <div>
-                <p className="text-sm font-bold text-ink">Onsite optical lab</p>
-                <p className="text-xs text-ink/55">Faster eyewear, done right</p>
-              </div>
+              Welcoming new patients in Pontotoc, MS
+            </p>
+
+            <h1 className="mt-7 max-w-4xl font-display text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-[0_2px_20px_rgba(0,20,32,0.35)] sm:text-6xl lg:text-7xl">
+              Life is better
+              <span className="block">in focus.</span>
+            </h1>
+
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 drop-shadow-[0_1px_10px_rgba(0,20,32,0.45)]">
+              A trusted family eye clinic caring for North Mississippi since 1981
+              — comprehensive exams, designer eyewear, and doctors who know you
+              by name.
+            </p>
+
+            <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 rounded-full bg-white py-2.5 pl-2.5 pr-7 font-bold text-ink shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand text-white transition-transform duration-300 group-hover:rotate-45">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </span>
+                Book Your Eye Exam
+              </Link>
+              <a
+                href={clinic.phoneHref}
+                className="glass-btn rounded-full px-7 py-4 font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
+                style={{ background: "rgba(255,255,255,0.16)", borderColor: "rgba(255,255,255,0.5)" }}
+              >
+                Call {clinic.phone}
+              </a>
             </div>
           </div>
         </div>
