@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Glass from "@/components/Glass";
-import Icon from "@/components/Icon";
+import ServiceCard from "@/components/ServiceCard";
 import Reveal from "@/components/Reveal";
 import Hero from "@/components/Hero";
 import Photo from "@/components/Photo";
@@ -83,24 +83,7 @@ export default function HomePage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {featuredServices.map((service, i) => (
               <Reveal key={service.slug} delay={i * 90}>
-                <Glass
-                  href={`/services/${service.slug}`}
-                  className="group h-full p-7 hover:-translate-y-1.5 hover:shadow-xl"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky/60 text-brand-dark transition-colors duration-500 group-hover:bg-brand group-hover:text-white">
-                    <Icon name={service.icon} />
-                  </div>
-                  <h3 className="mt-5 font-display text-lg font-bold text-ink">
-                    {service.name}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/65">{service.summary}</p>
-                  <p className="mt-4 text-sm font-semibold text-brand">
-                    Learn more
-                    <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                      &rarr;
-                    </span>
-                  </p>
-                </Glass>
+                <ServiceCard service={service} index={i} />
               </Reveal>
             ))}
           </div>
