@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree, Plus_Jakarta_Sans } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MapSection from "@/components/MapSection";
 import GlassFilter from "@/components/GlassFilter";
 import "./globals.css";
 
@@ -41,6 +42,7 @@ export default function RootLayout({
         <GlassFilter />
         <Header />
         <main>{children}</main>
+        <MapSection />
         <Footer />
       </body>
     </html>

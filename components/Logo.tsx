@@ -6,7 +6,7 @@ import Link from "next/link";
  */
 export default function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link href="/" className="inline-flex items-center" aria-label="Wood Eye Clinic — home">
+    <Link href="/" className="inline-flex items-center" aria-label="Wood Eye Clinic home">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={light ? "/logo-light.webp" : "/logo.webp"}
