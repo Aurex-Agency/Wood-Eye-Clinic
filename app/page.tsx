@@ -80,11 +80,17 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Stacked cards: each pins under the header and the next scrolls up
+              over it, leaving a peek of the ones behind. */}
+          <div className="mx-auto mt-12 max-w-3xl">
             {featuredServices.map((service, i) => (
-              <Reveal key={service.slug} delay={i * 90}>
+              <div
+                key={service.slug}
+                className="sticky pb-5"
+                style={{ top: `${116 + i * 22}px` }}
+              >
                 <ServiceCard service={service} index={i} />
-              </Reveal>
+              </div>
             ))}
           </div>
 

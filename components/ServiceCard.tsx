@@ -3,21 +3,10 @@ import Icon from "@/components/Icon";
 import type { Service } from "@/lib/site";
 
 /*
- * Home-page service card in the "colour glowing through frosted glass" style:
- * a vivid gradient rises from the bottom, a frosted glass sheet covers the top
- * and fades out toward the bottom so the colour stays vivid there, a fine dot
- * texture sits over the glass, and the whole card keeps our glass edge + shine.
- * One cohesive cool-toned glow per card.
+ * Wide glass service panel used in the home-page stacked-cards scroll section.
+ * Pure frosted glass (our standard styling), no colour. Cards are made to
+ * stack via sticky positioning by the parent section.
  */
-const glows = [
-  { from: "#34d399", to: "#047857" }, // emerald
-  { from: "#38bdf8", to: "#0369a1" }, // sky
-  { from: "#818cf8", to: "#4338ca" }, // indigo
-  { from: "#2dd4bf", to: "#0f766e" }, // teal
-  { from: "#22d3ee", to: "#0e7490" }, // cyan
-  { from: "#60a5fa", to: "#1e40af" }, // blue
-];
-
 export default function ServiceCard({
   service,
   index,
@@ -25,63 +14,32 @@ export default function ServiceCard({
   service: Service;
   index: number;
 }) {
-  const g = glows[index % glows.length];
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group relative flex min-h-[17rem] flex-col overflow-hidden rounded-[1.75rem] shadow-xl ring-1 ring-inset ring-white/30 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl"
+      className="glass-surface glass-strong group flex items-center gap-5 rounded-[1.75rem] p-7 shadow-2xl transition-transform duration-300 hover:-translate-y-0.5 sm:gap-7 sm:p-9"
     >
-      {/* vivid gradient glow rising from the bottom */}
-      <span
-        aria-hidden
-        className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-        style={{
-          background: `radial-gradient(155% 125% at 50% 122%, ${g.from} 0%, ${g.to} 42%, transparent 82%)`,
-        }}
-      />
-      {/* fine dot texture */}
-      <span
-        aria-hidden
-        className="absolute inset-0 opacity-[0.13]"
-        style={{
-          backgroundImage: "radial-gradient(rgba(255,255,255,0.95) 1px, transparent 1.4px)",
-          backgroundSize: "15px 15px",
-        }}
-      />
-      {/* frosted glass sheet over the top, fading to reveal the colour below */}
-      <span
-        aria-hidden
-        className="absolute inset-0 backdrop-blur-2xl"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.55) 44%, rgba(255,255,255,0.18) 74%, rgba(255,255,255,0) 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 66%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, #000 0%, #000 66%, transparent 100%)",
-        }}
-      />
-      {/* top-edge shine */}
-      <span
-        aria-hidden
-        className="absolute inset-x-5 top-0 h-px"
-        style={{
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)",
-        }}
-      />
+      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-sky/70 text-brand-dark transition-colors duration-500 group-hover:bg-brand group-hover:text-white sm:h-20 sm:w-20">
+        <Icon name={service.icon} className="h-8 w-8 sm:h-9 sm:w-9" />
+      </span>
 
-      {/* content */}
-      <div className="relative flex h-full flex-col p-7">
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/70 bg-white/60 text-brand-dark shadow-sm backdrop-blur-md transition-transform duration-500 group-hover:scale-105">
-          <Icon name={service.icon} />
+      <div className="min-w-0 flex-1">
+        <span className="font-display text-xs font-bold tracking-[0.3em] text-brand/60">
+          {String(index + 1).padStart(2, "0")}
         </span>
-        <h3 className="mt-5 font-display text-lg font-bold text-ink">{service.name}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-ink/70">{service.summary}</p>
-        <p className="mt-auto pt-6 text-sm font-bold text-white drop-shadow-[0_1px_5px_rgba(0,25,20,0.45)]">
-          Learn more
-          <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-            &rarr;
-          </span>
+        <h3 className="mt-0.5 font-display text-xl font-bold text-ink sm:text-2xl">
+          {service.name}
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-ink/70 sm:text-base">
+          {service.summary}
         </p>
       </div>
+
+      <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-lg transition-transform duration-300 group-hover:translate-x-1 sm:flex">
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </span>
     </Link>
   );
 }
