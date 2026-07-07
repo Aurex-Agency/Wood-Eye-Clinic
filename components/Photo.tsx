@@ -62,7 +62,7 @@ export default function Photo({
           loading={priority ? undefined : "lazy"}
           className="h-full w-full object-cover"
           style={{
-            filter: focused ? "blur(0)" : "blur(14px)",
+            filter: focused ? "none" : "blur(14px)",
             opacity: focused ? 1 : 0.6,
             transform: `scale(${scale})`,
             transition:

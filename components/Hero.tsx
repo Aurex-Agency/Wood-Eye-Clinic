@@ -98,9 +98,12 @@ export default function Hero() {
 
         {/* Big eyeglass lenses that bring the scene into focus */}
         <div className="relative flex justify-center lg:justify-end">
+          {/* No CSS filter/drop-shadow here: a filter would lift this SVG into
+              its own compositing layer, excluding it from the sticky header's
+              backdrop blur, so the glasses would scroll behind the menu sharp. */}
           <svg
             viewBox="0 0 720 440"
-            className="h-auto w-full max-w-[44rem] drop-shadow-[0_28px_50px_rgba(0,18,30,0.5)]"
+            className="h-auto w-full max-w-[44rem]"
             role="img"
             aria-label="The Wood Eye Clinic team seen clearly through a pair of glasses"
           >

@@ -107,8 +107,7 @@ body {
     rgba(255, 255, 255, 0.5) 0%,
     rgba(255, 255, 255, 0.3) 100%
   );
-  backdrop-filter: blur(22px) saturate(185%) brightness(1.05);
-  -webkit-backdrop-filter: blur(22px) saturate(185%) brightness(1.05);
+  backdrop-filter: blur(30px) saturate(190%) brightness(1.06);
   box-shadow:
     0 18px 50px rgba(8, 40, 60, 0.16),
     0 4px 12px rgba(8, 40, 60, 0.08),
@@ -187,7 +186,6 @@ body {
     rgba(6, 32, 46, 0.55) 100%
   );
   backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid rgba(188, 237, 255, 0.28);
   box-shadow:
     0 22px 60px rgba(0, 22, 36, 0.4),
@@ -203,7 +201,6 @@ body {
     rgba(255, 255, 255, 0.42) 100%
   );
   backdrop-filter: blur(12px) saturate(165%);
-  -webkit-backdrop-filter: blur(12px) saturate(165%);
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow:
     0 4px 16px rgba(8, 48, 72, 0.1),
@@ -216,11 +213,14 @@ body {
 .glass-nav {
   background: linear-gradient(
     140deg,
-    rgba(255, 255, 255, 0.58) 0%,
-    rgba(255, 255, 255, 0.4) 100%
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.18) 100%
   );
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(64px) saturate(220%) brightness(1.1);
+  box-shadow:
+    0 14px 40px rgba(8, 40, 60, 0.18),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.3);
 }
 
 /* Glass secondary button */
@@ -231,7 +231,6 @@ body {
     rgba(255, 255, 255, 0.4) 100%
   );
   backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
     0 6px 20px rgba(8, 48, 72, 0.12),
@@ -248,11 +247,15 @@ body {
     filter 900ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: filter, opacity, transform;
+  /* no will-change: it would pin the element to its own compositing layer,
+     excluding it from the sticky header's backdrop blur after reveal */
 }
 
+/* filter: none (not blur(0)) once revealed: a lingering filter would keep the
+   element on its own compositing layer, excluded from the sticky header's
+   backdrop blur, so it would scroll behind the menu without frosting. */
 .reveal-clear {
-  filter: blur(0);
+  filter: none;
   opacity: 1;
   transform: none;
 }
