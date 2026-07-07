@@ -12,7 +12,7 @@ import { clinic } from "@/lib/site";
  */
 export default function Hero() {
   return (
-    <section className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
+    <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop */}
       <div className="absolute inset-0" aria-hidden="true">
         <div

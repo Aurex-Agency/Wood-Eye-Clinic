@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
 import Icon from "@/components/Icon";
 import { clinic, services } from "@/lib/site";
@@ -45,6 +45,37 @@ export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
+  // On the home page the header floats over the dark hero, so nav text is
+  // white until the hero scrolls out from behind it, then it turns dark.
+  const [light, setLight] = useState(pathname === "/");
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setLight(false);
+      return;
+    }
+    const hero = document.getElementById("hero");
+    if (!hero) {
+      setLight(false);
+      return;
+    }
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      setLight(hero.getBoundingClientRect().bottom > 120);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [pathname]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -52,7 +83,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 px-4 pt-4">
       <div className="glass-liquid mx-auto flex max-w-6xl items-center justify-between rounded-full px-5 py-3 sm:px-7">
-        <Logo />
+        <Logo light={light} />
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {nav.map((item) =>
@@ -63,7 +94,9 @@ export default function Header() {
                   className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
                     isActive(item.href)
                       ? "bg-brand text-white"
-                      : "text-ink/80 hover:bg-sky/50 hover:text-brand-dark"
+                      : light
+                        ? "text-white hover:bg-white/20 hover:text-white"
+                        : "text-ink/80 hover:bg-sky/50 hover:text-brand-dark"
                   }`}
                 >
                   {item.label}
@@ -132,7 +165,9 @@ export default function Header() {
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
                   isActive(item.href)
                     ? "bg-brand text-white"
-                    : "text-ink/80 hover:bg-sky/50 hover:text-brand-dark"
+                    : light
+                      ? "text-white hover:bg-white/20 hover:text-white"
+                      : "text-ink/80 hover:bg-sky/50 hover:text-brand-dark"
                 }`}
               >
                 {item.label}
@@ -144,7 +179,9 @@ export default function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <a
             href={clinic.phoneHref}
-            className="text-sm font-bold text-brand-dark transition-colors hover:text-brand"
+            className={`text-sm font-bold transition-colors duration-300 ${
+              light ? "text-white hover:text-sky" : "text-brand-dark hover:text-brand"
+            }`}
           >
             {clinic.phone}
           </a>
@@ -159,7 +196,9 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-sky/50 lg:hidden"
+          className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-300 lg:hidden ${
+            light ? "text-white hover:bg-white/20" : "text-ink hover:bg-sky/50"
+          }`}
           aria-expanded={open}
           aria-label="Toggle navigation menu"
         >
