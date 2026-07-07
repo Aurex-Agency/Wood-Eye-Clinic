@@ -207,20 +207,54 @@ body {
     inset 0 1px 1px rgba(255, 255, 255, 0.85);
 }
 
-/* Header bar glass: translucent enough that content scrolling behind it is
-   visibly frosted, while staying light enough to keep nav text and the logo
-   crisp. Overrides the more opaque .glass-strong fill used on text panels. */
-.glass-nav {
+/* Liquid glass (Apple-style) for the menu bar: nearly clear so the page shows
+   through in full color, brightened and saturated like a real lens, with
+   bright light-catching rims on the top and bottom edges and a soft inner
+   glow at the corners. */
+.glass-liquid {
+  position: relative;
+  isolation: isolate;
   background: linear-gradient(
-    140deg,
-    rgba(255, 255, 255, 0.32) 0%,
-    rgba(255, 255, 255, 0.18) 100%
+    120deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.12) 40%,
+    rgba(255, 255, 255, 0.22) 100%
   );
-  backdrop-filter: blur(64px) saturate(220%) brightness(1.1);
+  backdrop-filter: blur(28px) saturate(185%) brightness(1.38);
   box-shadow:
-    0 14px 40px rgba(8, 40, 60, 0.18),
-    inset 0 1px 1.5px rgba(255, 255, 255, 0.95),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+    0 16px 40px rgba(6, 30, 45, 0.28),
+    0 2px 8px rgba(6, 30, 45, 0.12),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.85),
+    inset 0 -1.5px 1px rgba(255, 255, 255, 0.45),
+    inset 3px 3px 14px -8px rgba(255, 255, 255, 0.9),
+    inset -3px -3px 14px -8px rgba(255, 255, 255, 0.7);
+}
+
+/* Bright rim ring that catches light around the whole pill edge */
+.glass-liquid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.2) 30%,
+    rgba(255, 255, 255, 0.08) 55%,
+    rgba(255, 255, 255, 0.35) 80%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* Glass secondary button */

@@ -27,7 +27,7 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(0,24,36,0.85) 0%, rgba(0,24,36,0.5) 46%, rgba(0,24,36,0.25) 100%)",
+              "linear-gradient(to bottom, rgba(150,205,235,0.2) 0%, rgba(0,24,36,0) 15%), linear-gradient(to right, rgba(0,24,36,0.82) 0%, rgba(0,24,36,0.5) 46%, rgba(0,24,36,0.25) 100%)",
           }}
         />
         <div className="orb animate-drift right-[6%] top-[14%] h-80 w-80 bg-sky/20" />
