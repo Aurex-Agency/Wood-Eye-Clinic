@@ -38,7 +38,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${body.variable} ${display.variable} ambient min-h-screen font-sans`}>
+      <body className={`${body.variable} ${display.variable} min-h-screen font-sans`}>
+        <div className="site-bg" aria-hidden="true" />
         <GlassFilter />
         <Header />
         <main>{children}</main>
