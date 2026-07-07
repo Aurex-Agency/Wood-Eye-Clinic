@@ -51,7 +51,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 px-4 pt-4">
-      <div className="glass-surface glass-strong mx-auto flex max-w-6xl items-center justify-between rounded-3xl px-5 py-3 sm:px-7">
+      <div className="glass-surface glass-nav mx-auto flex max-w-6xl items-center justify-between rounded-3xl px-5 py-3 sm:px-7">
         <Logo />
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">

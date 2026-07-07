@@ -210,6 +210,19 @@ body {
     inset 0 1px 1px rgba(255, 255, 255, 0.85);
 }
 
+/* Header bar glass: translucent enough that content scrolling behind it is
+   visibly frosted, while staying light enough to keep nav text and the logo
+   crisp. Overrides the more opaque .glass-strong fill used on text panels. */
+.glass-nav {
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.58) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+}
+
 /* Glass secondary button */
 .glass-btn {
   background: linear-gradient(
