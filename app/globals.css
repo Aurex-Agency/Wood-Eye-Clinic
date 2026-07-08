@@ -85,6 +85,39 @@ body {
     var(--color-cloud);
 }
 
+/* Fixed team-photo backdrop shown behind the whole site (until the footer
+   covers it). Softened and washed with a light warm scrim so the glass panels
+   read as clearer glass in front and all text stays legible. */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  background:
+    linear-gradient(to bottom, rgba(224, 232, 240, 0.58) 0%, rgba(210, 222, 233, 0.64) 100%),
+    url("/img/site-bg.webp") center / cover no-repeat;
+}
+
+/* Soft light halo for text that sits directly on the photo backdrop (section
+   intros, body copy, page heros) so it stays crisp and legible without a solid
+   panel or heavy frost. text-shadow is inherited, so setting it on the
+   container lifts all the text inside. */
+.text-readable {
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.95),
+    0 1px 14px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+/* A touch of brand tint over the backdrop for cohesion */
+.site-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70rem 50rem at 85% -10%, rgba(188, 237, 255, 0.35), transparent 60%),
+    radial-gradient(60rem 44rem at -10% 110%, rgba(0, 117, 161, 0.12), transparent 60%);
+}
+
 /* Decorative floating glow orbs (place inside a relative/overflow-hidden parent) */
 .orb {
   position: absolute;
@@ -104,11 +137,10 @@ body {
   isolation: isolate;
   background: linear-gradient(
     140deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.3) 100%
+    rgba(255, 255, 255, 0.64) 0%,
+    rgba(255, 255, 255, 0.46) 100%
   );
-  backdrop-filter: blur(22px) saturate(185%) brightness(1.05);
-  -webkit-backdrop-filter: blur(22px) saturate(185%) brightness(1.05);
+  backdrop-filter: blur(30px) saturate(190%) brightness(1.06);
   box-shadow:
     0 18px 50px rgba(8, 40, 60, 0.16),
     0 4px 12px rgba(8, 40, 60, 0.08),
@@ -164,16 +196,16 @@ body {
 .glass-strong {
   background: linear-gradient(
     140deg,
-    rgba(255, 255, 255, 0.84) 0%,
-    rgba(255, 255, 255, 0.66) 100%
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.8) 100%
   );
 }
 
 .glass-tint {
   background: linear-gradient(
     140deg,
-    rgba(214, 243, 255, 0.55) 0%,
-    rgba(188, 237, 255, 0.3) 100%
+    rgba(221, 245, 255, 0.7) 0%,
+    rgba(198, 240, 255, 0.5) 100%
   );
 }
 
@@ -187,7 +219,6 @@ body {
     rgba(6, 32, 46, 0.55) 100%
   );
   backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
   border: 1px solid rgba(188, 237, 255, 0.28);
   box-shadow:
     0 22px 60px rgba(0, 22, 36, 0.4),
@@ -203,24 +234,158 @@ body {
     rgba(255, 255, 255, 0.42) 100%
   );
   backdrop-filter: blur(12px) saturate(165%);
-  -webkit-backdrop-filter: blur(12px) saturate(165%);
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow:
     0 4px 16px rgba(8, 48, 72, 0.1),
     inset 0 1px 1px rgba(255, 255, 255, 0.85);
 }
 
-/* Header bar glass: translucent enough that content scrolling behind it is
-   visibly frosted, while staying light enough to keep nav text and the logo
-   crisp. Overrides the more opaque .glass-strong fill used on text panels. */
-.glass-nav {
+/* Liquid glass (Apple-style) for the menu bar: nearly clear so the page shows
+   through in full color, brightened and saturated like a real lens. The edges
+   are shaped like thick, curved (bent) glass — the background compresses and
+   brightens as it wraps around the rounded edge — with a soft specular shine
+   sweeping across the top. */
+.glass-liquid {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  backdrop-filter: blur(28px) saturate(185%) brightness(1.38);
+  box-shadow:
+    /* float */
+    0 16px 40px rgba(6, 30, 45, 0.28),
+    0 2px 8px rgba(6, 30, 45, 0.12),
+    /* thin crisp top/bottom highlight lines */
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.5),
+    /* bent-edge bevel: wide bright bands hugging the left & right rounded
+       edges, so the glass looks like it curves and refracts at the sides */
+    inset 10px 0 20px -12px rgba(255, 255, 255, 0.9),
+    inset -10px 0 20px -12px rgba(255, 255, 255, 0.9),
+    /* a soft refraction shadow just inside the top edge for thickness/depth */
+    inset 0 11px 20px -16px rgba(4, 26, 40, 0.4);
+}
+
+/* Specular shine: a soft diagonal glare sweeping across the glass. */
+.glass-liquid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    102deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 9%,
+    rgba(255, 255, 255, 0.08) 19%,
+    rgba(255, 255, 255, 0) 34%,
+    rgba(255, 255, 255, 0) 72%,
+    rgba(255, 255, 255, 0.14) 84%,
+    rgba(255, 255, 255, 0) 96%
+  );
+  pointer-events: none;
+}
+
+/* Bent-glass rim: a fine edge that reads as a curved lens lip, tinted with a
+   hint of sky-blue refraction rather than a flat white outline. */
+.glass-liquid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.25px;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(190, 231, 255, 0.35) 22%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(190, 231, 255, 0.4) 78%,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Real translucent glass pane (for the stacked service cards): you see the
+   backdrop frosted through it, with bevelled bent edges, a bright light-
+   catching rim, and a soft specular shine — an actual sheet of glass rather
+   than a white card. */
+.glass-pane {
+  position: relative;
+  isolation: isolate;
   background: linear-gradient(
     140deg,
-    rgba(255, 255, 255, 0.58) 0%,
-    rgba(255, 255, 255, 0.4) 100%
+    rgba(255, 255, 255, 0.44) 0%,
+    rgba(255, 255, 255, 0.26) 100%
   );
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(26px) saturate(190%) brightness(1.12);
+  box-shadow:
+    0 22px 50px rgba(6, 30, 45, 0.22),
+    0 4px 12px rgba(6, 30, 45, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.5),
+    inset 11px 0 22px -14px rgba(255, 255, 255, 0.85),
+    inset -11px 0 22px -14px rgba(255, 255, 255, 0.85),
+    inset 0 12px 22px -16px rgba(4, 26, 40, 0.3);
+}
+
+/* specular shine sweeping across the pane */
+.glass-pane::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    104deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.38) 8%,
+    rgba(255, 255, 255, 0.06) 18%,
+    rgba(255, 255, 255, 0) 32%,
+    rgba(255, 255, 255, 0) 74%,
+    rgba(255, 255, 255, 0.12) 86%,
+    rgba(255, 255, 255, 0) 97%
+  );
+  pointer-events: none;
+}
+
+/* bright bent-glass rim, tinted with a hint of sky refraction */
+.glass-pane::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.25px;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(190, 231, 255, 0.4) 24%,
+    rgba(255, 255, 255, 0.06) 52%,
+    rgba(190, 231, 255, 0.45) 80%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* Glass secondary button */
@@ -231,7 +396,6 @@ body {
     rgba(255, 255, 255, 0.4) 100%
   );
   backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
     0 6px 20px rgba(8, 48, 72, 0.12),
@@ -248,11 +412,15 @@ body {
     filter 900ms cubic-bezier(0.22, 1, 0.36, 1),
     opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: filter, opacity, transform;
+  /* no will-change: it would pin the element to its own compositing layer,
+     excluding it from the sticky header's backdrop blur after reveal */
 }
 
+/* filter: none (not blur(0)) once revealed: a lingering filter would keep the
+   element on its own compositing layer, excluded from the sticky header's
+   backdrop blur, so it would scroll behind the menu without frosting. */
 .reveal-clear {
-  filter: blur(0);
+  filter: none;
   opacity: 1;
   transform: none;
 }

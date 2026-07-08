@@ -12,7 +12,7 @@ import { clinic } from "@/lib/site";
  */
 export default function Hero() {
   return (
-    <section className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
+    <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop */}
       <div className="absolute inset-0" aria-hidden="true">
         <div
@@ -27,7 +27,7 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(0,24,36,0.85) 0%, rgba(0,24,36,0.5) 46%, rgba(0,24,36,0.25) 100%)",
+              "linear-gradient(to bottom, rgba(150,205,235,0.2) 0%, rgba(0,24,36,0) 15%), linear-gradient(to right, rgba(0,24,36,0.82) 0%, rgba(0,24,36,0.5) 46%, rgba(0,24,36,0.25) 100%)",
           }}
         />
         <div className="orb animate-drift right-[6%] top-[14%] h-80 w-80 bg-sky/20" />
@@ -98,9 +98,12 @@ export default function Hero() {
 
         {/* Big eyeglass lenses that bring the scene into focus */}
         <div className="relative flex justify-center lg:justify-end">
+          {/* No CSS filter/drop-shadow here: a filter would lift this SVG into
+              its own compositing layer, excluding it from the sticky header's
+              backdrop blur, so the glasses would scroll behind the menu sharp. */}
           <svg
             viewBox="0 0 720 440"
-            className="h-auto w-full max-w-[44rem] drop-shadow-[0_28px_50px_rgba(0,18,30,0.5)]"
+            className="h-auto w-full max-w-[44rem]"
             role="img"
             aria-label="The Wood Eye Clinic team seen clearly through a pair of glasses"
           >

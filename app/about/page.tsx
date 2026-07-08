@@ -55,7 +55,7 @@ export default function AboutPage() {
       </section>
 
       <section className="px-6 py-10">
-        <div className="mx-auto max-w-4xl space-y-6 text-lg leading-relaxed text-ink/75">
+        <div className="glass-surface mx-auto max-w-4xl space-y-6 rounded-4xl p-8 text-lg leading-relaxed text-ink/75 sm:p-10">
           <Reveal>
             <p>
               At Wood Eye Clinic, we believe healthy vision is essential to

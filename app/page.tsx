@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Glass from "@/components/Glass";
-import Icon from "@/components/Icon";
+import ServiceCard from "@/components/ServiceCard";
 import Reveal from "@/components/Reveal";
 import Hero from "@/components/Hero";
 import Photo from "@/components/Photo";
@@ -43,7 +43,7 @@ export default function HomePage() {
 
       {/* See clearly again */}
       <section className="px-6 py-20">
-        <Reveal className="mx-auto max-w-3xl text-center">
+        <Reveal className="glass-surface mx-auto max-w-3xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
             See Clearly Again
           </p>
@@ -67,7 +67,7 @@ export default function HomePage() {
       {/* Services */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Eyecare Services
             </p>
@@ -80,28 +80,17 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Stacked cards: each pins under the header and the next scrolls up
+              over it, leaving a peek of the ones behind. */}
+          <div className="mx-auto mt-12 max-w-3xl">
             {featuredServices.map((service, i) => (
-              <Reveal key={service.slug} delay={i * 90}>
-                <Glass
-                  href={`/services/${service.slug}`}
-                  className="group h-full p-7 hover:-translate-y-1.5 hover:shadow-xl"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky/60 text-brand-dark transition-colors duration-500 group-hover:bg-brand group-hover:text-white">
-                    <Icon name={service.icon} />
-                  </div>
-                  <h3 className="mt-5 font-display text-lg font-bold text-ink">
-                    {service.name}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink/65">{service.summary}</p>
-                  <p className="mt-4 text-sm font-semibold text-brand">
-                    Learn more
-                    <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                      &rarr;
-                    </span>
-                  </p>
-                </Glass>
-              </Reveal>
+              <div
+                key={service.slug}
+                className="sticky pb-5"
+                style={{ top: `${116 + i * 22}px` }}
+              >
+                <ServiceCard service={service} index={i} />
+              </div>
             ))}
           </div>
 
@@ -119,7 +108,7 @@ export default function HomePage() {
       {/* Inside the clinic photo gallery */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Inside Wood Eye Clinic
             </p>
@@ -139,7 +128,7 @@ export default function HomePage() {
                 alt="An optometrist examining a patient with advanced imaging technology"
                 className="aspect-[4/3]"
               />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
                 Advanced diagnostic imaging
               </p>
             </Reveal>
@@ -149,7 +138,7 @@ export default function HomePage() {
                 alt="A patient browsing the designer frame wall in the optical boutique"
                 className="aspect-[3/4]"
               />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
                 A boutique full of designer frames
               </p>
             </Reveal>
@@ -159,7 +148,7 @@ export default function HomePage() {
                 alt="The Wood Eye Clinic team in the optical boutique"
                 className="aspect-[4/3]"
               />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
                 A team that treats you like family
               </p>
             </Reveal>
@@ -173,7 +162,7 @@ export default function HomePage() {
       {/* Doctors */}
       <section className="px-6 py-4">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Meet the Optometrists
             </p>
@@ -235,7 +224,7 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Patient Stories
             </p>
