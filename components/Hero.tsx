@@ -1,16 +1,27 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { clinic } from "@/lib/site";
 
 /*
  * "See clearly" hero. The scene fills the section softly out of focus, the way
- * the world looks without the right prescription. A large pair of eyeglass
- * lenses sits over it, and everything seen through the lenses snaps into sharp
- * focus. A literal, on-brand play on what the clinic does.
+ * the world looks without the right prescription. A glass-framed photo of the
+ * clinic sits to the right, blurred until the visitor presses "See what happens
+ * at Wood Eye Clinic," which brings it into sharp focus. A literal, on-brand
+ * play on what the clinic does.
  *
- * SWAP THE PHOTO: replace /public/img/hero.webp. Both the blurred backdrop and
- * the sharp lenses read from the same file, so one swap updates both.
+ * The reveal cross-fades a sharp image over a pre-blurred one (hero-blur.webp)
+ * rather than animating a CSS `filter`, so the framed photo never lifts into
+ * its own compositing layer and keeps frosting correctly behind the sticky
+ * header while it scrolls.
+ *
+ * SWAP THE PHOTO: replace /public/img/hero.webp, then regenerate the blurred
+ * companion /public/img/hero-blur.webp from the same source.
  */
 export default function Hero() {
+  const [revealed, setRevealed] = useState(false);
+
   return (
     <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop */}
@@ -37,7 +48,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[0.82fr_1.18fr]">
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         {/* Copy */}
         <div className="max-w-xl">
           <p className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md">
@@ -96,80 +107,90 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Big eyeglass lenses that bring the scene into focus */}
+        {/* Glass-framed clinic photo that snaps into focus on demand */}
         <div className="relative flex justify-center lg:justify-end">
-          {/* No CSS filter/drop-shadow here: a filter would lift this SVG into
-              its own compositing layer, excluding it from the sticky header's
-              backdrop blur, so the glasses would scroll behind the menu sharp. */}
-          <svg
-            viewBox="0 0 720 440"
-            className="h-auto w-full max-w-[44rem]"
-            role="img"
-            aria-label="The Wood Eye Clinic team seen clearly through a pair of glasses"
-          >
-            <defs>
-              <clipPath id="hero-lenses">
-                <circle cx="197" cy="212" r="152" />
-                <circle cx="523" cy="212" r="152" />
-              </clipPath>
-              <linearGradient id="hero-frame" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#06344a" />
-                <stop offset="0.55" stopColor="#0075a1" />
-                <stop offset="1" stopColor="#063246" />
-              </linearGradient>
-              <radialGradient id="hero-lensvig" cx="0.5" cy="0.42" r="0.62">
-                <stop offset="0.55" stopColor="#001a26" stopOpacity="0" />
-                <stop offset="1" stopColor="#001a26" stopOpacity="0.42" />
-              </radialGradient>
-            </defs>
-
-            {/* Sharp, in-focus scene revealed only inside the lenses */}
-            <g clipPath="url(#hero-lenses)">
-              <image
-                href="/img/hero.webp"
-                x="30"
-                y="-40"
-                width="660"
-                height="510"
-                preserveAspectRatio="xMidYMid slice"
+          <div className="glass-surface group relative w-full max-w-[34rem] overflow-hidden rounded-[2rem] p-2 shadow-2xl sm:p-3">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem]">
+              {/* Pre-blurred base (no CSS filter, so it frosts under the header) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/img/hero-blur.webp"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full scale-105 object-cover"
               />
-              {/* faint cool tint */}
-              <rect x="0" y="0" width="720" height="440" fill="#0075a1" opacity="0.06" />
-              {/* diagonal glass reflections */}
-              <g transform="rotate(-26 360 212)">
-                <rect x="-60" y="120" width="900" height="70" fill="#ffffff" opacity="0.16" />
-                <rect x="-60" y="205" width="900" height="30" fill="#ffffff" opacity="0.1" />
-              </g>
-              {/* inner lens vignette for depth */}
-              <circle cx="197" cy="212" r="152" fill="url(#hero-lensvig)" />
-              <circle cx="523" cy="212" r="152" fill="url(#hero-lensvig)" />
-            </g>
+              {/* Sharp image fades in on reveal */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/img/hero.webp"
+                alt="The Wood Eye Clinic team welcoming patients"
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{
+                  opacity: revealed ? 1 : 0,
+                  transform: revealed ? "scale(1)" : "scale(1.05)",
+                  transition:
+                    "opacity 900ms cubic-bezier(0.22,1,0.36,1), transform 1200ms cubic-bezier(0.22,1,0.36,1)",
+                }}
+              />
 
-            {/* Frame */}
-            <g fill="none" stroke="url(#hero-frame)" strokeWidth="21" strokeLinecap="round">
-              <circle cx="197" cy="212" r="152" />
-              <circle cx="523" cy="212" r="152" />
-              {/* bridge */}
-              <path d="M348 196 q12 -20 24 0" />
-              {/* temple arms */}
-              <path d="M52 168 L14 100" />
-              <path d="M668 168 L706 100" />
-            </g>
-            {/* Glossy frame highlight */}
-            <g fill="none" stroke="#bfeaff" strokeOpacity="0.5" strokeWidth="4">
-              <path d="M96 120 a152 152 0 0 1 150 -58" />
-              <path d="M422 120 a152 152 0 0 1 150 -58" />
-            </g>
-            {/* Inner rim highlight */}
-            <g fill="none" stroke="#ffffff" strokeOpacity="0.4" strokeWidth="2.5">
-              <circle cx="197" cy="212" r="142" />
-              <circle cx="523" cy="212" r="142" />
-            </g>
-          </svg>
+              {/* Soft glass sheen */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 42%)",
+                }}
+                aria-hidden="true"
+              />
 
-          <span className="glass-chip absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full px-5 py-2 text-sm font-bold text-brand-dark shadow-lg">
-            See clearly again
-          </span>
+              {/* Reveal control / scrim */}
+              <button
+                type="button"
+                onClick={() => setRevealed((r) => !r)}
+                aria-pressed={revealed}
+                aria-label={
+                  revealed
+                    ? "Blur the clinic photo again"
+                    : "See what happens at Wood Eye Clinic"
+                }
+                className="absolute inset-0 flex items-end justify-center focus:outline-none"
+              >
+                <span
+                  className="pointer-events-none absolute inset-0 transition-opacity duration-700"
+                  style={{
+                    opacity: revealed ? 0 : 1,
+                    background:
+                      "linear-gradient(to top, rgba(0,20,30,0.55) 0%, rgba(0,20,30,0.1) 55%, rgba(0,20,30,0) 100%)",
+                  }}
+                />
+                <span
+                  className="glass-chip pointer-events-none relative mb-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-brand-dark shadow-lg transition-all duration-500"
+                  style={{
+                    opacity: revealed ? 0 : 1,
+                    transform: revealed ? "translateY(8px)" : "translateY(0)",
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  See what happens at Wood Eye Clinic
+                </span>
+              </button>
+
+              {/* Replay hint once revealed */}
+              <span
+                className="glass-chip pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-brand-dark shadow-md transition-opacity duration-700"
+                style={{ opacity: revealed ? 1 : 0 }}
+              >
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+                  <path d="M3 3v5h5" />
+                </svg>
+                Tap to blur
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
