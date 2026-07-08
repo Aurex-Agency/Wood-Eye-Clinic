@@ -15,7 +15,7 @@ export default function PageHero({
         className="orb animate-drift left-1/2 top-[-6rem] h-72 w-96 -translate-x-1/2 bg-sky/50"
         aria-hidden="true"
       />
-      <div className="relative mx-auto max-w-4xl text-center">
+      <div className="relative mx-auto max-w-4xl text-center text-readable">
         <Reveal>
           <p className="glass-chip mx-auto inline-block rounded-full px-4 py-1.5 text-sm font-bold uppercase tracking-[0.28em] text-brand-dark">
             {eyebrow}

@@ -43,7 +43,7 @@ export default function HomePage() {
 
       {/* See clearly again */}
       <section className="px-6 py-20">
-        <Reveal className="mx-auto max-w-3xl text-center">
+        <Reveal className="mx-auto max-w-3xl text-center text-readable">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
             See Clearly Again
           </p>
@@ -67,7 +67,7 @@ export default function HomePage() {
       {/* Services */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center text-readable">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Eyecare Services
             </p>
@@ -108,7 +108,7 @@ export default function HomePage() {
       {/* Inside the clinic photo gallery */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center text-readable">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Inside Wood Eye Clinic
             </p>
@@ -162,7 +162,7 @@ export default function HomePage() {
       {/* Doctors */}
       <section className="px-6 py-4">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center text-readable">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Meet the Optometrists
             </p>
@@ -224,7 +224,7 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center text-readable">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Patient Stories
             </p>

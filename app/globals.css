@@ -97,6 +97,17 @@ body {
     url("/img/site-bg.webp") center / cover no-repeat;
 }
 
+/* Soft light halo for text that sits directly on the photo backdrop (section
+   intros, body copy, page heros) so it stays crisp and legible without a solid
+   panel or heavy frost. text-shadow is inherited, so setting it on the
+   container lifts all the text inside. */
+.text-readable {
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.95),
+    0 1px 14px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.5);
+}
+
 /* A touch of brand tint over the backdrop for cohesion */
 .site-bg::after {
   content: "";
