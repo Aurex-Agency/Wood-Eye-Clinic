@@ -1,128 +1,76 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { clinic } from "@/lib/site";
 
 /*
- * "Life is better in focus" hero. A clear photo of the clinic fills the section
- * behind a legibility scrim. On load a line-art pair of glasses drops in from
- * above and settles over the centered headline while the copy animates from
- * softly blurred into sharp focus, a literal play on what the clinic does.
+ * "See clearly" hero. The scene fills the section softly out of focus, the way
+ * the world looks without the right prescription. A glass-framed photo of the
+ * clinic sits to the right, blurred until the visitor presses "See what happens
+ * at Wood Eye Clinic," which brings it into sharp focus. A literal, on-brand
+ * play on what the clinic does.
  *
- * The blur lives on the individual copy elements (not a wrapping ancestor) and
- * is removed outright once the intro finishes, so nothing keeps a lingering
- * `filter` layer that would stop the sticky header from frosting the hero.
+ * The reveal cross-fades a sharp image over a pre-blurred one (hero-blur.webp)
+ * rather than animating a CSS `filter`, so the framed photo never lifts into
+ * its own compositing layer and keeps frosting correctly behind the sticky
+ * header while it scrolls.
  *
- * SWAP THE PHOTO: replace /public/img/hero.webp.
+ * SWAP THE PHOTO: replace /public/img/hero.webp, then regenerate the blurred
+ * companion /public/img/hero-blur.webp from the same source.
  */
 export default function Hero() {
-  // revealed -> run the intro transitions; settled -> strip the blur filter.
   const [revealed, setRevealed] = useState(false);
-  const [settled, setSettled] = useState(false);
-
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setRevealed(true));
-    const timer = setTimeout(() => setSettled(true), 2000);
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(timer);
-    };
-  }, []);
-
-  // Blur while blurred; animate to sharp on reveal; drop the property once done.
-  const blur = settled ? undefined : revealed ? "blur(0px)" : "blur(9px)";
-  const copyStyle = {
-    filter: blur,
-    transition: "filter 950ms cubic-bezier(0.22,1,0.36,1)",
-    transitionDelay: revealed ? "520ms" : "0ms",
-  };
 
   return (
-    <section id="hero" className="relative -mt-[92px] flex min-h-[44rem] items-center overflow-hidden px-4 pb-20 pt-32 sm:px-6 lg:min-h-[50rem]">
-      {/* Clear photo backdrop with a legibility scrim */}
+    <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
+      {/* Out-of-focus backdrop */}
       <div className="absolute inset-0" aria-hidden="true">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/img/hero.webp')", transform: "scale(1.04)" }}
+          style={{
+            backgroundImage: "url('/img/hero.webp')",
+            filter: "blur(24px) brightness(0.6) saturate(1.1)",
+            transform: "scale(1.15)",
+          }}
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 72% 62% at 50% 44%, rgba(0,15,25,0.64) 0%, rgba(0,15,25,0.3) 58%, rgba(0,15,25,0) 100%), linear-gradient(to bottom, rgba(0,15,25,0.74) 0%, rgba(0,15,25,0.46) 42%, rgba(0,15,25,0.72) 100%)",
+              "linear-gradient(to bottom, rgba(150,205,235,0.2) 0%, rgba(0,24,36,0) 15%), linear-gradient(to right, rgba(0,24,36,0.82) 0%, rgba(0,24,36,0.5) 46%, rgba(0,24,36,0.25) 100%)",
           }}
         />
-        <div className="orb animate-drift right-[8%] top-[16%] h-72 w-72 bg-sky/15" />
+        <div className="orb animate-drift right-[6%] top-[14%] h-80 w-80 bg-sky/20" />
         <div
-          className="orb animate-drift left-[10%] bottom-[12%] h-72 w-72 bg-brand/20"
+          className="orb animate-drift left-[8%] bottom-[10%] h-72 w-72 bg-brand/25"
           style={{ animationDelay: "-9s" }}
         />
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center text-center">
-        {/* Badge */}
-        <p
-          className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md"
-          style={copyStyle}
-        >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky opacity-70" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky" />
-          </span>
-          Welcoming new patients in Pontotoc, MS
-        </p>
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        {/* Copy */}
+        <div className="max-w-xl">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky opacity-70" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky" />
+            </span>
+            Welcoming new patients in Pontotoc, MS
+          </p>
 
-        {/* Headline with the glasses that drop into focus over it */}
-        <div className="relative mt-7 w-full">
-          <h1
-            className="font-display text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-[0_2px_20px_rgba(0,18,30,0.6)] sm:text-6xl lg:text-7xl"
-            style={copyStyle}
-          >
+          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-[0_2px_18px_rgba(0,18,30,0.55)] sm:text-6xl lg:text-7xl">
             Life is better
             <span className="block text-sky">in focus.</span>
           </h1>
 
-          {/* Line-art glasses: sharp (outside the blurred copy), dropping in */}
-          <span
-            className="pointer-events-none absolute left-1/2 top-1/2 w-[118%] max-w-none -translate-x-1/2 -translate-y-1/2 sm:w-[104%]"
-            aria-hidden="true"
-          >
-            <svg
-              viewBox="0 0 760 320"
-              className="h-auto w-full"
-              fill="none"
-              stroke="#a5ddf6"
-              strokeWidth="11"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{
-                transform: revealed ? "translateY(0)" : "translateY(-175%)",
-                opacity: revealed ? 1 : 0,
-                filter: "drop-shadow(0 10px 24px rgba(0,20,34,0.45))",
-                transition:
-                  "transform 1150ms cubic-bezier(0.34,1.42,0.5,1), opacity 700ms ease-out",
-              }}
-            >
-              <circle cx="250" cy="168" r="128" />
-              <circle cx="510" cy="168" r="128" />
-              {/* bridge */}
-              <path d="M372 140 q18 -22 36 0" />
-              {/* temple arms sweeping up and out */}
-              <path d="M128 128 L26 46" />
-              <path d="M632 128 L734 46" />
-            </svg>
-          </span>
-        </div>
-
-        <div style={copyStyle}>
-          <p className="mx-auto mt-7 max-w-lg text-lg leading-relaxed text-white/85 drop-shadow-[0_1px_10px_rgba(0,18,30,0.5)]">
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-white/85 drop-shadow-[0_1px_10px_rgba(0,18,30,0.5)]">
             A trusted family eye clinic caring for North Mississippi since 1981,
             with comprehensive exams, designer eyewear, and doctors who know you
             by name.
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               href="/contact"
               className="group inline-flex items-center justify-center gap-3 rounded-full bg-white py-2.5 pl-2.5 pr-7 font-bold text-ink shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl"
@@ -142,7 +90,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
             <div className="flex items-center gap-2">
               <div className="flex gap-0.5 text-sky" aria-label="Five star rated">
                 {Array.from({ length: 5 }).map((_, s) => (
@@ -156,6 +104,92 @@ export default function Hero() {
             <span className="text-sm text-white/70">
               <span className="font-bold text-white">45+ years</span> of care
             </span>
+          </div>
+        </div>
+
+        {/* Clinic photo resting on a soft dark-glass pane that harmonizes with
+            the hero, snapping into focus on demand */}
+        <div className="relative flex justify-center lg:justify-end">
+          <div className="glass-dark relative w-full max-w-[36rem] rounded-[1.75rem] p-2.5 shadow-xl sm:p-3">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.35rem]">
+              {/* Pre-blurred base (no CSS filter, so it frosts under the header) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/img/hero-blur.webp"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full scale-105 object-cover"
+              />
+              {/* Sharp image fades in on reveal */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/img/hero.webp"
+                alt="The Wood Eye Clinic team welcoming patients"
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{
+                  opacity: revealed ? 1 : 0,
+                  transform: revealed ? "scale(1)" : "scale(1.05)",
+                  transition:
+                    "opacity 900ms cubic-bezier(0.22,1,0.36,1), transform 1200ms cubic-bezier(0.22,1,0.36,1)",
+                }}
+              />
+              {/* Faint sheen for a hint of glass */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 44%)",
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Reveal control / scrim */}
+              <button
+                type="button"
+                onClick={() => setRevealed((r) => !r)}
+                aria-pressed={revealed}
+                aria-label={
+                  revealed
+                    ? "Blur the clinic photo again"
+                    : "See what happens at Wood Eye Clinic"
+                }
+                className="absolute inset-0 flex items-end justify-center focus:outline-none"
+              >
+                <span
+                  className="pointer-events-none absolute inset-0 transition-opacity duration-700"
+                  style={{
+                    opacity: revealed ? 0 : 1,
+                    background:
+                      "linear-gradient(to top, rgba(0,20,30,0.5) 0%, rgba(0,20,30,0.08) 55%, rgba(0,20,30,0) 100%)",
+                  }}
+                />
+                <span
+                  className="glass-chip pointer-events-none relative mb-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-brand-dark shadow-lg transition-all duration-500"
+                  style={{
+                    opacity: revealed ? 0 : 1,
+                    transform: revealed ? "translateY(8px)" : "translateY(0)",
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  See what happens at Wood Eye Clinic
+                </span>
+              </button>
+
+              {/* Replay hint once revealed */}
+              <span
+                className="glass-chip pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-brand-dark shadow-md transition-opacity duration-700"
+                style={{ opacity: revealed ? 1 : 0 }}
+              >
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+                  <path d="M3 3v5h5" />
+                </svg>
+                Tap to blur
+              </span>
+            </div>
           </div>
         </div>
       </div>
