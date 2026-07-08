@@ -43,7 +43,7 @@ export default function HomePage() {
 
       {/* See clearly again */}
       <section className="px-6 py-20">
-        <Reveal className="mx-auto max-w-3xl text-center text-readable">
+        <Reveal className="glass-surface mx-auto max-w-3xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
             See Clearly Again
           </p>
@@ -67,7 +67,7 @@ export default function HomePage() {
       {/* Services */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center text-readable">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Eyecare Services
             </p>
@@ -108,7 +108,7 @@ export default function HomePage() {
       {/* Inside the clinic photo gallery */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center text-readable">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Inside Wood Eye Clinic
             </p>
@@ -128,7 +128,7 @@ export default function HomePage() {
                 alt="An optometrist examining a patient with advanced imaging technology"
                 className="aspect-[4/3]"
               />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
                 Advanced diagnostic imaging
               </p>
             </Reveal>
@@ -138,7 +138,7 @@ export default function HomePage() {
                 alt="A patient browsing the designer frame wall in the optical boutique"
                 className="aspect-[3/4]"
               />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
                 A boutique full of designer frames
               </p>
             </Reveal>
@@ -148,7 +148,7 @@ export default function HomePage() {
                 alt="The Wood Eye Clinic team in the optical boutique"
                 className="aspect-[4/3]"
               />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/60">
+              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
                 A team that treats you like family
               </p>
             </Reveal>
@@ -162,7 +162,7 @@ export default function HomePage() {
       {/* Doctors */}
       <section className="px-6 py-4">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center text-readable">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Meet the Optometrists
             </p>
@@ -224,7 +224,7 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="mx-auto max-w-2xl text-center text-readable">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Patient Stories
             </p>
