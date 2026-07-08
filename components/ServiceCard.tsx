@@ -17,9 +17,9 @@ export default function ServiceCard({
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="glass-surface glass-strong group flex items-center gap-5 rounded-[1.75rem] p-7 shadow-2xl transition-transform duration-300 hover:-translate-y-0.5 sm:gap-7 sm:p-9"
+      className="glass-pane group flex items-center gap-5 overflow-hidden rounded-[1.75rem] p-7 transition-transform duration-300 hover:-translate-y-0.5 sm:gap-7 sm:p-9"
     >
-      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-sky/70 text-brand-dark transition-colors duration-500 group-hover:bg-brand group-hover:text-white sm:h-20 sm:w-20">
+      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/60 bg-white/40 text-brand-dark shadow-inner backdrop-blur-md transition-colors duration-500 group-hover:bg-brand/80 group-hover:text-white sm:h-20 sm:w-20">
         <Icon name={service.icon} className="h-8 w-8 sm:h-9 sm:w-9" />
       </span>
 
