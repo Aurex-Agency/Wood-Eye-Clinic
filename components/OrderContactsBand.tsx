@@ -8,7 +8,7 @@ import { clinic } from "@/lib/site";
  */
 export default function OrderContactsBand({
   title = "Need more contacts?",
-  text = "Reorder your contact lenses online anytime — quick, easy, and shipped straight to your door.",
+  text = "Reorder your contact lenses online anytime. Quick, easy, and shipped straight to your door.",
 }: {
   title?: string;
   text?: string;

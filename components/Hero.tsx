@@ -22,7 +22,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
+    <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:-mt-[108px] sm:px-6 sm:pt-36 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop. The bottom is masked to fade away so the fixed
           light site backdrop (which the next section also sits on) shows through,
           letting the dark hero melt smoothly into the section below. */}
