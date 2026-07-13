@@ -1,42 +1,13 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { clinic } from "@/lib/site";
 
 /*
- * "See clearly" hero. The scene fills the section softly out of focus, the way
- * the world looks without the right prescription. A glass-framed photo of the
- * clinic sits to the right, blurred until the visitor presses "See what happens
- * at Wood Eye Clinic," which brings it into sharp focus. A literal, on-brand
- * play on what the clinic does.
+ * Home hero: the copy on the left, a clean glass-framed photo of the team on
+ * the right. The out-of-focus photo backdrop fills the section and fades away
+ * at the bottom so the hero blends into the section below.
  *
- * The reveal cross-fades a sharp image over a pre-blurred one (hero-blur.webp)
- * rather than animating a CSS `filter`, so the framed photo never lifts into
- * its own compositing layer and keeps frosting correctly behind the sticky
- * header while it scrolls.
- *
- * SWAP THE PHOTO: replace /public/img/hero.webp, then regenerate the blurred
- * companion /public/img/hero-blur.webp from the same source.
+ * SWAP THE PHOTO: replace /public/img/hero.webp.
  */
 export default function Hero() {
-  // On load, a pair of glasses lowers over the photo like putting them on. The
-  // photo is blurred except inside the lenses, which act as clear windows. Once
-  // the glasses settle, the whole photo comes into focus and they fade away.
-  const [dropped, setDropped] = useState(false); // glasses have lowered into place
-  const [revealed, setRevealed] = useState(false); // the whole photo is sharp
-  const [glassesGone, setGlassesGone] = useState(false); // glasses faded away
-
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setDropped(true));
-    const t1 = setTimeout(() => setRevealed(true), 1950);
-    const t2 = setTimeout(() => setGlassesGone(true), 2800);
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, []);
-
   return (
     <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop. The bottom is masked to fade away so the fixed
@@ -135,86 +106,16 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Clinic photo on a soft dark-glass pane. On load, glasses lower over
-            the blurred photo and you see clearly only through the lenses; then
-            the whole photo comes into focus and the glasses fade. */}
+        {/* Clean glass-framed team photo */}
         <div className="relative flex justify-center lg:justify-end">
           <div className="glass-dark relative w-full max-w-[36rem] rounded-[1.75rem] p-2.5 shadow-xl sm:p-3">
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.35rem]">
-              {/* Pre-blurred base */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/img/hero-blur.webp"
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full scale-105 object-cover"
-              />
-              {/* Full sharp photo — fades in once the glasses have settled */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/img/hero.webp"
                 alt="The Wood Eye Clinic team at their optical boutique in Pontotoc"
                 className="absolute inset-0 h-full w-full object-cover"
-                style={{
-                  opacity: revealed ? 1 : 0,
-                  transition: "opacity 850ms cubic-bezier(0.22,1,0.36,1)",
-                }}
               />
-
-              {/* Glasses lowering in: the lenses clip the sharp photo so you see
-                  clearly through them over the blurred rest, and the frame is
-                  drawn on top. The whole SVG lowers as one. */}
-              <svg
-                viewBox="0 0 400 300"
-                preserveAspectRatio="xMidYMid slice"
-                className="absolute inset-0 h-full w-full"
-                aria-hidden="true"
-                style={{
-                  transform: dropped ? "translateY(0)" : "translateY(-86%)",
-                  opacity: glassesGone ? 0 : 1,
-                  transition:
-                    "transform 1200ms cubic-bezier(0.33,1,0.35,1), opacity 700ms ease-out",
-                }}
-              >
-                <defs>
-                  <clipPath id="hero-lens-clip">
-                    <circle cx="125" cy="150" r="70" />
-                    <circle cx="275" cy="150" r="70" />
-                  </clipPath>
-                </defs>
-                {/* sharp photo revealed only inside the lenses */}
-                <image
-                  href="/img/hero.webp"
-                  x="0"
-                  y="0"
-                  width="400"
-                  height="300"
-                  preserveAspectRatio="xMidYMid slice"
-                  clipPath="url(#hero-lens-clip)"
-                />
-                {/* frame, layered dark halo + white + blue rim for legibility */}
-                <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <g stroke="rgba(0,18,30,0.5)" strokeWidth="15">
-                    <circle cx="125" cy="150" r="70" />
-                    <circle cx="275" cy="150" r="70" />
-                    <path d="M195 143 q5 -12 10 0" />
-                    <path d="M57 130 L12 86" />
-                    <path d="M343 130 L388 86" />
-                  </g>
-                  <g stroke="#ffffff" strokeWidth="8">
-                    <circle cx="125" cy="150" r="70" />
-                    <circle cx="275" cy="150" r="70" />
-                    <path d="M195 143 q5 -12 10 0" />
-                    <path d="M57 130 L12 86" />
-                    <path d="M343 130 L388 86" />
-                  </g>
-                  <g stroke="#7fd3f2" strokeWidth="2.5">
-                    <circle cx="125" cy="150" r="70" />
-                    <circle cx="275" cy="150" r="70" />
-                  </g>
-                </g>
-              </svg>
-
               {/* Faint sheen for a hint of glass */}
               <div
                 className="pointer-events-none absolute inset-0"
