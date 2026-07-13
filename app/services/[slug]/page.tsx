@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
+import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
 import OrderContactsBand from "@/components/OrderContactsBand";
@@ -56,6 +57,21 @@ export default async function ServicePage({ params }: Props) {
           </Reveal>
         </div>
       </section>
+
+      {service.photo && (
+        <section className="px-6 py-4">
+          <div className="mx-auto max-w-4xl">
+            <Reveal>
+              <Photo
+                src={service.photo}
+                alt={service.photoAlt ?? `${service.name} at Wood Eye Clinic`}
+                className="aspect-[16/7]"
+                rounded="rounded-[2rem]"
+              />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       <section className="px-6 py-8">
         <div className="mx-auto max-w-4xl space-y-8">
