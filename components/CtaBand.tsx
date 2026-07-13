@@ -38,12 +38,6 @@ export default function CtaBand({
             aria-hidden="true"
           />
 
-          {/* frosted glass overlay for depth */}
-          <div
-            className="glass-dark pointer-events-none absolute inset-4 rounded-[2rem] opacity-70"
-            aria-hidden="true"
-          />
-
           <div className="relative">
             <h2 className="font-display text-3xl font-bold sm:text-4xl">{title}</h2>
             <p className="mx-auto mt-4 max-w-xl text-white/80">{text}</p>
