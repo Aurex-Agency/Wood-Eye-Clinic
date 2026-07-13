@@ -45,8 +45,8 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <Photo
-              src="/img/team-boutique.webp"
-              alt="The Wood Eye Clinic team in the optical boutique"
+              src="/img/office/lounge.webp"
+              alt="The warm, light-filled optical lounge at Wood Eye Clinic"
               className="aspect-[16/9]"
               rounded="rounded-[2rem]"
             />

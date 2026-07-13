@@ -16,7 +16,7 @@ export default function CtaBand({
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('/img/hero.webp')",
+              backgroundImage: "url('/img/office/cta.webp')",
               filter: "blur(18px) brightness(0.5) saturate(1.15)",
               transform: "scale(1.2)",
             }}
