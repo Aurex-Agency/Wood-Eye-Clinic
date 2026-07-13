@@ -23,8 +23,19 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
-      {/* Out-of-focus backdrop */}
-      <div className="absolute inset-0" aria-hidden="true">
+      {/* Out-of-focus backdrop. The bottom is masked to fade away so the fixed
+          light site backdrop (which the next section also sits on) shows through,
+          letting the dark hero melt smoothly into the section below. */}
+      <div
+        className="absolute inset-0"
+        aria-hidden="true"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.45) 86%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.45) 86%, transparent 100%)",
+        }}
+      >
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -125,7 +136,7 @@ export default function Hero() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/img/hero.webp"
-                alt="The Wood Eye Clinic team welcoming patients"
+                alt="The Wood Eye Clinic team at their optical boutique in Pontotoc"
                 className="absolute inset-0 h-full w-full object-cover"
                 style={{
                   opacity: revealed ? 1 : 0,

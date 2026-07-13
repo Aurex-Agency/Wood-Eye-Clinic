@@ -24,7 +24,7 @@ export default function HomePage() {
       <Hero />
 
       {/* Trust bar */}
-      <section className="px-6">
+      <section className="px-6 pt-12 sm:pt-16">
         <div className="mx-auto max-w-6xl">
           <Glass tint className="rounded-4xl">
             <div className="grid grid-cols-2 gap-6 p-8 sm:p-10 lg:grid-cols-4">
