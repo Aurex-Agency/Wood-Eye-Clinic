@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import Photo from "@/components/Photo";
 import BrandMarquee from "@/components/BrandMarquee";
 import CtaBand from "@/components/CtaBand";
+import OrderContactsBand from "@/components/OrderContactsBand";
 import { clinic, doctors, services, testimonials } from "@/lib/site";
 
 const featuredServices = services.slice(0, 6);
@@ -40,6 +41,9 @@ export default function HomePage() {
           </Glass>
         </div>
       </section>
+
+      {/* Order contacts online — prominent for returning patients */}
+      <OrderContactsBand />
 
       {/* See clearly again */}
       <section className="px-6 py-20">

@@ -191,11 +191,7 @@ export default function Header() {
             href={clinic.orderContactsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 ${
-              light
-                ? "border-white/50 text-white hover:bg-white/15"
-                : "border-brand text-brand hover:bg-brand hover:text-white"
-            }`}
+            className="whitespace-nowrap rounded-full bg-sky px-4 py-2 text-sm font-bold text-brand-deep shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
           >
             Order Contacts
           </a>

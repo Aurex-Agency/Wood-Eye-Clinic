@@ -4,6 +4,7 @@ import Icon from "@/components/Icon";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
+import OrderContactsBand from "@/components/OrderContactsBand";
 import { services } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -45,6 +46,8 @@ export default function ServicesPage() {
           ))}
         </div>
       </section>
+
+      <OrderContactsBand />
 
       <CtaBand
         title="Not sure which service you need?"

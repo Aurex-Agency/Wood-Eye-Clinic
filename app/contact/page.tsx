@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
+import OrderContactsBand from "@/components/OrderContactsBand";
 import { clinic } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -96,6 +97,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <OrderContactsBand />
     </>
   );
 }
