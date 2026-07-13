@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { clinic } from "@/lib/site";
 
 /*
- * Home hero: the copy on the left, a clean glass-framed photo of the team on
- * the right. The out-of-focus photo backdrop fills the section and fades away
- * at the bottom so the hero blends into the section below.
+ * Home hero: copy on the left, a clean glass-framed team photo on the right.
+ * The out-of-focus photo backdrop fills the section and fades away at the
+ * bottom so the hero blends into the section below.
  *
- * On load the whole hero eases from softly blurred + faded into sharp focus, an
- * on-brand "life in focus" intro. The blur is dropped once the intro finishes
- * so no lingering filter layer interferes with the sticky header's frosting.
+ * On load the hero eases from softly blurred into focus while a pair of glasses
+ * settles over the headline, then lifts away — an on-brand "life in focus"
+ * intro. The blur is applied per element (not on a wrapping ancestor) so the
+ * glasses stay crisp, and it is dropped once the intro finishes so no lingering
+ * filter layer interferes with the sticky header's frosting.
  *
  * SWAP THE PHOTO: replace /public/img/hero.webp.
  */
@@ -20,12 +22,17 @@ export default function Hero() {
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setFocused(true));
-    const t = setTimeout(() => setSettled(true), 1150);
+    const t = setTimeout(() => setSettled(true), 1500);
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(t);
     };
   }, []);
+
+  const focusStyle = {
+    filter: settled ? undefined : focused ? "blur(0px)" : "blur(9px)",
+    transition: "filter 950ms ease-out",
+  };
 
   return (
     <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
@@ -66,15 +73,14 @@ export default function Hero() {
 
       <div
         className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]"
-        style={{
-          opacity: focused ? 1 : 0,
-          filter: settled ? undefined : focused ? "blur(0px)" : "blur(9px)",
-          transition: "opacity 950ms ease-out, filter 950ms ease-out",
-        }}
+        style={{ opacity: focused ? 1 : 0.8, transition: "opacity 950ms ease-out" }}
       >
         {/* Copy */}
         <div className="max-w-xl">
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md">
+          <p
+            className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md"
+            style={focusStyle}
+          >
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky opacity-70" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky" />
@@ -82,18 +88,57 @@ export default function Hero() {
             Welcoming new patients in Pontotoc, MS
           </p>
 
-          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-[0_2px_18px_rgba(0,18,30,0.55)] sm:text-6xl lg:text-7xl">
-            Life is better
-            <span className="block text-sky">in focus.</span>
-          </h1>
+          <div className="relative mt-6">
+            <h1 className="font-display text-5xl font-bold leading-[1.02] tracking-tight text-white drop-shadow-[0_2px_18px_rgba(0,18,30,0.55)] sm:text-6xl lg:text-7xl">
+              Life is better
+              <span className="block text-sky">in focus.</span>
+            </h1>
 
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-white/85 drop-shadow-[0_1px_10px_rgba(0,18,30,0.5)]">
+            {/* Glasses that fade in over the headline as the hero comes into
+                focus on load, then fade away. No CSS transform (which would
+                promote a layer and mis-composite), so it paints reliably; the
+                SVG centers itself via preserveAspectRatio. */}
+            <svg
+              viewBox="0 0 460 200"
+              preserveAspectRatio="xMidYMid meet"
+              className="pointer-events-none absolute inset-y-0 left-0 z-20 h-full w-[80%] max-w-[26rem] sm:w-[72%]"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              style={{
+                opacity: settled ? 0 : focused ? 1 : 0,
+                transition: "opacity 800ms ease-out",
+              }}
+            >
+              {/* dark halo so the light-blue frame reads over the headline */}
+              <g stroke="rgba(0,18,30,0.55)" strokeWidth="16">
+                <circle cx="140" cy="104" r="78" />
+                <circle cx="320" cy="104" r="78" />
+                <path d="M212 92 q28 -22 56 0" />
+                <path d="M60 84 L6 40" />
+                <path d="M400 84 L454 40" />
+              </g>
+              <g stroke="#8fd6f4" strokeWidth="9">
+                <circle cx="140" cy="104" r="78" />
+                <circle cx="320" cy="104" r="78" />
+                <path d="M212 92 q28 -22 56 0" />
+                <path d="M60 84 L6 40" />
+                <path d="M400 84 L454 40" />
+              </g>
+            </svg>
+          </div>
+
+          <p
+            className="mt-6 max-w-md text-lg leading-relaxed text-white/85 drop-shadow-[0_1px_10px_rgba(0,18,30,0.5)]"
+            style={focusStyle}
+          >
             A trusted family eye clinic caring for North Mississippi since 1981,
             with comprehensive exams, designer eyewear, and doctors who know you
             by name.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center" style={focusStyle}>
             <a
               href={clinic.bookingUrl}
               target="_blank"
@@ -115,7 +160,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2" style={focusStyle}>
             <div className="flex items-center gap-2">
               <div className="flex gap-0.5 text-sky" aria-label="Five star rated">
                 {Array.from({ length: 5 }).map((_, s) => (
@@ -134,7 +179,7 @@ export default function Hero() {
 
         {/* Clean glass-framed team photo */}
         <div className="relative flex justify-center lg:justify-end">
-          <div className="glass-dark relative w-full max-w-[36rem] rounded-[1.75rem] p-2.5 shadow-xl sm:p-3">
+          <div className="glass-dark relative w-full max-w-[36rem] rounded-[1.75rem] p-2.5 shadow-xl sm:p-3" style={focusStyle}>
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.35rem]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
