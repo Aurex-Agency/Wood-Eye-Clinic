@@ -55,12 +55,14 @@ export default function HomePage() {
             clearly for the first time. Our doctors take the time to find the
             right prescription, and the right care, for your eyes and your life.
           </p>
-          <Link
-            href="/contact"
+          <a
+            href={clinic.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-8 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
           >
             Schedule Your Eye Exam
-          </Link>
+          </a>
         </Reveal>
       </section>
 

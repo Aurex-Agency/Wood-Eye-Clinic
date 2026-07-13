@@ -11,6 +11,32 @@ export default function Footer() {
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
             {clinic.tagline}
           </p>
+          <div className="mt-6 flex flex-col gap-2.5">
+            <a
+              href={clinic.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-sky px-5 py-2.5 text-center text-sm font-bold text-brand-deep transition-all duration-300 hover:-translate-y-0.5 hover:bg-white sm:max-w-xs"
+            >
+              Book an Appointment
+            </a>
+            <a
+              href={clinic.orderContactsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-white/40 px-5 py-2.5 text-center text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 sm:max-w-xs"
+            >
+              Order Contacts Online
+            </a>
+            <a
+              href={clinic.patientPortalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-white/40 px-5 py-2.5 text-center text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 sm:max-w-xs"
+            >
+              Patient Portal
+            </a>
+          </div>
         </div>
 
         <div>

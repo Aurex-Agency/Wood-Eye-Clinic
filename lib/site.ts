@@ -11,6 +11,11 @@ export const clinic = {
   },
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Wood+Eye+Clinic+26+S+Main+Street+Pontotoc+MS+38863",
+  // External patient-facing systems
+  bookingUrl:
+    "https://patron.solutionreach.com/uipatron/schedule/subscriber/bcdc301367849bc1/welcome?utm_campaign=sr-legacy-link-redirect",
+  patientPortalUrl: "https://revolutionehr.com/patient-portal/login",
+  orderContactsUrl: "https://portal.drcontactlens.com/",
   hours: [
     { day: "Monday", hours: "9:00 am to 5:00 pm" },
     { day: "Tuesday", hours: "9:00 am to 6:00 pm" },
