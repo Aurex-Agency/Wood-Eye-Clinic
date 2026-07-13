@@ -87,6 +87,28 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* A welcoming look inside the office */}
+      <section className="px-6 py-6">
+        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
+          <Reveal>
+            <Photo
+              src="/img/office/reception.webp"
+              alt="The welcoming front desk and waiting area at Wood Eye Clinic"
+              className="aspect-[16/10]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+          <Reveal delay={120}>
+            <Photo
+              src="/img/office/eyewear-corner.webp"
+              alt="The designer frame boutique at Wood Eye Clinic"
+              className="aspect-[16/10]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+        </div>
+      </section>
+
       <section className="px-6 py-10">
         <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2">
           {values.map((v, i) => (

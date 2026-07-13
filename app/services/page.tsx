@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
 import PageHero from "@/components/PageHero";
+import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
 import OrderContactsBand from "@/components/OrderContactsBand";
@@ -21,6 +22,20 @@ export default function ServicesPage() {
         title="Complete care for every pair of eyes"
         description="As a full-service eye and vision care provider, we offer everything from routine exams and designer eyewear to advanced disease management, all under one roof in downtown Pontotoc."
       />
+
+      {/* A welcoming look at the boutique */}
+      <section className="px-6 pb-4 pt-4">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <Photo
+              src="/img/office/waiting.webp"
+              alt="The warm, light-filled waiting area at Wood Eye Clinic"
+              className="aspect-[16/6]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+        </div>
+      </section>
 
       <section className="px-6 py-10">
         <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
