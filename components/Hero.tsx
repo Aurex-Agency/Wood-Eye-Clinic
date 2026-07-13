@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { clinic } from "@/lib/site";
 
 /*
@@ -5,9 +8,25 @@ import { clinic } from "@/lib/site";
  * the right. The out-of-focus photo backdrop fills the section and fades away
  * at the bottom so the hero blends into the section below.
  *
+ * On load the whole hero eases from softly blurred + faded into sharp focus, an
+ * on-brand "life in focus" intro. The blur is dropped once the intro finishes
+ * so no lingering filter layer interferes with the sticky header's frosting.
+ *
  * SWAP THE PHOTO: replace /public/img/hero.webp.
  */
 export default function Hero() {
+  const [focused, setFocused] = useState(false);
+  const [settled, setSettled] = useState(false);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setFocused(true));
+    const t = setTimeout(() => setSettled(true), 1150);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+    };
+  }, []);
+
   return (
     <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop. The bottom is masked to fade away so the fixed
@@ -45,7 +64,14 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <div
+        className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]"
+        style={{
+          opacity: focused ? 1 : 0,
+          filter: settled ? undefined : focused ? "blur(0px)" : "blur(9px)",
+          transition: "opacity 950ms ease-out, filter 950ms ease-out",
+        }}
+      >
         {/* Copy */}
         <div className="max-w-xl">
           <p className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md">
