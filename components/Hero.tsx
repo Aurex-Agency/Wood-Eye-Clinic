@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { clinic } from "@/lib/site";
 
 /*
@@ -19,7 +19,22 @@ import { clinic } from "@/lib/site";
  * companion /public/img/hero-blur.webp from the same source.
  */
 export default function Hero() {
-  const [revealed, setRevealed] = useState(false);
+  // On load, a pair of glasses drops down (like putting them on) while the
+  // framed photo comes into focus, then the glasses lift away.
+  const [dropped, setDropped] = useState(false); // glasses have dropped into place
+  const [revealed, setRevealed] = useState(false); // photo is sharp
+  const [glassesGone, setGlassesGone] = useState(false); // glasses faded away
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setDropped(true));
+    const t1 = setTimeout(() => setRevealed(true), 780);
+    const t2 = setTimeout(() => setGlassesGone(true), 2500);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, []);
 
   return (
     <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:min-h-[48rem]">
@@ -154,53 +169,50 @@ export default function Hero() {
                 }}
                 aria-hidden="true"
               />
+            </div>
 
-              {/* Reveal control / scrim */}
-              <button
-                type="button"
-                onClick={() => setRevealed((r) => !r)}
-                aria-pressed={revealed}
-                aria-label={
-                  revealed
-                    ? "Blur the clinic photo again"
-                    : "See what happens at Wood Eye Clinic"
-                }
-                className="absolute inset-0 flex items-end justify-center focus:outline-none"
+            {/* Wood-eye glasses that drop in on load, like putting them on, and
+                lift away as the photo comes into focus. Placed outside the
+                clipped image so they can enter from above the frame. */}
+            <div
+              className="pointer-events-none absolute inset-x-2.5 inset-y-2.5 z-10 flex items-center justify-center sm:inset-x-3 sm:inset-y-3"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 520 250"
+                className="w-[82%]"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  transform: dropped ? "translateY(0)" : "translateY(-120%)",
+                  opacity: glassesGone ? 0 : 1,
+                  transition:
+                    "transform 1150ms cubic-bezier(0.34,1.34,0.5,1), opacity 650ms ease-out",
+                }}
               >
-                <span
-                  className="pointer-events-none absolute inset-0 transition-opacity duration-700"
-                  style={{
-                    opacity: revealed ? 0 : 1,
-                    background:
-                      "linear-gradient(to top, rgba(0,20,30,0.5) 0%, rgba(0,20,30,0.08) 55%, rgba(0,20,30,0) 100%)",
-                  }}
-                />
-                <span
-                  className="glass-chip pointer-events-none relative mb-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-brand-dark shadow-lg transition-all duration-500"
-                  style={{
-                    opacity: revealed ? 0 : 1,
-                    transform: revealed ? "translateY(8px)" : "translateY(0)",
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                  See what happens at Wood Eye Clinic
-                </span>
-              </button>
-
-              {/* Replay hint once revealed */}
-              <span
-                className="glass-chip pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-brand-dark shadow-md transition-opacity duration-700"
-                style={{ opacity: revealed ? 1 : 0 }}
-              >
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
-                  <path d="M3 3v5h5" />
-                </svg>
-                Tap to blur
-              </span>
+                {/* dark halo so the frame reads over any part of the photo */}
+                <g stroke="rgba(0,18,30,0.5)" strokeWidth="21">
+                  <circle cx="158" cy="132" r="92" />
+                  <circle cx="362" cy="132" r="92" />
+                  <path d="M250 116 q10 -16 20 0" />
+                  <path d="M66 104 L16 52" />
+                  <path d="M454 104 L504 52" />
+                </g>
+                {/* white frame */}
+                <g stroke="#ffffff" strokeWidth="12">
+                  <circle cx="158" cy="132" r="92" />
+                  <circle cx="362" cy="132" r="92" />
+                  <path d="M250 116 q10 -16 20 0" />
+                  <path d="M66 104 L16 52" />
+                  <path d="M454 104 L504 52" />
+                </g>
+                {/* subtle brand-blue rim on the lenses */}
+                <g stroke="#7fd3f2" strokeWidth="4">
+                  <circle cx="158" cy="132" r="92" />
+                  <circle cx="362" cy="132" r="92" />
+                </g>
+              </svg>
             </div>
           </div>
         </div>
