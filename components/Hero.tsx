@@ -19,16 +19,17 @@ import { clinic } from "@/lib/site";
  * companion /public/img/hero-blur.webp from the same source.
  */
 export default function Hero() {
-  // On load, a pair of glasses drops down (like putting them on) while the
-  // framed photo comes into focus, then the glasses lift away.
-  const [dropped, setDropped] = useState(false); // glasses have dropped into place
-  const [revealed, setRevealed] = useState(false); // photo is sharp
+  // On load, a pair of glasses lowers over the photo like putting them on. The
+  // photo is blurred except inside the lenses, which act as clear windows. Once
+  // the glasses settle, the whole photo comes into focus and they fade away.
+  const [dropped, setDropped] = useState(false); // glasses have lowered into place
+  const [revealed, setRevealed] = useState(false); // the whole photo is sharp
   const [glassesGone, setGlassesGone] = useState(false); // glasses faded away
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setDropped(true));
-    const t1 = setTimeout(() => setRevealed(true), 780);
-    const t2 = setTimeout(() => setGlassesGone(true), 2500);
+    const t1 = setTimeout(() => setRevealed(true), 1950);
+    const t2 = setTimeout(() => setGlassesGone(true), 2800);
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(t1);
@@ -134,12 +135,13 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Clinic photo resting on a soft dark-glass pane that harmonizes with
-            the hero, snapping into focus on demand */}
+        {/* Clinic photo on a soft dark-glass pane. On load, glasses lower over
+            the blurred photo and you see clearly only through the lenses; then
+            the whole photo comes into focus and the glasses fade. */}
         <div className="relative flex justify-center lg:justify-end">
           <div className="glass-dark relative w-full max-w-[36rem] rounded-[1.75rem] p-2.5 shadow-xl sm:p-3">
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.35rem]">
-              {/* Pre-blurred base (no CSS filter, so it frosts under the header) */}
+              {/* Pre-blurred base */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/img/hero-blur.webp"
@@ -147,7 +149,7 @@ export default function Hero() {
                 aria-hidden="true"
                 className="absolute inset-0 h-full w-full scale-105 object-cover"
               />
-              {/* Sharp image fades in on reveal */}
+              {/* Full sharp photo — fades in once the glasses have settled */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/img/hero.webp"
@@ -155,11 +157,64 @@ export default function Hero() {
                 className="absolute inset-0 h-full w-full object-cover"
                 style={{
                   opacity: revealed ? 1 : 0,
-                  transform: revealed ? "scale(1)" : "scale(1.05)",
-                  transition:
-                    "opacity 900ms cubic-bezier(0.22,1,0.36,1), transform 1200ms cubic-bezier(0.22,1,0.36,1)",
+                  transition: "opacity 850ms cubic-bezier(0.22,1,0.36,1)",
                 }}
               />
+
+              {/* Glasses lowering in: the lenses clip the sharp photo so you see
+                  clearly through them over the blurred rest, and the frame is
+                  drawn on top. The whole SVG lowers as one. */}
+              <svg
+                viewBox="0 0 400 300"
+                preserveAspectRatio="xMidYMid slice"
+                className="absolute inset-0 h-full w-full"
+                aria-hidden="true"
+                style={{
+                  transform: dropped ? "translateY(0)" : "translateY(-86%)",
+                  opacity: glassesGone ? 0 : 1,
+                  transition:
+                    "transform 1200ms cubic-bezier(0.33,1,0.35,1), opacity 700ms ease-out",
+                }}
+              >
+                <defs>
+                  <clipPath id="hero-lens-clip">
+                    <circle cx="125" cy="150" r="70" />
+                    <circle cx="275" cy="150" r="70" />
+                  </clipPath>
+                </defs>
+                {/* sharp photo revealed only inside the lenses */}
+                <image
+                  href="/img/hero.webp"
+                  x="0"
+                  y="0"
+                  width="400"
+                  height="300"
+                  preserveAspectRatio="xMidYMid slice"
+                  clipPath="url(#hero-lens-clip)"
+                />
+                {/* frame, layered dark halo + white + blue rim for legibility */}
+                <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <g stroke="rgba(0,18,30,0.5)" strokeWidth="15">
+                    <circle cx="125" cy="150" r="70" />
+                    <circle cx="275" cy="150" r="70" />
+                    <path d="M195 143 q5 -12 10 0" />
+                    <path d="M57 130 L12 86" />
+                    <path d="M343 130 L388 86" />
+                  </g>
+                  <g stroke="#ffffff" strokeWidth="8">
+                    <circle cx="125" cy="150" r="70" />
+                    <circle cx="275" cy="150" r="70" />
+                    <path d="M195 143 q5 -12 10 0" />
+                    <path d="M57 130 L12 86" />
+                    <path d="M343 130 L388 86" />
+                  </g>
+                  <g stroke="#7fd3f2" strokeWidth="2.5">
+                    <circle cx="125" cy="150" r="70" />
+                    <circle cx="275" cy="150" r="70" />
+                  </g>
+                </g>
+              </svg>
+
               {/* Faint sheen for a hint of glass */}
               <div
                 className="pointer-events-none absolute inset-0"
@@ -169,50 +224,6 @@ export default function Hero() {
                 }}
                 aria-hidden="true"
               />
-            </div>
-
-            {/* Wood-eye glasses that drop in on load, like putting them on, and
-                lift away as the photo comes into focus. Placed outside the
-                clipped image so they can enter from above the frame. */}
-            <div
-              className="pointer-events-none absolute inset-x-2.5 inset-y-2.5 z-10 flex items-center justify-center sm:inset-x-3 sm:inset-y-3"
-              aria-hidden="true"
-            >
-              <svg
-                viewBox="0 0 520 250"
-                className="w-[82%]"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{
-                  transform: dropped ? "translateY(0)" : "translateY(-120%)",
-                  opacity: glassesGone ? 0 : 1,
-                  transition:
-                    "transform 1150ms cubic-bezier(0.34,1.34,0.5,1), opacity 650ms ease-out",
-                }}
-              >
-                {/* dark halo so the frame reads over any part of the photo */}
-                <g stroke="rgba(0,18,30,0.5)" strokeWidth="21">
-                  <circle cx="158" cy="132" r="92" />
-                  <circle cx="362" cy="132" r="92" />
-                  <path d="M250 116 q10 -16 20 0" />
-                  <path d="M66 104 L16 52" />
-                  <path d="M454 104 L504 52" />
-                </g>
-                {/* white frame */}
-                <g stroke="#ffffff" strokeWidth="12">
-                  <circle cx="158" cy="132" r="92" />
-                  <circle cx="362" cy="132" r="92" />
-                  <path d="M250 116 q10 -16 20 0" />
-                  <path d="M66 104 L16 52" />
-                  <path d="M454 104 L504 52" />
-                </g>
-                {/* subtle brand-blue rim on the lenses */}
-                <g stroke="#7fd3f2" strokeWidth="4">
-                  <circle cx="158" cy="132" r="92" />
-                  <circle cx="362" cy="132" r="92" />
-                </g>
-              </svg>
             </div>
           </div>
         </div>
