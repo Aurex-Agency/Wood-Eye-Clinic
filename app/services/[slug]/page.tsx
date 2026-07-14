@@ -60,20 +60,18 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      {service.photo && (
-        <section className="px-6 py-4">
-          <div className="mx-auto max-w-4xl">
-            <Reveal>
-              <Photo
-                src={service.photo}
-                alt={service.photoAlt ?? `${service.name} at Wood Eye Clinic`}
-                className="aspect-[4/3] sm:aspect-[16/7]"
-                rounded="rounded-[2rem]"
-              />
-            </Reveal>
-          </div>
-        </section>
-      )}
+      <section className="px-6 py-4">
+        <div className="mx-auto max-w-4xl">
+          <Reveal>
+            <Photo
+              src="/img/office/lobby.webp"
+              alt="The warm, welcoming waiting lounge at Wood Eye Clinic in Pontotoc"
+              className="aspect-[4/3] sm:aspect-[16/7]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+        </div>
+      </section>
 
       <section className="px-6 py-8">
         <div className="mx-auto max-w-4xl space-y-8">

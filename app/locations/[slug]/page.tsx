@@ -208,8 +208,9 @@ export default async function LocationPage({ params }: Props) {
             <Photo
               src="/img/office/storefront.webp"
               alt={`The Wood Eye Clinic storefront on Main Street in Pontotoc, serving ${location.city}, ${location.state}`}
-              className="aspect-[4/3] sm:aspect-[16/6]"
+              className="aspect-[4/3] sm:aspect-[16/8]"
               rounded="rounded-[2rem]"
+              objectPosition="center 82%"
             />
           </Reveal>
         </div>
