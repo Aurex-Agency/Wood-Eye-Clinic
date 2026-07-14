@@ -45,8 +45,8 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <Photo
-              src="/img/team-boutique.webp"
-              alt="The Wood Eye Clinic team in the optical boutique"
+              src="/img/office/lounge.webp"
+              alt="The warm, light-filled optical lounge at Wood Eye Clinic"
               className="aspect-[16/9]"
               rounded="rounded-[2rem]"
             />
@@ -83,6 +83,28 @@ export default function AboutPage() {
               through our doors. We look forward to helping you and your
               family enjoy a lifetime of healthy vision.
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* A welcoming look inside the office */}
+      <section className="px-6 py-6">
+        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
+          <Reveal>
+            <Photo
+              src="/img/office/reception.webp"
+              alt="The welcoming front desk and waiting area at Wood Eye Clinic"
+              className="aspect-[16/10]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+          <Reveal delay={120}>
+            <Photo
+              src="/img/office/eyewear-corner.webp"
+              alt="The designer frame boutique at Wood Eye Clinic"
+              className="aspect-[16/10]"
+              rounded="rounded-[2rem]"
+            />
           </Reveal>
         </div>
       </section>

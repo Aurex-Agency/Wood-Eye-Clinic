@@ -11,7 +11,7 @@ export default function Logo({ light = false }: { light?: boolean }) {
       <img
         src={light ? "/logo-light.webp" : "/logo.webp"}
         alt="Wood Eye Clinic"
-        className="h-10 w-auto transition-transform duration-500 hover:scale-[1.03] sm:h-12"
+        className="h-12 w-auto transition-transform duration-500 hover:scale-[1.03] sm:h-16"
       />
     </Link>
   );

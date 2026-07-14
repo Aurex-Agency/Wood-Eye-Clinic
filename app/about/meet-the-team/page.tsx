@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Glass from "@/components/Glass";
 import PageHero from "@/components/PageHero";
+import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
 import { doctors, staff } from "@/lib/site";
@@ -21,6 +22,19 @@ export default function MeetTheTeamPage() {
         title="The people behind your care"
         description="From your first phone call to your final frame fitting, every member of our team is dedicated to creating an exceptional experience."
       />
+
+      <section className="px-6 pb-4 pt-4">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <Photo
+              src="/img/office/team.webp"
+              alt="The full Wood Eye Clinic team at their optical boutique in Pontotoc"
+              className="aspect-[3/2]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+        </div>
+      </section>
 
       <section className="px-6 py-10">
         <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { clinic } from "@/lib/site";
 
 export default function CtaBand({
@@ -16,7 +15,7 @@ export default function CtaBand({
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('/img/hero.webp')",
+              backgroundImage: "url('/img/office/cta.webp')",
               filter: "blur(18px) brightness(0.5) saturate(1.15)",
               transform: "scale(1.2)",
             }}
@@ -39,27 +38,25 @@ export default function CtaBand({
             aria-hidden="true"
           />
 
-          {/* frosted glass overlay for depth */}
-          <div
-            className="glass-dark pointer-events-none absolute inset-4 rounded-[2rem] opacity-70"
-            aria-hidden="true"
-          />
-
           <div className="relative">
             <h2 className="font-display text-3xl font-bold sm:text-4xl">{title}</h2>
             <p className="mx-auto mt-4 max-w-xl text-white/80">{text}</p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href="/contact"
+              <a
+                href={clinic.bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="rounded-full bg-white px-8 py-4 font-bold text-brand-deep shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-sky"
               >
-                Request an Appointment
-              </Link>
+                Book an Appointment
+              </a>
               <a
-                href={clinic.phoneHref}
+                href={clinic.orderContactsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="rounded-full border border-white/40 bg-white/5 px-8 py-4 font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/15"
               >
-                Call {clinic.phone}
+                Order Contacts Online
               </a>
             </div>
           </div>

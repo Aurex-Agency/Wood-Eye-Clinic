@@ -45,6 +45,15 @@ export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+
+  // Close every menu whenever the route changes so a dropdown never lingers
+  // open after navigating to one of its pages.
+  useEffect(() => {
+    setOpenMenu(null);
+    setOpen(false);
+    setExpanded(null);
+  }, [pathname]);
   // On the home page the header floats over the dark hero, so nav text is
   // white until the hero scrolls out from behind it, then it turns dark.
   const [light, setLight] = useState(pathname === "/");
@@ -85,13 +94,18 @@ export default function Header() {
       <div className="glass-liquid mx-auto flex max-w-6xl items-center justify-between rounded-full px-5 py-3 sm:px-7">
         <Logo light={light} />
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Main navigation">
           {nav.map((item) =>
             item.children ? (
-              <div key={item.href} className="group relative">
+              <div
+                key={item.href}
+                className="relative"
+                onMouseEnter={() => setOpenMenu(item.label)}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
+                  className={`flex items-center gap-1 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
                     isActive(item.href)
                       ? "bg-brand text-white"
                       : light
@@ -102,7 +116,9 @@ export default function Header() {
                   {item.label}
                   <svg
                     viewBox="0 0 24 24"
-                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180"
+                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                      openMenu === item.label ? "rotate-180" : ""
+                    }`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2.5"
@@ -114,13 +130,28 @@ export default function Header() {
                   </svg>
                 </Link>
 
-                {/* Dropdown */}
-                <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                {/* Dropdown — frosted panel that materializes out of a blur */}
+                <div
+                  className={`absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 ${
+                    openMenu === item.label ? "" : "pointer-events-none"
+                  }`}
+                >
                   <div
                     className={`glass-surface rounded-3xl p-2 shadow-2xl ${
                       item.children.length > 4 ? "w-[34rem]" : "w-72"
                     }`}
-                    style={{ backgroundColor: "rgba(255,255,255,0.96)" }}
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.96)",
+                      opacity: openMenu === item.label ? 1 : 0,
+                      transform:
+                        openMenu === item.label
+                          ? "translateY(0) scale(1)"
+                          : "translateY(-12px) scale(0.95)",
+                      filter: openMenu === item.label ? "blur(0px)" : "blur(14px)",
+                      transformOrigin: "top center",
+                      transition:
+                        "opacity 280ms ease, transform 420ms cubic-bezier(0.16,1,0.3,1), filter 380ms cubic-bezier(0.16,1,0.3,1)",
+                    }}
                   >
                     <div
                       className={
@@ -131,6 +162,7 @@ export default function Header() {
                         <Link
                           key={child.href}
                           href={child.href}
+                          onClick={() => setOpenMenu(null)}
                           className="flex items-start gap-3 rounded-2xl px-3 py-2.5 transition-colors duration-200 hover:bg-sky/50"
                         >
                           {child.icon && (
@@ -150,6 +182,7 @@ export default function Header() {
                     {item.children.length > 4 && (
                       <Link
                         href={item.href}
+                        onClick={() => setOpenMenu(null)}
                         className="mt-1 block rounded-2xl bg-brand/10 px-4 py-2.5 text-center text-sm font-bold text-brand transition-colors hover:bg-brand hover:text-white"
                       >
                         View all services &rarr;
@@ -162,7 +195,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
                   isActive(item.href)
                     ? "bg-brand text-white"
                     : light
@@ -176,27 +209,39 @@ export default function Header() {
           )}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-2.5 xl:flex">
           <a
-            href={clinic.phoneHref}
-            className={`text-sm font-bold transition-colors duration-300 ${
+            href={clinic.patientPortalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`whitespace-nowrap text-sm font-semibold transition-colors duration-300 ${
               light ? "text-white hover:text-sky" : "text-brand-dark hover:text-brand"
             }`}
           >
-            {clinic.phone}
+            Patient Portal
           </a>
-          <Link
-            href="/contact"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand"
+          <a
+            href={clinic.orderContactsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="whitespace-nowrap rounded-full bg-sky px-4 py-2 text-sm font-bold text-brand-deep shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
           >
-            Request Appointment
-          </Link>
+            Order Contacts
+          </a>
+          <a
+            href={clinic.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="whitespace-nowrap rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand"
+          >
+            Book an Appointment
+          </a>
         </div>
 
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-300 lg:hidden ${
+          className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-300 xl:hidden ${
             light ? "text-white hover:bg-white/20" : "text-ink hover:bg-sky/50"
           }`}
           aria-expanded={open}
@@ -216,7 +261,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="glass-surface glass-strong mx-auto mt-2 max-h-[75vh] max-w-6xl overflow-y-auto rounded-3xl p-4 lg:hidden">
+        <div className="glass-surface glass-strong mx-auto mt-2 max-h-[75vh] max-w-6xl overflow-y-auto rounded-3xl p-4 xl:hidden">
           <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
             {nav.map((item) =>
               item.children ? (
@@ -282,13 +327,33 @@ export default function Header() {
                 </Link>
               )
             )}
-            <Link
-              href="/contact"
+            <a
+              href={clinic.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-2xl bg-ink px-4 py-3 text-center text-base font-semibold text-white"
             >
-              Request Appointment
-            </Link>
+              Book an Appointment
+            </a>
+            <a
+              href={clinic.orderContactsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="rounded-2xl border-2 border-brand px-4 py-3 text-center text-base font-bold text-brand"
+            >
+              Order Contacts Online
+            </a>
+            <a
+              href={clinic.patientPortalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="rounded-2xl border-2 border-brand/50 px-4 py-3 text-center text-base font-bold text-brand-dark"
+            >
+              Patient Portal
+            </a>
             <a
               href={clinic.phoneHref}
               className="rounded-2xl px-4 py-3 text-center text-base font-bold text-brand-dark"

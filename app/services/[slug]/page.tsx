@@ -5,6 +5,7 @@ import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
+import OrderContactsBand from "@/components/OrderContactsBand";
 import { services } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -129,6 +130,14 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <OrderContactsBand
+        title={
+          service.slug === "contact-lenses"
+            ? "Already wear contacts? Reorder online"
+            : "Need more contacts?"
+        }
+      />
 
       <CtaBand />
     </>

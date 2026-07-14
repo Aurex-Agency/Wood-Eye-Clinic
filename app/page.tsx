@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import Photo from "@/components/Photo";
 import BrandMarquee from "@/components/BrandMarquee";
 import CtaBand from "@/components/CtaBand";
+import OrderContactsBand from "@/components/OrderContactsBand";
 import { clinic, doctors, services, testimonials } from "@/lib/site";
 
 const featuredServices = services.slice(0, 6);
@@ -24,7 +25,7 @@ export default function HomePage() {
       <Hero />
 
       {/* Trust bar */}
-      <section className="px-6">
+      <section className="px-6 pt-12 sm:pt-16">
         <div className="mx-auto max-w-6xl">
           <Glass tint className="rounded-4xl">
             <div className="grid grid-cols-2 gap-6 p-8 sm:p-10 lg:grid-cols-4">
@@ -41,6 +42,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Order contacts online — prominent for returning patients */}
+      <OrderContactsBand />
+
       {/* See clearly again */}
       <section className="px-6 py-20">
         <Reveal className="glass-surface mx-auto max-w-3xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
@@ -55,12 +59,14 @@ export default function HomePage() {
             clearly for the first time. Our doctors take the time to find the
             right prescription, and the right care, for your eyes and your life.
           </p>
-          <Link
-            href="/contact"
+          <a
+            href={clinic.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-8 inline-block rounded-full bg-brand px-8 py-4 font-bold text-white shadow-xl shadow-brand/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark"
           >
             Schedule Your Eye Exam
-          </Link>
+          </a>
         </Reveal>
       </section>
 
@@ -121,37 +127,50 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-12 grid items-center gap-5 md:grid-cols-3">
+          <div className="mt-12 space-y-5">
+            {/* Featured wide shot of the optical lounge */}
             <Reveal>
               <Photo
-                src="/img/exam.webp"
-                alt="An optometrist examining a patient with advanced imaging technology"
-                className="aspect-[4/3]"
+                src="/img/office/lounge.webp"
+                alt="The warm, light-filled optical lounge at Wood Eye Clinic"
+                className="aspect-[16/9]"
+                rounded="rounded-[2rem]"
               />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
-                Advanced diagnostic imaging
-              </p>
             </Reveal>
-            <Reveal delay={120}>
-              <Photo
-                src="/img/eyewear-wall.webp"
-                alt="A patient browsing the designer frame wall in the optical boutique"
-                className="aspect-[3/4]"
-              />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
-                A boutique full of designer frames
-              </p>
-            </Reveal>
-            <Reveal delay={240}>
-              <Photo
-                src="/img/team-boutique.webp"
-                alt="The Wood Eye Clinic team in the optical boutique"
-                className="aspect-[4/3]"
-              />
-              <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
-                A team that treats you like family
-              </p>
-            </Reveal>
+
+            {/* Three-up of the boutique, an exam room, and the storefront */}
+            <div className="grid gap-5 md:grid-cols-3">
+              <Reveal>
+                <Photo
+                  src="/img/office/eyewear-wall.webp"
+                  alt="A wall of designer frames in the Wood Eye Clinic optical boutique"
+                  className="aspect-[3/4]"
+                />
+                <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
+                  A boutique full of designer frames
+                </p>
+              </Reveal>
+              <Reveal delay={120}>
+                <Photo
+                  src="/img/office/exam-room.webp"
+                  alt="A Wood Eye Clinic exam room with advanced diagnostic equipment"
+                  className="aspect-[3/4]"
+                />
+                <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
+                  Advanced diagnostic technology
+                </p>
+              </Reveal>
+              <Reveal delay={240}>
+                <Photo
+                  src="/img/office/storefront.webp"
+                  alt="The historic Wood Eye Clinic building on Main Street in downtown Pontotoc"
+                  className="aspect-[3/4]"
+                />
+                <p className="mt-3 text-center text-sm font-semibold text-ink/70 text-readable">
+                  On Main Street in downtown Pontotoc
+                </p>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>

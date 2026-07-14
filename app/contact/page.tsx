@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Glass from "@/components/Glass";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import Photo from "@/components/Photo";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
+import OrderContactsBand from "@/components/OrderContactsBand";
 import { clinic } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -20,6 +22,20 @@ export default function ContactPage() {
         title="We would love to hear from you"
         description="Request an appointment, ask about your insurance, or just say hello. Our team is here to help."
       />
+
+      {/* Welcoming storefront on Main Street */}
+      <section className="px-6 pb-4 pt-4">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <Photo
+              src="/img/office/exterior.webp"
+              alt="The Wood Eye Clinic building on Main Street in downtown Pontotoc"
+              className="aspect-[16/6]"
+              rounded="rounded-[2rem]"
+            />
+          </Reveal>
+        </div>
+      </section>
 
       <section className="px-6 py-10">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.4fr_1fr]">
@@ -96,6 +112,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <OrderContactsBand />
     </>
   );
 }
