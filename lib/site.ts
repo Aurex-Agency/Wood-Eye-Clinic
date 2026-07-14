@@ -150,7 +150,7 @@ export const doctors: TeamMember[] = [
 export const staff: TeamMember[] = [
   {
     slug: "sarah-grace",
-    name: "Sarah Grace",
+    name: "Sarah Grace Golden",
     shortName: "Sarah",
     role: "Office Manager",
     isDoctor: false,
