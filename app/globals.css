@@ -444,6 +444,27 @@ body {
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
+/* Mobile: same glass look with lighter backdrop blurs. Small screens show far
+   less backdrop per pane, so a shorter blur radius reads identically while
+   costing the GPU much less — keeps scrolling at 60fps on phones. */
+@media (max-width: 640px) {
+  .glass-surface {
+    backdrop-filter: blur(18px) saturate(190%) brightness(1.06);
+  }
+  .glass-liquid {
+    backdrop-filter: blur(18px) saturate(185%) brightness(1.38);
+  }
+  .glass-pane {
+    backdrop-filter: blur(16px) saturate(190%) brightness(1.12);
+  }
+  .glass-dark {
+    backdrop-filter: blur(16px) saturate(160%);
+  }
+  .orb {
+    filter: blur(40px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal-blur {
     filter: none;

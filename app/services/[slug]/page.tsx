@@ -37,21 +37,23 @@ export default async function ServicePage({ params }: Props) {
       <section className="px-6 pb-6 pt-16 sm:pt-20">
         <div className="mx-auto max-w-4xl">
           <Reveal>
-            <Link
-              href="/services"
-              className="text-sm font-semibold text-brand transition-colors hover:text-brand-dark"
-            >
-              &larr; All Eyecare Services
-            </Link>
-            <div className="mt-8 flex items-start gap-5">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-sky/60 text-brand-dark">
-                <Icon name={service.icon} className="h-7 w-7" />
-              </div>
-              <div>
-                <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-                  {service.name}
-                </h1>
-                <p className="mt-4 text-lg leading-relaxed text-ink/70">{service.summary}</p>
+            <div className="glass-surface rounded-4xl px-6 py-7 sm:px-10 sm:py-9">
+              <Link
+                href="/services"
+                className="text-sm font-semibold text-brand transition-colors hover:text-brand-dark"
+              >
+                &larr; All Eyecare Services
+              </Link>
+              <div className="mt-6 flex flex-col items-start gap-4 sm:mt-8 sm:flex-row sm:gap-5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky/60 text-brand-dark sm:h-14 sm:w-14">
+                  <Icon name={service.icon} className="h-6 w-6 sm:h-7 sm:w-7" />
+                </div>
+                <div>
+                  <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl">
+                    {service.name}
+                  </h1>
+                  <p className="mt-4 text-lg leading-relaxed text-ink/70">{service.summary}</p>
+                </div>
               </div>
             </div>
           </Reveal>
@@ -65,7 +67,7 @@ export default async function ServicePage({ params }: Props) {
               <Photo
                 src={service.photo}
                 alt={service.photoAlt ?? `${service.name} at Wood Eye Clinic`}
-                className="aspect-[16/7]"
+                className="aspect-[4/3] sm:aspect-[16/7]"
                 rounded="rounded-[2rem]"
               />
             </Reveal>

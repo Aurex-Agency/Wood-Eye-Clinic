@@ -1,3 +1,12 @@
+/*
+ * Canonical site origin used for SEO (canonical URLs, Open Graph, sitemap,
+ * JSON-LD). Set NEXT_PUBLIC_SITE_URL in Vercel once the custom domain is
+ * live; until then the production Vercel URL keeps every tag correct.
+ */
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://wood-eye-clinic.vercel.app";
+
 export const clinic = {
   name: "Wood Eye Clinic",
   tagline: "Caring for the vision of Pontotoc and North Mississippi since 1981.",
@@ -11,6 +20,7 @@ export const clinic = {
   },
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Wood+Eye+Clinic+26+S+Main+Street+Pontotoc+MS+38863",
+  geo: { latitude: 34.2465, longitude: -88.9987 },
   // External patient-facing systems
   bookingUrl:
     "https://patron.solutionreach.com/uipatron/schedule/subscriber/bcdc301367849bc1/welcome?utm_campaign=sr-legacy-link-redirect",

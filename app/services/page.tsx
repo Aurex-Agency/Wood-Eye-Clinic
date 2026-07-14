@@ -30,7 +30,7 @@ export default function ServicesPage() {
             <Photo
               src="/img/office/waiting.webp"
               alt="The warm, light-filled waiting area at Wood Eye Clinic"
-              className="aspect-[16/6]"
+              className="aspect-[4/3] sm:aspect-[16/6]"
               rounded="rounded-[2rem]"
             />
           </Reveal>

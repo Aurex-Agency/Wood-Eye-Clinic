@@ -28,7 +28,7 @@ export default function HomePage() {
       <section className="px-6 pt-12 sm:pt-16">
         <div className="mx-auto max-w-6xl">
           <Glass tint className="rounded-4xl">
-            <div className="grid grid-cols-2 gap-6 p-8 sm:p-10 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-6 p-6 sm:p-10 lg:grid-cols-4">
               {trustPoints.map((point) => (
                 <div key={point.label} className="text-center">
                   <p className="font-display text-3xl font-bold text-brand-dark sm:text-4xl">
@@ -46,8 +46,8 @@ export default function HomePage() {
       <OrderContactsBand />
 
       {/* See clearly again */}
-      <section className="px-6 py-20">
-        <Reveal className="glass-surface mx-auto max-w-3xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
+      <section className="px-6 py-14 sm:py-20">
+        <Reveal className="glass-surface mx-auto max-w-3xl rounded-[1.75rem] px-6 py-7 text-center sm:px-10 sm:py-9">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
             See Clearly Again
           </p>
@@ -71,9 +71,9 @@ export default function HomePage() {
       </section>
 
       {/* Services */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-6 py-7 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Eyecare Services
             </p>
@@ -112,9 +112,9 @@ export default function HomePage() {
       </section>
 
       {/* Inside the clinic photo gallery */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-6 py-7 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Inside Wood Eye Clinic
             </p>
@@ -181,7 +181,7 @@ export default function HomePage() {
       {/* Doctors */}
       <section className="px-6 py-4">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-6 py-7 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Meet the Optometrists
             </p>
@@ -241,9 +241,9 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
+          <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-6 py-7 text-center sm:px-10 sm:py-9">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
               Patient Stories
             </p>
