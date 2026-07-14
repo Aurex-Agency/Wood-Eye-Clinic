@@ -28,8 +28,8 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <Photo
-              src="/img/office/waiting.webp"
-              alt="The warm, light-filled waiting area at Wood Eye Clinic"
+              src="/img/office/services-hero.webp"
+              alt="Walls of designer eyewear on display in the optical boutique at Wood Eye Clinic"
               className="aspect-[4/3] sm:aspect-[16/6]"
               rounded="rounded-[2rem]"
             />
