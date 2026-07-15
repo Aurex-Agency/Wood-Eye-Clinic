@@ -119,7 +119,7 @@ export const doctors: TeamMember[] = [
     isDoctor: true,
     photo: "/img/doctors/warren.webp",
     joined: "Joined the clinic in June 2023",
-    headline: "Advanced technology paired with hometown, personalized care.",
+    headline: "Committed to delivering advanced eye care with a personal touch.",
     intro:
       "Dr. Joseph Caleb Warren joined Wood Eye Clinic in June 2023 and is proud to provide compassionate, personalized eye care to patients throughout Pontotoc and the surrounding communities.",
     bio: [
@@ -138,7 +138,8 @@ export const doctors: TeamMember[] = [
       "Eyelid lesion removal",
       "YAG posterior capsulotomy laser surgery",
     ],
-    funFact: "A Pontotoc native who loves deer hunting and time at the gym.",
+    funFact:
+      "A Pontotoc native who enjoys spending time with his wife and daughters, deer hunting, and staying active in the gym.",
   },
 ];
 
@@ -192,8 +193,8 @@ export const staff: TeamMember[] = [
   },
   {
     slug: "christy-wallace",
-    name: "Christy Wallace",
-    shortName: "Christy",
+    name: "Christi Wallace",
+    shortName: "Christi",
     role: "Optometric Technician",
     isDoctor: false,
     joined: "Beside you at every exam",
@@ -206,7 +207,7 @@ export const staff: TeamMember[] = [
   },
   {
     slug: "chloe-throne",
-    name: "Chloe Throne",
+    name: "Chloe Thorne",
     shortName: "Chloe",
     role: "Glasses Technician",
     isDoctor: false,
@@ -305,16 +306,12 @@ export type Service = {
   short: string;
   icon: string;
   summary: string;
-  photo?: string;
-  photoAlt?: string;
   sections: ServiceSection[];
 };
 
 export const services: Service[] = [
   {
     slug: "comprehensive-eye-exams",
-    photo: "/img/office/exam-room.webp",
-    photoAlt: "An exam room at Wood Eye Clinic ready for a comprehensive eye exam",
     name: "Comprehensive Eye Exams",
     short: "Eye Exams",
     icon: "eye",
@@ -349,8 +346,6 @@ export const services: Service[] = [
   },
   {
     slug: "childrens-eye-exams",
-    photo: "/img/office/lounge.webp",
-    photoAlt: "The comfortable, family-friendly lounge at Wood Eye Clinic",
     name: "Children's Eye Exams",
     short: "Kids' Exams",
     icon: "child",
@@ -414,8 +409,6 @@ export const services: Service[] = [
   },
   {
     slug: "vision-therapy",
-    photo: "/img/office/reception.webp",
-    photoAlt: "The welcoming reception area at Wood Eye Clinic",
     name: "Vision Therapy",
     short: "Vision Therapy",
     icon: "target",
@@ -458,8 +451,6 @@ export const services: Service[] = [
   },
   {
     slug: "diabetic-eye-care",
-    photo: "/img/office/exam-room.webp",
-    photoAlt: "Diagnostic imaging equipment in a Wood Eye Clinic exam room",
     name: "Diabetic Eye Care",
     short: "Diabetic Care",
     icon: "drop",
@@ -515,8 +506,6 @@ export const services: Service[] = [
   },
   {
     slug: "eye-disease-management",
-    photo: "/img/office/exterior.webp",
-    photoAlt: "The Wood Eye Clinic building in downtown Pontotoc, Mississippi",
     name: "Eye Disease Management",
     short: "Eye Conditions",
     icon: "shield",
@@ -585,8 +574,6 @@ export const services: Service[] = [
   },
   {
     slug: "contact-lenses",
-    photo: "/img/office/eyewear-corner.webp",
-    photoAlt: "The contact lens and eyewear corner at Wood Eye Clinic",
     name: "Contact Lenses",
     short: "Contacts",
     icon: "lens",
@@ -653,8 +640,6 @@ export const services: Service[] = [
   },
   {
     slug: "eyewear-and-glasses",
-    photo: "/img/office/eyewear-wall.webp",
-    photoAlt: "The designer eyewear wall at Wood Eye Clinic",
     name: "Eyewear & Glasses",
     short: "Eyewear",
     icon: "glasses",
@@ -726,8 +711,6 @@ export const services: Service[] = [
   },
   {
     slug: "sunglasses",
-    photo: "/img/office/eyewear-corner.webp",
-    photoAlt: "Sunglasses and designer frames on display at Wood Eye Clinic",
     name: "Sunglasses",
     short: "Sunglasses",
     icon: "sun",
@@ -761,8 +744,6 @@ export const services: Service[] = [
   },
   {
     slug: "computer-vision",
-    photo: "/img/office/waiting.webp",
-    photoAlt: "The bright, light-filled waiting area at Wood Eye Clinic",
     name: "Computer Vision Care",
     short: "Digital Eye Strain",
     icon: "monitor",
@@ -791,8 +772,6 @@ export const services: Service[] = [
   },
   {
     slug: "lasik-co-management",
-    photo: "/img/office/storefront.webp",
-    photoAlt: "The Wood Eye Clinic storefront on South Main Street",
     name: "LASIK Consultation & Co-Management",
     short: "LASIK",
     icon: "spark",
@@ -820,8 +799,6 @@ export const services: Service[] = [
   },
   {
     slug: "onsite-optical-lab",
-    photo: "/img/office/eyewear-wall.webp",
-    photoAlt: "Frames on the wall at Wood Eye Clinic, ready for the onsite lab",
     name: "Onsite Optical Lab",
     short: "Optical Lab",
     icon: "lab",

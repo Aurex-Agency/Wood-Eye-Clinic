@@ -11,6 +11,27 @@ import { services } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Photo shown at the top of each service page. Most services share the
+// welcoming lobby shot; a few have their own more fitting image.
+const LOBBY_PHOTO = {
+  src: "/img/office/lobby.webp",
+  alt: "The warm, welcoming waiting lounge at Wood Eye Clinic in Pontotoc",
+};
+const SERVICE_PHOTOS: Record<string, { src: string; alt: string }> = {
+  "onsite-optical-lab": {
+    src: "/img/office/optical-lab.webp",
+    alt: "An exam room with advanced diagnostic equipment at Wood Eye Clinic",
+  },
+  "eyewear-and-glasses": {
+    src: "/img/office/eyewear-display.webp",
+    alt: "Walls of designer frames in the optical boutique at Wood Eye Clinic",
+  },
+  sunglasses: {
+    src: "/img/office/eyewear-display.webp",
+    alt: "Designer sunglasses and frames on display at Wood Eye Clinic",
+  },
+};
+
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
 }
@@ -31,6 +52,7 @@ export default async function ServicePage({ params }: Props) {
   if (!service) notFound();
 
   const related = services.filter((s) => s.slug !== slug).slice(0, 3);
+  const heroPhoto = SERVICE_PHOTOS[service.slug] ?? LOBBY_PHOTO;
 
   return (
     <>
@@ -64,8 +86,8 @@ export default async function ServicePage({ params }: Props) {
         <div className="mx-auto max-w-4xl">
           <Reveal>
             <Photo
-              src="/img/office/lobby.webp"
-              alt="The warm, welcoming waiting lounge at Wood Eye Clinic in Pontotoc"
+              src={heroPhoto.src}
+              alt={heroPhoto.alt}
               className="aspect-[4/3] sm:aspect-[16/7]"
               rounded="rounded-[2rem]"
             />
