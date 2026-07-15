@@ -3,29 +3,10 @@
 import { useState } from "react";
 
 /*
- * Contact form. Submissions are delivered by email via FormSubmit.co, a
- * no-backend form service: the destination address is encoded in the
- * endpoint, so every submission is emailed to the clinic.
- *
- * SETUP (one time): the very first submission triggers a FormSubmit
- * activation email to the destination inbox. Click the activation link in
- * that email once and all future submissions arrive automatically.
- *
- * To change the destination or hide the address from the page source, set
- * NEXT_PUBLIC_FORM_ENDPOINT (e.g. a FormSubmit alias URL) in the environment.
+ * Contact form. Submissions POST to /api/contact, which emails a branded
+ * message to the clinic and a confirmation to the patient (via Resend when
+ * configured, otherwise FormSubmit as a no-setup fallback).
  */
-const FORM_ENDPOINT =
-  process.env.NEXT_PUBLIC_FORM_ENDPOINT ??
-  "https://formsubmit.co/ajax/woodeyeclinic@gmail.com";
-
-const TOPIC_LABELS: Record<string, string> = {
-  appointment: "Request an appointment",
-  eyewear: "Glasses or contact lenses",
-  insurance: "Insurance question",
-  "vision-therapy": "Vision therapy",
-  other: "Something else",
-};
-
 type Status = "idle" | "submitting" | "success" | "error";
 
 export default function ContactForm() {
@@ -42,28 +23,20 @@ export default function ContactForm() {
       return;
     }
 
-    const firstName = String(data.get("firstName") ?? "").trim();
-    const lastName = String(data.get("lastName") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const topic = String(data.get("topic") ?? "");
-
     const payload = {
-      Name: `${firstName} ${lastName}`.trim(),
-      Phone: data.get("phone"),
-      Email: email,
-      "How can we help": TOPIC_LABELS[topic] ?? topic,
-      Message: data.get("message"),
-      _subject: "New message from the Wood Eye Clinic website",
-      _template: "table",
-      _replyto: email,
-      _captcha: "false",
+      firstName: String(data.get("firstName") ?? "").trim(),
+      lastName: String(data.get("lastName") ?? "").trim(),
+      phone: String(data.get("phone") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      topic: String(data.get("topic") ?? ""),
+      message: String(data.get("message") ?? "").trim(),
     };
 
     setStatus("submitting");
     try {
-      const res = await fetch(FORM_ENDPOINT, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error(`Request failed: ${res.status}`);

@@ -14,7 +14,7 @@ const featuredServices = services.slice(0, 6);
 const trustPoints = [
   { stat: "1981", label: "Caring for Pontotoc since" },
   { stat: "3", label: "Experienced optometrists" },
-  { stat: "45+", label: "Years of combined legacy" },
+  { stat: "65+", label: "Years of combined experience" },
   { stat: "Onsite", label: "Optical lab for faster eyewear" },
 ];
 
