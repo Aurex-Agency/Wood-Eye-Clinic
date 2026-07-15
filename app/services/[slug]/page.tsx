@@ -11,16 +11,36 @@ import { services } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
-// Photo shown at the top of each service page. Most services share the
-// welcoming lobby shot; a few have their own more fitting image.
+// Photo shown at the top of each service page. Each service has its own
+// fitting image; the lobby shot is a fallback for any without one.
 const LOBBY_PHOTO = {
   src: "/img/office/lobby.webp",
   alt: "The warm, welcoming waiting lounge at Wood Eye Clinic in Pontotoc",
 };
 const SERVICE_PHOTOS: Record<string, { src: string; alt: string }> = {
-  "onsite-optical-lab": {
-    src: "/img/office/optical-lab.webp",
-    alt: "An exam room with advanced diagnostic equipment at Wood Eye Clinic",
+  "comprehensive-eye-exams": {
+    src: "/img/office/exam-room.webp",
+    alt: "An exam room at Wood Eye Clinic ready for a comprehensive eye exam",
+  },
+  "childrens-eye-exams": {
+    src: "/img/office/lounge.webp",
+    alt: "The comfortable, family-friendly lounge at Wood Eye Clinic",
+  },
+  "vision-therapy": {
+    src: "/img/office/reception.webp",
+    alt: "The welcoming reception area at Wood Eye Clinic",
+  },
+  "diabetic-eye-care": {
+    src: "/img/office/exam-room.webp",
+    alt: "Diagnostic imaging equipment in a Wood Eye Clinic exam room",
+  },
+  "eye-disease-management": {
+    src: "/img/office/exterior.webp",
+    alt: "The Wood Eye Clinic building in downtown Pontotoc, Mississippi",
+  },
+  "contact-lenses": {
+    src: "/img/office/eyewear-corner.webp",
+    alt: "The contact lens and eyewear corner at Wood Eye Clinic",
   },
   "eyewear-and-glasses": {
     src: "/img/office/eyewear-display.webp",
@@ -29,6 +49,18 @@ const SERVICE_PHOTOS: Record<string, { src: string; alt: string }> = {
   sunglasses: {
     src: "/img/office/eyewear-display.webp",
     alt: "Designer sunglasses and frames on display at Wood Eye Clinic",
+  },
+  "computer-vision": {
+    src: "/img/office/waiting.webp",
+    alt: "The bright, light-filled waiting area at Wood Eye Clinic",
+  },
+  "lasik-co-management": {
+    src: "/img/office/storefront.webp",
+    alt: "The Wood Eye Clinic storefront on South Main Street",
+  },
+  "onsite-optical-lab": {
+    src: "/img/office/optical-lab.webp",
+    alt: "An exam room with advanced diagnostic equipment at Wood Eye Clinic",
   },
 };
 
