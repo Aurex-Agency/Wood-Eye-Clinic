@@ -4,8 +4,7 @@
  * live; until then the production Vercel URL keeps every tag correct.
  */
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://wood-eye-clinic.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://woodeyeclinic.com";
 
 export const clinic = {
   name: "Wood Eye Clinic",
