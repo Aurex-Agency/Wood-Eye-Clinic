@@ -59,6 +59,14 @@ const legacyRedirects = [
 const nextConfig: NextConfig = {
   async redirects() {
     return [
+      // Canonical host: force www.woodeyeclinic.com -> woodeyeclinic.com so the
+      // site only ever serves the non-www version.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.woodeyeclinic.com" }],
+        destination: "https://woodeyeclinic.com/:path*",
+        permanent: true,
+      },
       ...legacyRedirects.map((r) => ({ ...r, permanent: true })),
       // Fallback: any other leftover legacy .html page -> home.
       { source: "/:path*.html", destination: "/", permanent: true },
