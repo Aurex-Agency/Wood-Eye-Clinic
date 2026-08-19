@@ -5,11 +5,11 @@ import { clinic } from "@/lib/site";
 import { currentPagePath, track } from "@/lib/analytics";
 
 /*
- * Contact form. Submits to /api/contact, which emails the clinic inbox.
- * The GA4 contact_form_submit event fires only after the server confirms
- * delivery, never on button click, so the metric counts real leads.
+ * Appointment request form. Posts to /api/contact with formType "appointment".
+ * Fires GA4 appointment_request only after the server confirms the request
+ * reached the clinic inbox.
  */
-export default function ContactForm() {
+export default function AppointmentForm() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +26,7 @@ export default function ContactForm() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, formType: "contact" }),
+        body: JSON.stringify({ ...data, formType: "appointment" }),
       });
       const result = await response.json().catch(() => ({}));
 
@@ -35,9 +35,9 @@ export default function ContactForm() {
         return;
       }
 
-      track("contact_form_submit", {
+      track("appointment_request", {
         page_path: currentPagePath(),
-        link_location: "contact_page",
+        link_location: "appointment_page",
       });
       setSubmitted(true);
     } catch {
@@ -63,10 +63,10 @@ export default function ContactForm() {
             <path d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-xl font-bold text-ink">Thank you for reaching out!</h3>
+        <h3 className="text-xl font-bold text-ink">Your request is in!</h3>
         <p className="mt-2 text-ink/70">
-          We have received your message and will get back to you as soon as
-          possible. If you need immediate assistance, please call us at{" "}
+          A member of our team will call you shortly to confirm your
+          appointment time. If you need to be seen right away, call us at{" "}
           {clinic.phone}.
         </p>
       </div>
@@ -107,25 +107,45 @@ export default function ContactForm() {
             className={inputStyles}
           />
         </label>
-        <label className="block sm:col-span-2">
+        <label className="block">
+          <span className="mb-1.5 block text-sm font-semibold text-ink">Are you a</span>
+          <select name="patientType" className={inputStyles} defaultValue="New patient">
+            <option value="New patient">New patient</option>
+            <option value="Returning patient">Returning patient</option>
+          </select>
+        </label>
+        <label className="block">
           <span className="mb-1.5 block text-sm font-semibold text-ink">
-            How can we help?
+            What do you need?
           </span>
-          <select name="topic" className={inputStyles} defaultValue="appointment">
-            <option value="appointment">Request an appointment</option>
-            <option value="eyewear">Glasses or contact lenses</option>
-            <option value="insurance">Insurance question</option>
-            <option value="vision-therapy">Vision therapy</option>
-            <option value="other">Something else</option>
+          <select name="topic" className={inputStyles} defaultValue="Comprehensive eye exam">
+            <option value="Comprehensive eye exam">Comprehensive eye exam</option>
+            <option value="Contact lens exam or fitting">Contact lens exam or fitting</option>
+            <option value="Child's eye exam">Child&apos;s eye exam</option>
+            <option value="Glasses or frame fitting">Glasses or frame fitting</option>
+            <option value="Eye health concern">Eye health concern</option>
+            <option value="Something else">Something else</option>
           </select>
         </label>
         <label className="block sm:col-span-2">
-          <span className="mb-1.5 block text-sm font-semibold text-ink">Message</span>
+          <span className="mb-1.5 block text-sm font-semibold text-ink">
+            Days and times that work best
+          </span>
+          <input
+            type="text"
+            name="preferredDay"
+            placeholder="Weekday mornings, or Tuesday after 4:00"
+            className={inputStyles}
+          />
+        </label>
+        <label className="block sm:col-span-2">
+          <span className="mb-1.5 block text-sm font-semibold text-ink">
+            Anything else we should know?
+          </span>
           <textarea
             name="message"
-            rows={5}
-            required
-            placeholder="Tell us a little about what you need..."
+            rows={4}
+            placeholder="Insurance questions, accessibility needs, or anything else."
             className={inputStyles}
           />
         </label>
@@ -140,8 +160,9 @@ export default function ContactForm() {
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-ink/50">
-        Please do not include personal medical details in this form. For
-        urgent eye care needs, call us directly at {clinic.phone}.
+        This is a request, not a confirmed booking. We will call you to confirm
+        your time. Please do not include personal medical details. For urgent
+        eye care needs, call us at {clinic.phone}.
       </p>
 
       {error && (
@@ -158,7 +179,7 @@ export default function ContactForm() {
         disabled={sending}
         className="mt-5 w-full rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto sm:px-10"
       >
-        {sending ? "Sending..." : "Send Message"}
+        {sending ? "Sending..." : "Request My Appointment"}
       </button>
     </form>
   );

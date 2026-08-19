@@ -90,7 +90,7 @@ export default function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4">
+    <header className="sticky top-0 z-50 px-4 pt-4" data-track-location="header">
       <div className="glass-liquid mx-auto flex max-w-6xl items-center justify-between rounded-full px-5 py-3 sm:px-7">
         <Logo light={light} />
 
@@ -238,6 +238,33 @@ export default function Header() {
           </a>
         </div>
 
+        {/* Tap-to-call, always visible on mobile. The only tel: link in the
+            header used to live inside the closed menu drawer, two taps deep. */}
+        <div className="flex items-center gap-1 xl:hidden">
+          <a
+            href={clinic.phoneHref}
+            aria-label={`Call Wood Eye Clinic at ${clinic.phone}`}
+            className={`flex h-11 items-center gap-2 rounded-full px-4 text-sm font-bold transition-colors duration-300 ${
+              light
+                ? "bg-white/20 text-white hover:bg-white/30"
+                : "bg-brand text-white hover:bg-brand-dark"
+            }`}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
+            </svg>
+            <span className="hidden sm:inline">Call</span>
+          </a>
+
         <button
           type="button"
           onClick={() => setOpen(!open)}
@@ -258,6 +285,7 @@ export default function Header() {
             {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
           </svg>
         </button>
+        </div>
       </div>
 
       {open && (

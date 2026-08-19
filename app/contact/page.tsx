@@ -43,7 +43,7 @@ export default function ContactPage() {
             <ContactForm />
           </Reveal>
 
-          <div className="space-y-5">
+          <div className="space-y-5" data-track-location="contact_page">
             <Reveal delay={100}>
               <Glass tint className="p-8">
                 <h2 className="font-display text-xl font-bold text-ink">Prefer to call?</h2>

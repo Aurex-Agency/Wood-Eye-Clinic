@@ -46,7 +46,7 @@ export default function HomePage() {
       <OrderContactsBand />
 
       {/* See clearly again */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-20" data-track-location="hero_cta">
         <Reveal className="glass-surface mx-auto max-w-3xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">
             See Clearly Again
@@ -282,7 +282,7 @@ export default function HomePage() {
       </section>
 
       {/* Visit */}
-      <section className="px-6 pb-8">
+      <section className="px-6 pb-8" data-track-location="home_visit">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-5 lg:grid-cols-2">
             <Reveal>

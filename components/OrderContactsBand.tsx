@@ -14,7 +14,7 @@ export default function OrderContactsBand({
   text?: string;
 }) {
   return (
-    <section className="px-6 py-10">
+    <section className="px-6 py-10" data-track-location="order_contacts_band">
       <div className="mx-auto max-w-6xl">
         <div className="relative overflow-hidden rounded-4xl bg-gradient-to-br from-sky via-brand to-brand-dark px-8 py-10 shadow-xl sm:px-12">
           {/* soft glow accents */}

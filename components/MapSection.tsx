@@ -15,7 +15,7 @@ const todayHours = clinic.hours;
  */
 export default function MapSection() {
   return (
-    <section className="px-6 pb-20 pt-6">
+    <section className="px-6 pb-20 pt-6" data-track-location="map_section">
       <div className="mx-auto max-w-6xl">
         <Reveal className="glass-surface mx-auto max-w-2xl rounded-[1.75rem] px-8 py-8 text-center sm:px-10 sm:py-9">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-brand">Visit Us</p>

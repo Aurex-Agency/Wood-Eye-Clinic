@@ -69,6 +69,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Reserve room for the mobile action bar (components/StickyCallBar.tsx) so it
+   never covers footer content. Matches the bar's md:hidden breakpoint. */
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+  }
+}
+
 ::selection {
   background: var(--color-sky);
   color: var(--color-ink);

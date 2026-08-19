@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MapSection from "@/components/MapSection";
 import GlassFilter from "@/components/GlassFilter";
+import Analytics from "@/components/Analytics";
+import StickyCallBar from "@/components/StickyCallBar";
 import "./globals.css";
 
 const body = Figtree({
@@ -45,6 +47,8 @@ export default function RootLayout({
         <main>{children}</main>
         <MapSection />
         <Footer />
+        <StickyCallBar />
+        <Analytics />
       </body>
     </html>
   );

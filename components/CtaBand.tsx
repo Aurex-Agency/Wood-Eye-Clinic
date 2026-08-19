@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { clinic } from "@/lib/site";
 
 export default function CtaBand({
@@ -8,7 +9,7 @@ export default function CtaBand({
   text?: string;
 }) {
   return (
-    <section className="px-6 py-16">
+    <section className="px-6 py-16" data-track-location="cta_band">
       <div className="mx-auto max-w-5xl">
         <div className="relative overflow-hidden rounded-5xl bg-brand-deep px-8 py-14 text-center text-white sm:px-14">
           {/* blurred photographic texture for warmth and depth */}
@@ -41,14 +42,18 @@ export default function CtaBand({
           <div className="relative">
             <h2 className="font-display text-3xl font-bold sm:text-4xl">{title}</h2>
             <p className="mx-auto mt-4 max-w-xl text-white/80">{text}</p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href={clinic.bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap">
+              <Link
+                href="/appointment"
                 className="rounded-full bg-white px-8 py-4 font-bold text-brand-deep shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-sky"
               >
-                Book an Appointment
+                Request an Appointment
+              </Link>
+              <a
+                href={clinic.phoneHref}
+                className="rounded-full border border-white/40 bg-white/5 px-8 py-4 font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/15"
+              >
+                Call {clinic.phone}
               </a>
               <a
                 href={clinic.orderContactsUrl}

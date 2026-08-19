@@ -4,7 +4,7 @@ import { clinic, services } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="mt-24 bg-ink text-white">
+    <footer data-track-location="footer" className="mt-24 bg-ink text-white">
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo light />
