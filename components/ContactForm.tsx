@@ -1,53 +1,59 @@
 "use client";
 
 import { useState } from "react";
-import { clinic } from "@/lib/site";
 import { currentPagePath, track } from "@/lib/analytics";
 
 /*
- * Contact form. Submits to /api/contact, which emails the clinic inbox.
- * The GA4 contact_form_submit event fires only after the server confirms
- * delivery, never on button click, so the metric counts real leads.
+ * Contact form. Submissions POST to /api/contact, which emails a branded
+ * message to the clinic and a confirmation to the patient (via Resend when
+ * configured, otherwise FormSubmit as a no-setup fallback).
  */
+type Status = "idle" | "submitting" | "success" | "error";
+
 export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<Status>("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (sending) return;
-    setSending(true);
-    setError(null);
+    const form = e.currentTarget;
+    const data = new FormData(form);
 
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    // Honeypot: if a bot filled the hidden field, pretend success and stop.
+    if (data.get("_honey")) {
+      setStatus("success");
+      return;
+    }
 
+    const payload = {
+      firstName: String(data.get("firstName") ?? "").trim(),
+      lastName: String(data.get("lastName") ?? "").trim(),
+      phone: String(data.get("phone") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      topic: String(data.get("topic") ?? ""),
+      message: String(data.get("message") ?? "").trim(),
+    };
+
+    setStatus("submitting");
     try {
-      const response = await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, formType: "contact" }),
+        body: JSON.stringify(payload),
       });
-      const result = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        setError(result.error || `Something went wrong. Please call us at ${clinic.phone}.`);
-        return;
-      }
-
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+      // Only after the server confirms delivery, never on button click.
       track("contact_form_submit", {
         page_path: currentPagePath(),
         link_location: "contact_page",
       });
-      setSubmitted(true);
+      setStatus("success");
+      form.reset();
     } catch {
-      setError(`We could not reach our server. Please call us at ${clinic.phone}.`);
-    } finally {
-      setSending(false);
+      setStatus("error");
     }
   }
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <div className="glass-surface glass-tint rounded-3xl p-10 text-center">
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-white">
@@ -66,8 +72,8 @@ export default function ContactForm() {
         <h3 className="text-xl font-bold text-ink">Thank you for reaching out!</h3>
         <p className="mt-2 text-ink/70">
           We have received your message and will get back to you as soon as
-          possible. If you need immediate assistance, please call us at{" "}
-          {clinic.phone}.
+          possible. If you need immediate assistance, please call us at (662)
+          489-5907.
         </p>
       </div>
     );
@@ -75,6 +81,8 @@ export default function ContactForm() {
 
   const inputStyles =
     "w-full rounded-2xl border border-white/70 bg-white/70 px-4 py-3 text-ink placeholder:text-ink/40 shadow-inner outline-none transition-all focus:border-brand focus:bg-white focus:ring-2 focus:ring-sky";
+
+  const submitting = status === "submitting";
 
   return (
     <form onSubmit={handleSubmit} className="glass-surface glass-strong rounded-3xl p-6 sm:p-8">
@@ -131,34 +139,49 @@ export default function ContactForm() {
         </label>
       </div>
 
-      {/* Honeypot: hidden from patients, irresistible to bots. */}
-      <div className="hidden" aria-hidden="true">
-        <label>
-          Company
-          <input type="text" name="company" tabIndex={-1} autoComplete="off" />
-        </label>
-      </div>
+      {/* Honeypot field: hidden from people, catches spam bots. */}
+      <input
+        type="text"
+        name="_honey"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
 
       <p className="mt-4 text-xs leading-relaxed text-ink/50">
         Please do not include personal medical details in this form. For
-        urgent eye care needs, call us directly at {clinic.phone}.
+        urgent eye care needs, call us directly at (662) 489-5907.
       </p>
 
-      {error && (
-        <p
-          role="alert"
-          className="mt-4 rounded-2xl bg-brand/10 px-5 py-4 text-sm font-semibold leading-relaxed text-brand-deep"
-        >
-          {error}
+      {status === "error" && (
+        <p className="mt-4 rounded-2xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          Sorry, something went wrong sending your message. Please try again, or
+          call us at{" "}
+          <a href="tel:+16624895907" className="font-bold underline">
+            (662) 489-5907
+          </a>
+          .
         </p>
       )}
 
       <button
         type="submit"
-        disabled={sending}
-        className="mt-5 w-full rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto sm:px-10"
+        disabled={submitting}
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-10"
       >
-        {sending ? "Sending..." : "Send Message"}
+        {submitting && (
+          <svg
+            className="h-5 w-5 animate-spin"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-90" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.4 0 0 5.4 0 12h4z" />
+          </svg>
+        )}
+        {submitting ? "Sending..." : "Send Message"}
       </button>
     </form>
   );

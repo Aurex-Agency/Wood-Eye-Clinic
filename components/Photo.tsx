@@ -14,6 +14,7 @@ export default function Photo({
   rounded = "rounded-3xl",
   priority = false,
   sheen = true,
+  objectPosition = "center",
 }: {
   src: string;
   alt: string;
@@ -21,6 +22,8 @@ export default function Photo({
   rounded?: string;
   priority?: boolean;
   sheen?: boolean;
+  /** object-position for the cover crop, e.g. "center 80%" to favour the base of a tall photo. */
+  objectPosition?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [focused, setFocused] = useState(priority);
@@ -62,6 +65,7 @@ export default function Photo({
           loading={priority ? undefined : "lazy"}
           className="h-full w-full object-cover"
           style={{
+            objectPosition,
             filter: focused ? "none" : "blur(14px)",
             opacity: focused ? 1 : 0.6,
             transform: `scale(${scale})`,

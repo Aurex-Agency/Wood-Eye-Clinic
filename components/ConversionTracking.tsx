@@ -1,10 +1,8 @@
 "use client";
 
-import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import {
-  GA_MEASUREMENT_ID,
   currentPagePath,
   isBookingLink,
   isDirectionsLink,
@@ -13,25 +11,26 @@ import {
 } from "@/lib/analytics";
 
 /*
- * One client component handles all of GA4:
+ * Conversion tracking for the GA4 tag loaded in app/layout.tsx.
  *
- *  1. Loads gtag.js and sends the initial page_view.
- *  2. Sends a page_view on every client-side route change (the App Router does
- *     not reload the page, so GA would otherwise only ever see the entry page).
- *  3. Listens for clicks on document once, in the capture phase, and turns
- *     tel:, mailto:, maps, and booking links into conversion events. Delegation
- *     means no link anywhere on the site needs to know about analytics, and
- *     links added later are covered automatically.
+ * This component deliberately does NOT load gtag.js or call gtag('config') --
+ * layout.tsx already does both, and doing it twice double-counts every
+ * pageview. This only adds what the base tag cannot do on its own:
  *
- * Form success events are NOT handled here. They are fired by the forms
- * themselves, only after the server confirms the submission.
+ *  1. A page_view on client-side route changes. The App Router does not reload
+ *     the document, so the base tag alone only ever reports the entry page.
+ *  2. One delegated capture-phase click listener that turns tel:, mailto:,
+ *     maps, and booking links into conversion events, so no individual link
+ *     anywhere on the site needs to know analytics exists.
+ *
+ * Form success events are fired by the forms themselves, only after the server
+ * confirms the submission.
  */
-export default function Analytics() {
+export default function ConversionTracking() {
   const pathname = usePathname();
   const firstRender = useRef(true);
 
-  // gtag's own config call sends the first page_view, so skip the initial
-  // effect run and only report subsequent client-side navigations.
+  // gtag('config') already sent the first page_view; only report navigations.
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
@@ -69,7 +68,6 @@ export default function Analytics() {
         return;
       }
 
-      // Relative and hash links are internal navigation, nothing to report.
       let url: URL;
       try {
         url = new URL(href, window.location.href);
@@ -88,26 +86,11 @@ export default function Analytics() {
       }
     }
 
-    // Capture phase so the event is recorded even if a handler further down
+    // Capture phase, so the event is recorded even if a handler further down
     // stops propagation before the click reaches document.
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
   }, []);
 
-  if (!GA_MEASUREMENT_ID) return null;
-
-  return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="ga4-init" strategy="afterInteractive">
-        {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GA_MEASUREMENT_ID}');`}
-      </Script>
-    </>
-  );
+  return null;
 }

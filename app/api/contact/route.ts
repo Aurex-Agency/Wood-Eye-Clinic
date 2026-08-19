@@ -1,146 +1,138 @@
 import { NextResponse } from "next/server";
-import { clinic } from "@/lib/site";
+import {
+  clinicNotificationEmail,
+  patientConfirmationEmail,
+  TOPIC_LABELS,
+  type ContactSubmission,
+} from "@/lib/emails";
 
-/*
- * Delivers contact and appointment form submissions to the clinic inbox.
- *
- * Before this route existed the contact form discarded every submission
- * client-side, so nothing a patient typed ever reached the clinic.
- *
- * Requires RESEND_API_KEY. If it is not configured the route returns 503 and
- * the form tells the patient to call instead, which routes the lead to the
- * phone rather than silently swallowing it.
- */
+export const runtime = "nodejs";
 
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL || "woodeyeclinic@gmail.com";
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? "woodeyeclinic@gmail.com";
 const FROM_EMAIL =
-  process.env.CONTACT_FROM_EMAIL || "Wood Eye Clinic Website <website@woodeyeclinic.com>";
+  process.env.CONTACT_FROM_EMAIL ??
+  // team.woodeyeclinic.com is the verified sending domain in Resend.
+  "Wood Eye Clinic <noreply@team.woodeyeclinic.com>";
 
-type Payload = {
-  formType?: string;
-  firstName?: string;
-  lastName?: string;
-  phone?: string;
-  email?: string;
-  topic?: string;
-  preferredDay?: string;
-  patientType?: string;
-  message?: string;
-  company?: string; // honeypot, must stay empty
-};
+async function sendViaResend(sub: ContactSubmission) {
+  const key = process.env.RESEND_API_KEY!;
+  const notify = clinicNotificationEmail(sub);
+  const confirm = patientConfirmationEmail(sub);
 
-function clean(value: unknown, max = 2000) {
-  return typeof value === "string" ? value.trim().slice(0, max) : "";
-}
+  const send = (payload: Record<string, unknown>) =>
+    fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-export async function POST(request: Request) {
-  let body: Payload;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  // Notify the clinic (required). Reply-To is the patient so staff can reply.
+  const res = await send({
+    from: FROM_EMAIL,
+    to: [TO_EMAIL],
+    reply_to: sub.email,
+    subject: notify.subject,
+    html: notify.html,
+    text: notify.text,
+  });
+  if (!res.ok) {
+    throw new Error(`Resend notify failed: ${res.status} ${await res.text()}`);
   }
 
-  // Bots fill every field they find; real patients never see this one.
-  if (clean(body.company)) {
+  // Confirmation to the patient (best effort — don't fail the request if this
+  // one bounces, the clinic already has the message).
+  try {
+    await send({
+      from: FROM_EMAIL,
+      to: [sub.email],
+      subject: confirm.subject,
+      html: confirm.html,
+      text: confirm.text,
+    });
+  } catch {
+    /* ignore confirmation failure */
+  }
+}
+
+async function sendViaFormSubmit(sub: ContactSubmission) {
+  const endpoint =
+    process.env.NEXT_PUBLIC_FORM_ENDPOINT ??
+    `https://formsubmit.co/ajax/${encodeURIComponent(TO_EMAIL)}`;
+  const res = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      Name: `${sub.firstName} ${sub.lastName}`.trim(),
+      Phone: sub.phone,
+      Email: sub.email,
+      "How can we help": sub.topicLabel,
+      Message: sub.message,
+      _subject: `New website message from ${sub.firstName} ${sub.lastName}`.trim(),
+      _template: "box",
+      _replyto: sub.email,
+      _captcha: "false",
+      _autoresponse:
+        `Hi ${sub.firstName}, thanks for reaching out to Wood Eye Clinic! ` +
+        `We have received your message and will get back to you soon, usually within one business day. ` +
+        `If you need to reach us sooner, please call (662) 489-5907.`,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`FormSubmit failed: ${res.status}`);
+  }
+}
+
+export async function POST(req: Request) {
+  let body: Record<string, string>;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ ok: false, error: "Invalid request" }, { status: 400 });
+  }
+
+  // Honeypot: silently accept bot submissions without doing anything.
+  if (body._honey) {
     return NextResponse.json({ ok: true });
   }
 
-  const isAppointment = clean(body.formType) === "appointment";
-  const firstName = clean(body.firstName, 100);
-  const lastName = clean(body.lastName, 100);
-  const phone = clean(body.phone, 40);
-  const email = clean(body.email, 200);
-  const message = clean(body.message);
+  const firstName = (body.firstName ?? "").trim();
+  const lastName = (body.lastName ?? "").trim();
+  const phone = (body.phone ?? "").trim();
+  const email = (body.email ?? "").trim();
+  const topic = (body.topic ?? "").trim();
+  const message = (body.message ?? "").trim();
 
-  if (!firstName || !lastName || !phone || !email) {
+  if (!firstName || !email || !message) {
     return NextResponse.json(
-      { error: "Please fill in your name, phone, and email." },
+      { ok: false, error: "Please fill in your name, email, and message." },
       { status: 400 }
     );
   }
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
-  }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json(
-      {
-        error: `Our online form is temporarily unavailable. Please call us at ${clinic.phone} and we will take care of you.`,
-      },
-      { status: 503 }
-    );
-  }
-
-  const rows: [string, string][] = [
-    ["Name", `${firstName} ${lastName}`],
-    ["Phone", phone],
-    ["Email", email],
-  ];
-  if (isAppointment) {
-    if (clean(body.patientType)) rows.push(["Patient", clean(body.patientType, 60)]);
-    if (clean(body.preferredDay)) rows.push(["Preferred time", clean(body.preferredDay, 120)]);
-  }
-  if (clean(body.topic)) rows.push(["Topic", clean(body.topic, 60)]);
-  if (message) rows.push(["Message", message]);
-
-  const subject = isAppointment
-    ? `Appointment request from ${firstName} ${lastName}`
-    : `Website message from ${firstName} ${lastName}`;
-
-  const html = `<h2>${escapeHtml(subject)}</h2><table cellpadding="6">${rows
-    .map(
-      ([label, value]) =>
-        `<tr><td><strong>${escapeHtml(label)}</strong></td><td>${escapeHtml(
-          value
-        ).replace(/\n/g, "<br>")}</td></tr>`
-    )
-    .join("")}</table><p>Sent from woodeyeclinic.com</p>`;
-
-  const text = `${subject}\n\n${rows.map(([l, v]) => `${l}: ${v}`).join("\n")}\n\nSent from woodeyeclinic.com`;
+  const submission: ContactSubmission = {
+    firstName,
+    lastName,
+    phone,
+    email,
+    topicLabel: TOPIC_LABELS[topic] ?? topic ?? "General",
+    message,
+  };
 
   try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [TO_EMAIL],
-        reply_to: email,
-        subject,
-        html,
-        text,
-      }),
-    });
-
-    if (!response.ok) {
-      console.error("Resend rejected the submission", response.status, await response.text());
-      return NextResponse.json(
-        {
-          error: `We could not send your message. Please call us at ${clinic.phone}.`,
-        },
-        { status: 502 }
-      );
+    if (process.env.RESEND_API_KEY) {
+      await sendViaResend(submission);
+    } else {
+      await sendViaFormSubmit(submission);
     }
-  } catch (error) {
-    console.error("Failed to reach the email provider", error);
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error("Contact form send failed:", err);
     return NextResponse.json(
-      { error: `We could not send your message. Please call us at ${clinic.phone}.` },
+      { ok: false, error: "Could not send your message. Please try again or call us." },
       { status: 502 }
     );
   }
-
-  return NextResponse.json({ ok: true });
 }

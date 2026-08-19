@@ -20,13 +20,30 @@ export default function AppointmentForm() {
     setSending(true);
     setError(null);
 
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    const data = new FormData(e.currentTarget);
+    const str = (k: string) => String(data.get(k) ?? "").trim();
+
+    // /api/contact requires a non-empty message, so fold the appointment
+    // specific answers into one so the clinic sees them in the email.
+    const details = [
+      `Patient: ${str("patientType")}`,
+      `Needs: ${str("topic")}`,
+      str("preferredDay") && `Preferred times: ${str("preferredDay")}`,
+      str("message") && `Notes: ${str("message")}`,
+    ].filter(Boolean).join("\n");
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, formType: "appointment" }),
+        body: JSON.stringify({
+          firstName: str("firstName"),
+          lastName: str("lastName"),
+          phone: str("phone"),
+          email: str("email"),
+          topic: "appointment",
+          message: details,
+        }),
       });
       const result = await response.json().catch(() => ({}));
 

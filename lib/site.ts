@@ -1,3 +1,11 @@
+/*
+ * Canonical site origin used for SEO (canonical URLs, Open Graph, sitemap,
+ * JSON-LD). Set NEXT_PUBLIC_SITE_URL in Vercel once the custom domain is
+ * live; until then the production Vercel URL keeps every tag correct.
+ */
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://woodeyeclinic.com";
+
 export const clinic = {
   name: "Wood Eye Clinic",
   tagline: "Caring for the vision of Pontotoc and North Mississippi since 1981.",
@@ -11,6 +19,7 @@ export const clinic = {
   },
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Wood+Eye+Clinic+26+S+Main+Street+Pontotoc+MS+38863",
+  geo: { latitude: 34.2465, longitude: -88.9987 },
   // External patient-facing systems
   bookingUrl:
     "https://patron.solutionreach.com/uipatron/schedule/subscriber/bcdc301367849bc1/welcome?utm_campaign=sr-legacy-link-redirect",
@@ -109,7 +118,7 @@ export const doctors: TeamMember[] = [
     isDoctor: true,
     photo: "/img/doctors/warren.webp",
     joined: "Joined the clinic in June 2023",
-    headline: "Advanced technology paired with hometown, personalized care.",
+    headline: "Committed to delivering advanced eye care with a personal touch.",
     intro:
       "Dr. Joseph Caleb Warren joined Wood Eye Clinic in June 2023 and is proud to provide compassionate, personalized eye care to patients throughout Pontotoc and the surrounding communities.",
     bio: [
@@ -128,7 +137,8 @@ export const doctors: TeamMember[] = [
       "Eyelid lesion removal",
       "YAG posterior capsulotomy laser surgery",
     ],
-    funFact: "A Pontotoc native who loves deer hunting and time at the gym.",
+    funFact:
+      "A Pontotoc native who enjoys spending time with his wife and daughters, deer hunting, and staying active in the gym.",
   },
 ];
 
@@ -140,7 +150,7 @@ export const doctors: TeamMember[] = [
 export const staff: TeamMember[] = [
   {
     slug: "sarah-grace",
-    name: "Sarah Grace",
+    name: "Sarah Grace Golden",
     shortName: "Sarah",
     role: "Office Manager",
     isDoctor: false,
@@ -182,8 +192,8 @@ export const staff: TeamMember[] = [
   },
   {
     slug: "christy-wallace",
-    name: "Christy Wallace",
-    shortName: "Christy",
+    name: "Christi Wallace",
+    shortName: "Christi",
     role: "Optometric Technician",
     isDoctor: false,
     joined: "Beside you at every exam",
@@ -196,7 +206,7 @@ export const staff: TeamMember[] = [
   },
   {
     slug: "chloe-throne",
-    name: "Chloe Throne",
+    name: "Chloe Thorne",
     shortName: "Chloe",
     role: "Glasses Technician",
     isDoctor: false,

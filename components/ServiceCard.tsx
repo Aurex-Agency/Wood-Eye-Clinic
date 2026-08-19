@@ -17,17 +17,17 @@ export default function ServiceCard({
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="glass-pane group flex items-center gap-5 overflow-hidden rounded-[1.75rem] p-7 transition-transform duration-300 hover:-translate-y-0.5 sm:gap-7 sm:p-9"
+      className="glass-pane group flex items-center gap-4 overflow-hidden rounded-[1.75rem] p-5 transition-transform duration-300 hover:-translate-y-0.5 sm:gap-7 sm:p-9"
     >
-      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/60 bg-white/40 text-brand-dark shadow-inner backdrop-blur-md transition-colors duration-500 group-hover:bg-brand/80 group-hover:text-white sm:h-20 sm:w-20">
-        <Icon name={service.icon} className="h-8 w-8 sm:h-9 sm:w-9" />
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/60 bg-white/40 text-brand-dark shadow-inner backdrop-blur-md transition-colors duration-500 group-hover:bg-brand/80 group-hover:text-white sm:h-20 sm:w-20 sm:rounded-2xl">
+        <Icon name={service.icon} className="h-6 w-6 sm:h-9 sm:w-9" />
       </span>
 
       <div className="min-w-0 flex-1">
         <span className="font-display text-xs font-bold tracking-[0.3em] text-brand/60">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <h3 className="mt-0.5 font-display text-xl font-bold text-ink sm:text-2xl">
+        <h3 className="mt-0.5 font-display text-lg font-bold text-ink sm:text-2xl">
           {service.name}
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-ink/70 sm:text-base">
