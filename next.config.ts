@@ -9,6 +9,9 @@ import type { NextConfig } from "next";
  * Unknown URLs return 404 instead of redirecting unrelated content to home.
  */
 const legacyRedirects = [
+  // Confirmed legacy 404s in Search Console; matching current services.
+  { source: "/frames", destination: "/services/eyewear-and-glasses" },
+  { source: "/sunglasses", destination: "/services/sunglasses" },
   { source: "/home.html", destination: "/" },
   { source: "/index.html", destination: "/" },
 
