@@ -91,7 +91,6 @@ const clinicSchema = {
   image: `${siteUrl}/og.jpg`,
   logo: `${siteUrl}/logo.webp`,
   foundingDate: "1981-11",
-  medicalSpecialty: "Optometric",
   address: {
     "@type": "PostalAddress",
     streetAddress: clinic.address.street,
@@ -119,7 +118,7 @@ const clinicSchema = {
     "Ripley MS",
     "Saltillo MS",
     "North Mississippi",
-  ].map((name) => ({ "@type": "City", name })),
+  ].map((name) => ({ "@type": name === "North Mississippi" ? "Place" : "City", name })),
   employee: doctors.map((doc) => ({
     "@type": "Person",
     name: doc.name,
@@ -139,7 +138,7 @@ export default function RootLayout({
       <body className={`${body.variable} ${display.variable} min-h-screen font-sans`}>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicSchema).replace(/</g, "\\u003c") }}
         />
 
         {/* Google Analytics (gtag.js) */}
