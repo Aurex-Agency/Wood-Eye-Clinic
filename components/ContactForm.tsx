@@ -3,19 +3,51 @@
 import { useState } from "react";
 
 /*
- * Contact form (first draft). Submission is handled client-side only for
- * now. Wire the handleSubmit body to the clinic's form endpoint (Formspree,
- * Netlify Forms, or a custom API route) before launch.
+ * Contact form. Submissions POST to /api/contact, which emails a branded
+ * message to the clinic and a confirmation to the patient (via Resend when
+ * configured, otherwise FormSubmit as a no-setup fallback).
  */
-export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+type Status = "idle" | "submitting" | "success" | "error";
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+export default function ContactForm() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    // Honeypot: if a bot filled the hidden field, pretend success and stop.
+    if (data.get("_honey")) {
+      setStatus("success");
+      return;
+    }
+
+    const payload = {
+      firstName: String(data.get("firstName") ?? "").trim(),
+      lastName: String(data.get("lastName") ?? "").trim(),
+      phone: String(data.get("phone") ?? "").trim(),
+      email: String(data.get("email") ?? "").trim(),
+      topic: String(data.get("topic") ?? ""),
+      message: String(data.get("message") ?? "").trim(),
+    };
+
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+      setStatus("success");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   }
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <div className="glass-surface glass-tint rounded-3xl p-10 text-center">
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-white">
@@ -43,6 +75,8 @@ export default function ContactForm() {
 
   const inputStyles =
     "w-full rounded-2xl border border-white/70 bg-white/70 px-4 py-3 text-ink placeholder:text-ink/40 shadow-inner outline-none transition-all focus:border-brand focus:bg-white focus:ring-2 focus:ring-sky";
+
+  const submitting = status === "submitting";
 
   return (
     <form onSubmit={handleSubmit} className="glass-surface glass-strong rounded-3xl p-6 sm:p-8">
@@ -99,16 +133,49 @@ export default function ContactForm() {
         </label>
       </div>
 
+      {/* Honeypot field: hidden from people, catches spam bots. */}
+      <input
+        type="text"
+        name="_honey"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
       <p className="mt-4 text-xs leading-relaxed text-ink/50">
         Please do not include personal medical details in this form. For
         urgent eye care needs, call us directly at (662) 489-5907.
       </p>
 
+      {status === "error" && (
+        <p className="mt-4 rounded-2xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          Sorry, something went wrong sending your message. Please try again, or
+          call us at{" "}
+          <a href="tel:+16624895907" className="font-bold underline">
+            (662) 489-5907
+          </a>
+          .
+        </p>
+      )}
+
       <button
         type="submit"
-        className="mt-5 w-full rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark sm:w-auto sm:px-10"
+        disabled={submitting}
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-10"
       >
-        Send Message
+        {submitting && (
+          <svg
+            className="h-5 w-5 animate-spin"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-90" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.4 0 0 5.4 0 12h4z" />
+          </svg>
+        )}
+        {submitting ? "Sending..." : "Send Message"}
       </button>
     </form>
   );

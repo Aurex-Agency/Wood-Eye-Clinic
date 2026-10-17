@@ -22,7 +22,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-16 pt-28 sm:-mt-[108px] sm:px-6 sm:pt-36 lg:min-h-[48rem]">
+    <section id="hero" className="relative -mt-[92px] flex min-h-[42rem] items-center overflow-hidden px-4 pb-12 pt-24 sm:-mt-[108px] sm:px-6 sm:pb-16 sm:pt-36 lg:min-h-[48rem]">
       {/* Out-of-focus backdrop. The bottom is masked to fade away so the fixed
           light site backdrop (which the next section also sits on) shows through,
           letting the dark hero melt smoothly into the section below. */}
@@ -61,7 +61,7 @@ export default function Hero() {
       <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         {/* Copy */}
         <div className="max-w-xl">
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur-md sm:text-sm">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky opacity-70" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-sky" />

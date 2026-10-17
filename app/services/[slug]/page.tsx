@@ -3,12 +3,66 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Glass from "@/components/Glass";
 import Icon from "@/components/Icon";
+import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
 import OrderContactsBand from "@/components/OrderContactsBand";
 import { services } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
+
+// Photo shown at the top of each service page. Each service has its own
+// fitting image; the lobby shot is a fallback for any without one.
+const LOBBY_PHOTO = {
+  src: "/img/office/lobby.webp",
+  alt: "The warm, welcoming waiting lounge at Wood Eye Clinic in Pontotoc",
+};
+const SERVICE_PHOTOS: Record<string, { src: string; alt: string }> = {
+  "comprehensive-eye-exams": {
+    src: "/img/office/exam-room.webp",
+    alt: "An exam room at Wood Eye Clinic ready for a comprehensive eye exam",
+  },
+  "childrens-eye-exams": {
+    src: "/img/office/lounge.webp",
+    alt: "The comfortable, family-friendly lounge at Wood Eye Clinic",
+  },
+  "vision-therapy": {
+    src: "/img/office/reception.webp",
+    alt: "The welcoming reception area at Wood Eye Clinic",
+  },
+  "diabetic-eye-care": {
+    src: "/img/office/exam-room.webp",
+    alt: "Diagnostic imaging equipment in a Wood Eye Clinic exam room",
+  },
+  "eye-disease-management": {
+    src: "/img/office/exterior.webp",
+    alt: "The Wood Eye Clinic building in downtown Pontotoc, Mississippi",
+  },
+  "contact-lenses": {
+    src: "/img/office/eyewear-corner.webp",
+    alt: "The contact lens and eyewear corner at Wood Eye Clinic",
+  },
+  "eyewear-and-glasses": {
+    src: "/img/office/eyewear-display.webp",
+    alt: "Walls of designer frames in the optical boutique at Wood Eye Clinic",
+  },
+  sunglasses: {
+    src: "/img/office/eyewear-display.webp",
+    alt: "Designer sunglasses and frames on display at Wood Eye Clinic",
+  },
+  "computer-vision": {
+    src: "/img/office/waiting.webp",
+    alt: "The bright, light-filled waiting area at Wood Eye Clinic",
+  },
+  "lasik-co-management": {
+    src: "/img/office/storefront.webp",
+    alt: "The Wood Eye Clinic storefront on South Main Street",
+  },
+  "onsite-optical-lab": {
+    src: "/img/office/optical-lab.webp",
+    alt: "An exam room with advanced diagnostic equipment at Wood Eye Clinic",
+  },
+};
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -30,29 +84,45 @@ export default async function ServicePage({ params }: Props) {
   if (!service) notFound();
 
   const related = services.filter((s) => s.slug !== slug).slice(0, 3);
+  const heroPhoto = SERVICE_PHOTOS[service.slug] ?? LOBBY_PHOTO;
 
   return (
     <>
       <section className="px-6 pb-6 pt-16 sm:pt-20">
         <div className="mx-auto max-w-4xl">
           <Reveal>
-            <Link
-              href="/services"
-              className="text-sm font-semibold text-brand transition-colors hover:text-brand-dark"
-            >
-              &larr; All Eyecare Services
-            </Link>
-            <div className="mt-8 flex items-start gap-5">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-sky/60 text-brand-dark">
-                <Icon name={service.icon} className="h-7 w-7" />
-              </div>
-              <div>
-                <h1 className="font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-                  {service.name}
-                </h1>
-                <p className="mt-4 text-lg leading-relaxed text-ink/70">{service.summary}</p>
+            <div className="glass-surface rounded-4xl px-6 py-7 sm:px-10 sm:py-9">
+              <Link
+                href="/services"
+                className="text-sm font-semibold text-brand transition-colors hover:text-brand-dark"
+              >
+                &larr; All Eyecare Services
+              </Link>
+              <div className="mt-6 flex flex-col items-start gap-4 sm:mt-8 sm:flex-row sm:gap-5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky/60 text-brand-dark sm:h-14 sm:w-14">
+                  <Icon name={service.icon} className="h-6 w-6 sm:h-7 sm:w-7" />
+                </div>
+                <div>
+                  <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl">
+                    {service.name}
+                  </h1>
+                  <p className="mt-4 text-lg leading-relaxed text-ink/70">{service.summary}</p>
+                </div>
               </div>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="px-6 py-4">
+        <div className="mx-auto max-w-4xl">
+          <Reveal>
+            <Photo
+              src={heroPhoto.src}
+              alt={heroPhoto.alt}
+              className="aspect-[4/3] sm:aspect-[16/7]"
+              rounded="rounded-[2rem]"
+            />
           </Reveal>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import { clinic, services } from "@/lib/site";
+import { locations } from "@/lib/locations";
 
 export default function Footer() {
   return (
@@ -108,6 +109,22 @@ export default function Footer() {
                 Contact & FAQs
               </Link>
             </li>
+          </ul>
+
+          <h3 className="mt-8 text-sm font-bold uppercase tracking-widest text-sky">
+            Areas We Serve
+          </h3>
+          <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-white/80">
+            {locations.map((l) => (
+              <li key={l.slug}>
+                <Link
+                  href={`/locations/${l.slug}`}
+                  className="transition-colors hover:text-white"
+                >
+                  {l.city}, {l.state}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

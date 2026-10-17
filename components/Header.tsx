@@ -27,6 +27,11 @@ const nav: NavItem[] = [
         href: "/about/meet-the-team",
         desc: "The people behind your care",
       },
+      {
+        label: "Areas We Serve",
+        href: "/locations",
+        desc: "Tupelo, Oxford, New Albany & more",
+      },
     ],
   },
   {
