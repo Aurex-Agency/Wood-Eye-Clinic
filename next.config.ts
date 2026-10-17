@@ -3,11 +3,10 @@ import type { NextConfig } from "next";
 /*
  * 301/308 redirects from the OLD website's URLs (the .html pages Google has
  * indexed) to the matching pages on this new site, so old search results and
- * bookmarks land on the right place and their SEO value carries over.
+ * bookmarks land on the relevant replacement.
  *
- * Add a line here for any additional legacy URL found in Google Search
- * Console. The catch-all at the end sends any other stray .html page to the
- * home page so nothing 404s.
+ * Add a matching destination for verified legacy URLs found in Search Console.
+ * Unknown URLs return 404 instead of redirecting unrelated content to home.
  */
 const legacyRedirects = [
   { source: "/home.html", destination: "/" },
@@ -69,8 +68,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       ...legacyRedirects.map((r) => ({ ...r, permanent: true })),
-      // Fallback: any other leftover legacy .html page -> home.
-      { source: "/:path*.html", destination: "/", permanent: true },
     ];
   },
 };
